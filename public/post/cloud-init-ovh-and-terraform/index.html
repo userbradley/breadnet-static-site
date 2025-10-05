@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Cloud-init, OVH and terraform · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Cloud-init, OVH and terraform</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Cloud-init, OVH and terraform</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 4 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>Yup, it&rsquo;s that time of the year again when I talk about some issues I&rsquo;ve had and couldn&rsquo;t find a solution on google so I wrote about it.</p>
+<h2 id="what-is-the-problem">What is the problem?</h2>
+<p>If you&rsquo;re never used OVH and terraform, you&rsquo;ll know that standing up the instance using terraform is quite easy. But adding a second network adapter and getting that to get DHCP&hellip; No.</p>
+<p>I&rsquo;ve previously written about using cloud-init, see below, on local infrastructure.
+[</p>
+<p>Cloud-init that works</p>
+<p>Want to speed up the deployment of Linux servers on your Xen based server? Well I finally figured it out!</p>
+<p><img src="https://breadnet.co.uk/favicon.png" alt="">breadNETBradley Stannard</p>
+<p><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="">
+](<strong>GHOST_URL</strong>/cloud-init-that-works/)
+But the difference here, is that the documentation is even worse!</p>
+<p>I&rsquo;m talking, like 3 different places saying something different.</p>
+<p>If you&rsquo;re not here to read the entire blog, scroll to the bottom where I have the solution to getting cloud init to work on OVH</p>
+<h2 id="lets-start">Let&rsquo;s start</h2>
+<p>So seeing as we&rsquo;re using terraform, our first call of action is to look at their documentation for cloud init, which uses a field called <code>user_data</code>
+[</p>
+<p>Provision Infrastructure with Cloud-Init | Terraform - HashiCorp Learn</p>
+<p>Deploy preconfigured infrastructure with Terraform using the Cloud-Init tool.</p>
+<p><img src="https://learn.hashicorp.com/img/favicons/favicon-192x192.png" alt="">HashiCorp Learn</p>
+<p><img src="https://www.datocms-assets.com/2885/1622161215-learn-card-2x.jpg" alt="">
+](<a href="https://learn.hashicorp.com/tutorials/terraform/cloud-init">https://learn.hashicorp.com/tutorials/terraform/cloud-init</a>)
+The part that annoys me here, is they make you use a provider called <code>template_file</code> which is actually deprecated&hellip;</p>
+<pre><code>data &quot;template_file&quot; &quot;user_data&quot; {
+  template = file(&quot;../scripts/add-ssh-web-app.yaml&quot;)
+}
+</code></pre>
+<p>so if you get an error like below, you&rsquo;re welcome</p>
+<p><code>Provider registry.terraform.io/hashicorp/template v2.2.0 does not have a package available for your current platform, darwin_arm64.</code>
+<img src="__GHOST_URL__/content/images/2022/03/image-1.png" alt="">
+I tried to run terraform in a docker container forcing amd64 (as I am on an M1 mac) - No luck :(</p>
+<p>The resolution for this one was to use a new provider, called <code>cloudinit_config</code> which looks a little something like this</p>
+<pre><code>data &quot;cloudinit_config&quot; &quot;user_data&quot; {
+  gzip = false
+  base64_encode = false
+  part {
+    content_type = &quot;text/x-shellscript&quot;
+    content = &quot;baz&quot;
+    filename = file(&quot;./cloudinit.cfg&quot;)
+  }
+}
+</code></pre>
+<p>But for the life of me, could not get this working. I was passing it to the instance rendered.</p>
+<p>I&rsquo;d had enough and thought, well fuck this noise we can probably pass the file straight in&hellip; Surely?</p>
+<pre><code>  user_data = file(&quot;./cloudinit.cfg&quot;)
+</code></pre>
+<p>This should work?</p>
+<p>So I&rsquo;ve tried it with the classic <code>hello world</code> and it seemed to work.
+<img src="__GHOST_URL__/content/images/2022/03/image-2.png" alt="">
+Below is what <code>./cloudinit.cfg</code> looks like, if you&rsquo;re wondering</p>
+<pre><code>#cloud-config
+
+runcmd:
+ - 'echo ============ Hello World ================'
+</code></pre>
+<hr>
+<h2 id="now-on-to-the-actual-issue-at-hand---network-interfaces">Now on to the actual issue at hand - Network Interfaces</h2>
+<p>Because I am lazy I wont be doing a nifty <code>for</code> loop, just going with a basic file that the instance calls.</p>
+<p>Below is that file:</p>
+<pre><code>#cloud-config
+runcmd:
+  - 'echo ============ Hello World ================'
+network:
+  ethernets:
+    ens3:
+      dhcp4: true
+    ens4:
+      dhcp4: true
+  version: 2
+</code></pre>
+<p>I&rsquo;ve saved this file as <code>netplan.cfg</code> and kept the hello world, as this outputs to logs so hopefully, we can see if it actually applies or no!
+<img src="__GHOST_URL__/content/images/2022/03/image-3.png" alt="">
+It ran hello world, but the network interface <code>ens4</code> isnt enabled and getting DHCP</p>
+<p>:(</p>
+<p>We can re-load our cloud init, whist logged in using</p>
+<pre><code>cloud-init -d init
+</code></pre>
+<p>Here&rsquo;s the error:
+<img src="__GHOST_URL__/content/images/2022/03/image-4.png" alt="">
+Looks like we need to fix the file</p>
+<pre><code>#cloud-config
+write_files:
+ - path: /etc/cloud/cloud.cfg.d/99-custom-networking.cfg
+        permissions: '0644'
+        content: |
+        network: {config: disabled}
+
+ - path: /etc/netplan/my-new-config.yaml
+   permissions: '0644'
+   content: |
+          network:
+              version: 2
+              ethernets:
+                  ens3:
+                      dhcp4: true
+                  ens4:
+                      dhcp4: true
+runcmd:
+        - rm /etc/netplan/50-cloud-init.yaml
+        - netplan generate
+        - netplan apply
+        - echo &quot;=== hello === &quot;
+</code></pre>
+<p>Becomes</p>
+<pre><code>#cloud-config
+write_files:
+  - encoding: b64
+    content: bmV0d29yazoge2NvbmZpZzogZGlzYWJsZWR9Cg==
+    owner: root:root
+    path: /etc/cloud/cloud.cfg.d/99-custom-networking.cfg
+    permissions: '0644'
+
+  - encoding: b64
+    content: bmV0d29yazoKICBldGhlcm5ldHM6CiAgICBlbnMzOgogICAgICBkaGNwNDogdHJ1ZQogICAgZW5zNDoKICAgICAgZGhjcDQ6IHRydWUKICB2ZXJzaW9uOiAyCg==
+    owner: root:root
+    path: /etc/netplan/my-new-config.yaml
+    permissions: '0644'
+
+
+runcmd:
+        - rm /etc/netplan/50-cloud-init.yaml
+        - netplan generate
+        - netplan apply
+        - echo &quot;=== hello === &quot;
+final_message: &quot;The system is finally up, after $UPTIME seconds&quot;
+</code></pre>
+<p>And would you look at that, it worked!
+<img src="__GHOST_URL__/content/images/2022/03/image-5.png" alt=""><img src="__GHOST_URL__/content/images/2022/03/image-6.png" alt=""></p>
+<h2 id="the-solution">The solution</h2>
+<ol>
+<li>Base 64 encode both the new netplan file, and the disable auto-gen config file</li>
+<li>Use the above file</li>
+<li>Pull the file in under <code>user_data</code></li>
+</ol>
+<p><code>netplan.yml</code></p>
+<pre><code>#cloud-config
+write_files:
+  - encoding: b64
+    content: bmV0d29yazoge2NvbmZpZzogZGlzYWJsZWR9Cg==
+    owner: root:root
+    path: /etc/cloud/cloud.cfg.d/99-custom-networking.cfg
+    permissions: '0644'
+
+  - encoding: b64
+    content: bmV0d29yazoKICBldGhlcm5ldHM6CiAgICBlbnMzOgogICAgICBkaGNwNDogdHJ1ZQogICAgZW5zNDoKICAgICAgZGhjcDQ6IHRydWUKICB2ZXJzaW9uOiAyCg==
+    owner: root:root
+    path: /etc/netplan/my-new-config.yaml
+    permissions: '0644'
+
+
+runcmd:
+        - rm /etc/netplan/50-cloud-init.yaml
+        - netplan generate
+        - netplan apply
+        - echo &quot;=== hello === &quot;
+final_message: &quot;The system is finally up, after $UPTIME seconds&quot;
+</code></pre>
+<p><code>instance.tf</code></p>
+<pre><code>resource &quot;openstack_compute_instance_v2&quot; &quot;zero-access&quot; {
+  name = &quot;zero-access&quot;
+  flavor_name = &quot;s1-2&quot;
+  key_pair = openstack_compute_keypair_v2.key.name
+  image_name = &quot;Ubuntu 18.04&quot;
+  security_groups = [ &quot;default&quot; ]
+  user_data = file(&quot;./netplan.yml&quot;)
+  network {
+    name = &quot;Ext-Net&quot;
+  }
+  network {
+    name = openstack_networking_network_v2.vpc.name
+
+  }
+</code></pre>
+<hr>
+<p>This post is more of a brain dump than anything, hoping to help those with the issue I had:</p>
+<h2 id="multiple-interfaces-on-ovh-not-getting-dhcp">multiple interfaces on ovh not getting dhcp</h2>
+<h2 id="how-to-use-cloud-init-on-ovh-with-terraform">how to use cloud-init on ovh with terraform</h2>
+<h2 id="how-to-use-cloud-init-with-openstace">how to use cloud-init with openstace</h2>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/shrink-ebs-aws/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Decrease EBS volume (AWS)</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>It&rsquo;s rare for me to blog about AWS considering I am mainly GCP focused, but this stumped me enough to the point I think it can be of use.</p>
+<p>Let&rsquo;s start</p>
+<hr>
+<p>AWS doesn&rsquo;t allow you to shrink an EBS volume, so our only way to do it is to create a new volume, move everything over then remap it.</p>
+<h3 id="getting-started">Getting started</h3>
+<p>We will assume:</p>
+<ol>
+<li>An instance running us us-east-1e</li>
+<li>300GB EBS volume named <code>old</code></li>
+<li>We want to create a new one of 100gb (we will call it <code>new-vol</code>)</li>
+</ol>
+<p>We need to shutdown the instance to prevent issues and inconsistencies.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 3 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/cloud-init-that-works/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Cloud-init that works</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>For some reason this single task has stumped me for around 3 years till I had to basically wipe my home lab as I messed up some hard drive install procedure half juggling act.</p>
+<p>I will be writing these instructions for Xen Orchestra but almost 99% of this can be transfered to other virtualization servers.</p>
+<p>First we will need to start with creating a VM on your server.</p>
+<p>I am chosing Ubuntu 18.04 as this is the current Ubuntu image I trust. generally I will move on to the latest LTS release after it&rsquo;s been out for a year.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 4 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

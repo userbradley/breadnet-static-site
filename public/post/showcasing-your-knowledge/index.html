@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Showcasing your knowledge · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Showcasing your knowledge</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Showcasing your knowledge</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 4 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>Being in IT is&hellip; <em>fun</em></p>
+<p>As with any job, you naturally move around and, if you&rsquo;re in IT, the second you open Linkedin to recruiters, 10,000 recruiters will blow your inbox up trying to get you. And boy, do they harass you! Wow.</p>
+<p>See, I&rsquo;ve had my fare share of interviews, and I know what I want (cough slack cough jira), and don&rsquo;t want - Windows.</p>
+<p>So in order to speed up the process of recruiters talking to me, and also to have a place to showcase my work, I decided it was a cool idea to make a <code>readme.md</code> file almost, detailing what I do, past work and past projects.</p>
+<p>Enter: <a href="__GHOST_URL__/showcasing-your-knowledge/bradley.breadnet.co.uk">bradley.breadnet.co.uk</a></p>
+<p>Now this site looks pretty simple, and really, it is. But the magic is how it&rsquo;s come to exist.</p>
+<p>(recruiters get out your bingo sheet)</p>
+<hr>
+<h2 id="mkdocs">Mkdocs</h2>
+<p>Mkdocs is the platform on which the site is built, this is a project based documentation platform that renders <code>md</code> files in to a static site.
+<img src="__GHOST_URL__/content/images/2021/12/image-3.png" alt="">
+I decided to go with this over something like Hugo was simple: I find Hugo overly complicated for what it is, and there is a lack of flexibility if you don&rsquo;t know a reasonable amount of WebDev, then it&rsquo;s just lost
+<img src="__GHOST_URL__/content/images/2021/12/image-4.png" alt="">
+It&rsquo;s SUPER simple to develop with, you just write a config file and then boom bow, run <code>mkdocs serve</code> and you can see the live site</p>
+<h2 id="git">Git</h2>
+<p>Seeing as all the files are <code>.md</code>, it only makes sense to store this all in Github.</p>
+<p>Now here&rsquo;s the catch. What we&rsquo;ve done is build a Codefresh Pipeline (<a href="__GHOST_URL__/dns-terraform-cloudflare/">Same things used for terraform</a>) that on a commit, builds the site and then deploys it.</p>
+<h2 id="docker">Docker</h2>
+<p>Now we have the pipeline running, we mentioned that it &lsquo;Builds the site&rsquo; - This is managed as a docker container. This has to be the most simple docker contaier in the world&hellip;</p>
+<pre><code>FROM nginx:alpine
+COPY site/ /usr/share/nginx/html
+</code></pre>
+<p>That&rsquo;s it!</p>
+<p>This docker container is then pushed to <a href="https://cloud.google.com/container-registry/">gcr.io</a> for a later stage!</p>
+<p>We also use docker for building the site, as there is a mkdocs docker container. If you&rsquo;re new to the world of cicd, most things need to run as a container in order to be used on a cicd pipeline!</p>
+<h2 id="terraform">Terraform</h2>
+<p>This is the &rsquo;later stage&rsquo;
+To be able to host this site as cheaply as possible, I&rsquo;ve selected to run on <a href="https://cloud.google.com/container-registry/">google cloud run</a>, which is a super pain free means to running simple containers in production, and scale automatically.</p>
+<p>Terraform uses the git commit ID as the container ID, and variables for what to deploy. This is actually pulled from the Codefresh Pipeline</p>
+<h2 id="cicd">CICD</h2>
+<p>Here&rsquo;s the coolest part I think!</p>
+<p>The pipeline looks like below
+<img src="__GHOST_URL__/content/images/2021/12/image-5.png" alt="">
+Mkdocs build, docker build and deploy are the coolest parts.</p>
+<p>mkdocs build connects to the local volume codefresh presnets, builds the static files to a directory, then the docker build pulls these files over, build the container and automatically pushes to GCR!</p>
+<p>Finally the deploy steps are as you&rsquo;d expect. The first one deploys to terraform, then the second one copies the files to my webserver where you&rsquo;ve probably visited at some point!</p>
+<hr>
+<h2 id="the-coolest-part">The coolest part?</h2>
+<p>Everything is managed as code.</p>
+<p>This includes but not limited to:</p>
+<ul>
+<li>GCP API Enablement</li>
+<li>GCP Service account creation</li>
+<li>DNS Config</li>
+<li>Site</li>
+<li>Docker Containers</li>
+<li>Pipeline setup</li>
+</ul>
+<hr>
+<p>Closing notes:</p>
+<p>The best way that I&rsquo;ve seen to present your knowledge to recruiters as well as companies etc, is a site! I&rsquo;ve got more comments about my site and my portfolio than my CV, as you&rsquo;re boxed in to this one page paradox where you&rsquo;re expected to **only **fill out a page, and miss things!</p>
+<p>A good example of this, is the skills matrix on the home page, this shows anyone what I know, and how well!
+<img src="__GHOST_URL__/content/images/2021/12/image-6.png" alt="">
+This is also a really good project to learn cloudrun, terraform and CICD - And the best part is you have an actual end product that you can use, and present to people! If you want to have a crack at it, you can find a &ldquo;Homework&rdquo; assignment at the link below
+[</p>
+<p>GitHub - bysd-project/portfolio-assignment</p>
+<p>Contribute to bysd-project/portfolio-assignment development by creating an account on GitHub.</p>
+<p><img src="https://github.githubassets.com/favicons/favicon.svg" alt="">GitHubsd-project</p>
+<h2 id="heading"><img src="https://opengraph.githubassets.com/8f004369117ca694b11fe0ba282659c57304c8e7c266273442ee7a8d6acf4f9a/bysd-project/portfolio-assignment" alt="">
+](<a href="https://github.com/bysd-project/portfolio-assignment">https://github.com/bysd-project/portfolio-assignment</a>)</h2>
+<p>So I&rsquo;ve added the ability to subscribe to my site&hellip; I know no one will, but I thought I would try and let yall enjoy it? It will just be a link to the latest post!</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/ssh-client-setup-using-keys/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">SSH Client setup using keys</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><h4 id="the-following-steps-will-setup-your-ssh-keypairs-on-your-local-machine-copy-the-public-key-to-your-server-and-configure-your-ssh-client-to-use-a-specific-private-key-with-a-server-alias">The following steps will setup your ssh keypairs on your local machine, copy the public key to your server, and configure your ssh client to use a specific private key with a server alias.</h4>
+<hr>
+<p>First, generate your keypair, I generally name the keys with my username-service, username-hostname, or username-device, sometimes even a combination of the three.</p>
+<p>To generate keys for a new server at securedomain.com</p>
+<p><code>ssh-keygen -t rsa -b 4096 -C 'email@securedomain.com'</code></p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 3 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/self-hosters-guide-to-the-cloud/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Self hosters guide to the cloud</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><ul>
+<li>services to offer</li>
+<li>how it&rsquo;s different</li>
+<li>ways to manage it</li>
+<li>best practices</li>
+<li>how to make the most of it</li>
+<li>companies I suggest</li>
+</ul>
+<p>I&rsquo;ll be honest with eneryone here, I never thought I would ever write something like this.</p>
+<p>The time has come, I am moving my servers to the cloud.</p>
+<p>I still am a selfhoster as I rely on my own knowledge and experience to operate all my services and ensure that they are online for the people who have come to rely on them.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 6 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

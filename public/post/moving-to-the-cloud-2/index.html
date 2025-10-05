@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Moving to the cloud: Infrastructure · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Moving to the cloud: Infrastructure</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Moving to the cloud: Infrastructure</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 10 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>Welcome back!</p>
+<p>If you&rsquo;re not seen it, I suggest you have a read of:
+[</p>
+<p>breadNET Cloud Migration</p>
+<p>How did I move all my servers to the cloud? Well - Ansible, automation and CI/CD!</p>
+<p><img src="https://breadnet.co.uk/favicon.png" alt="">breadNETBradley Stannard</p>
+<p><img src="https://images.unsplash.com/photo-1560182413-53772f3d7134?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="">
+](<strong>GHOST_URL</strong>/cloud-migration-part-1/)
+In this installment of &ldquo;Something I did at 4am that really should have been done during the day&rdquo; we will be looking at the infrastructure that will be powering my internal services.</p>
+<p>I had a lot of issues during this, but let&rsquo;s take a look at the code first.
+[</p>
+<p>terraform / breadNET OVH</p>
+<p>The OVH terraform for breadNET cloud servers</p>
+<p><img src="https://gitlab.breadnet.co.uk/assets/touch-icon-ipad-retina-8ebe416f5313483d9c1bc772b5bbe03ecad52a54eba443e5215a22caed2a16a2.png" alt="">GitLab</p>
+<p><img src="http://gitlab.breadnet.co.uk/assets/gitlab_logo-7ae504fe4f68fdebb3c2034e36621930cd36ea87924c11ff65dbcb8ed50dca58.png" alt="">
+](<a href="https://gitlab.breadnet.co.uk/terraform/breadnet-ovh">https://gitlab.breadnet.co.uk/terraform/breadnet-ovh</a>)
+I host all my code on Gitlab, allows me more control and able to play with CI at some point.</p>
+<p>I have decided that for this deployment that it&rsquo;s best to use a IaC (Infrastructure as code) approach to setting up and provisioning the instances.</p>
+<p>Probably wondering why?</p>
+<p>It seems like a long process at the time, but should OVH decided they want to burn down London, I can just add a variable in to the code for a different region, apply and restore from backups. Also, it allows for a single source of truth and being in git, better control of changes. Eventually I will move this to a pipeline on merge to master so I don&rsquo;t have to do any terraform applies my self!</p>
+<p>Lucky for me most of my applications (Barring Jira and Jellyfin) are quite lightweight so don&rsquo;t require a lot of compute resources. This being said I have still built this around the ability to expand my server needs as time progresses.</p>
+<hr>
+<h1 id="changes">changes</h1>
+<p>Now, about that last comment from the previous post about changing up a lot of things&hellip;
+[</p>
+<p>[BCM-2] List apps that need to be moved - breadNET Jira</p>
+<p><img src="https://jira.breadnet.co.uk/s/q6useh/814001/75e65367690ac553d207206292c2b417/_/jira-favicon-hires.png" alt="">JIRA</p>
+<p><img src="https://jira.breadnet.co.uk/secure/projectavatar?avatarId=10324" alt="">
+](<a href="https://jira.breadnet.co.uk/browse/BCM-2">https://jira.breadnet.co.uk/browse/BCM-2</a>)
+Last time we looked at the services I plan to migrate, we had a lot more.</p>
+<p>Since I wrote that post I have since moved out of my parents house, and have given them a deadline of end of Q2 to have the servers shutdown. Whilst this is quite a sad thing to do, once I am a house owner and chase all the promotions I can, I have plans to run my own local cloud. I would probably go down the Colocation route with something like Openstack as this would make moving my pre-existing infrastructure over quite easy as I am writing modules for Openstack.</p>
+<p>That being said, I have taken a look at the services I use day to day and have come to the conclusion the only services I **need **and rely on are:</p>
+<ul>
+<li>Passbolt</li>
+<li>Jira</li>
+<li>Jellyfin</li>
+<li>Gitlab</li>
+<li>Unifi</li>
+</ul>
+<p>Heres where things get fun.</p>
+<p>Jira suggests a minimum of 8gb worth of ram for running the instances and Jellyfin can run on a pi with direct streaming. Nice.</p>
+<p>It would seem like I will need to migrate Jira to the atlassian cloud offering, but plan on putting this off for as long as possible. I may see if I can just run a small computer at my parents for this. Still - End goal is to have it migrated.</p>
+<h1 id="the-why">the why</h1>
+<p>You&rsquo;re probably thinking, &ldquo;Why actually migrate?&rdquo;
+Well, running 4 pieces of equipment at my parents house when I am not paying for connections or power or space is a little unfair. I would move the server to where I live now, but we don&rsquo;t have a garage and nor the stable internet connection, blame Virgin Media and their <a href="https://www.ispreview.co.uk/talk/threads/virgin-media-business-500-35-voom-13-static-ips.37005/">shambolic implementation  of how to handle Static IP address&rsquo; </a></p>
+<p>Basically the way it works is the Virgin media router connects to their network, then you establish a GRE connection to  a virgin media data centre in one of the following: Birmingham/Leeds/Cambridge/Reading (according to our IP location) where traffic then flows to/from.</p>
+<p>Now this is fine, but it adds an additional 30ms of latency on to ANYTHING, and really breaks things like Cloudflare DNS, Google DNS and anything that uses an anycast IP address as instead of connecting to the closest server geographically and per ping, we connect to stuff up in Birmingham</p>
+<pre><code>traceroute to 1.1.1.1 (1.1.1.1), 64 hops max, 52 byte packets
+ 1  192.168.0.1 (192.168.0.1)  4.404 ms  2.788 ms  2.798 ms
+ 2  * * *
+ 3  brhm-core-2b-et-315-0.network.virginmedia.net (81.110.128.5)  19.415 ms  18.775 ms  18.458 ms
+ 4  * * *
+ 5  * * *
+ 6  tcma-ic-2-ae9-0.network.virginmedia.net (62.253.174.178)  20.490 ms  20.312 ms  17.615 ms
+ 7  162.158.32.254 (162.158.32.254)  32.277 ms  53.136 ms  38.476 ms
+ 8  162.158.32.9 (162.158.32.9)  31.605 ms  32.833 ms  35.764 ms
+ 9  one.one.one.one (1.1.1.1)  31.442 ms  31.381 ms  33.273 ms
+</code></pre>
+<p>Any way.</p>
+<p>Let&rsquo;s look at the code.</p>
+<p>I have opted to go with a minimum of 3 servers, 1 server will be a load balancer and reverse proxy, then 2 application servers.
+Going this route allows me to terminate SSL on one instance, and firewall things off on one instance, then the 2 back end instances don&rsquo;t need to be messed with as far as installing additional software goes. It also makes backups a lot easier (we will cover this in a second)</p>
+<p>I don&rsquo;t want to go in to the nitty gritty details too much as I want to do my best to do a little <a href="https://danielmiessler.com/study/security-by-obscurity/">&ldquo;Security through obscurity&rdquo;</a> and clean opsec practices.</p>
+<p>I am going to be identifying what the best reverse proxy is to run:</p>
+<ul>
+<li>HaProxy</li>
+<li>Nginx</li>
+<li>Varnish Proxy
+This is a POS as it doesn&rsquo;t do SSL</li>
+</ul>
+<p>So if we&rsquo;re being honest, the pick is between:</p>
+<ul>
+<li>HAProxy</li>
+<li>Nginx</li>
+</ul>
+<p>For the time being, I will roll Nginx as it&rsquo;s something I have been using since I (about to annoy a lot of old school fold) discovered apache2 isn&rsquo;t cool anymore.</p>
+<h1 id="actually-looking-at-the-code-now">actually looking at the code now</h1>
+<p>I know, I said let&rsquo;s look at the code like 3 times now&hellip;</p>
+<p>I have decided to go down the Modules route for Terraform as this is something I need to learn for work.</p>
+<p>One snag I came across was I am creating a VPC and then connecting the instances to them via a port. For each instance I need to create a port, then link it to the instance, as well as <code>Ext-Net</code> as OVH call it.</p>
+<pre><code>resource &quot;openstack_compute_instance_v2&quot; &quot;instance&quot; {
+  name = var.name
+  flavor_name = &quot;s1-2&quot;
+  key_pair = var.key
+  image_name = &quot;Ubuntu 18.04&quot;
+  security_groups = var.sg
+  network {
+    port = openstack_networking_port_v2.internet.id
+  }
+  network {
+    port = openstack_networking_port_v2.internal.id
+  }
+}
+
+resource &quot;openstack_networking_port_v2&quot; &quot;internal&quot; {
+  name           = &quot;${var.name}-backend&quot;
+  network_id     = var.netid
+  admin_state_up = &quot;true&quot;
+
+  fixed_ip {
+    subnet_id  = var.subid
+    ip_address = var.ip
+  }
+}
+
+resource &quot;openstack_networking_port_v2&quot; &quot;internet&quot; {
+  name           = &quot;${var.name}-ext-net&quot;
+  network_id     = &quot;6011fbc9-4cbf-46a4-8452-6890a340b60b&quot;
+  admin_state_up = &quot;true&quot;
+}
+</code></pre>
+<p>[</p>
+<p>Files · master · terraform / modules / ovh / Instance Ports</p>
+<p>Instance with VPC ports</p>
+<p><img src="https://gitlab.breadnet.co.uk/assets/touch-icon-ipad-retina-8ebe416f5313483d9c1bc772b5bbe03ecad52a54eba443e5215a22caed2a16a2.png" alt="">GitLab</p>
+<p><img src="http://gitlab.breadnet.co.uk/assets/gitlab_logo-7ae504fe4f68fdebb3c2034e36621930cd36ea87924c11ff65dbcb8ed50dca58.png" alt="">
+](<a href="https://gitlab.breadnet.co.uk/terraform/modules/ovh/instance-ports/-/tree/master">https://gitlab.breadnet.co.uk/terraform/modules/ovh/instance-ports/-/tree/master</a>)
+By slapping the instance creation in to a module, I dont have to create a port block each time I create an instance.</p>
+<p>Now it looks like the below to create a new instance:</p>
+<pre><code>module &quot;lb-rp&quot; {
+  source = &quot;git::https://gitlab.breadnet.co.uk/terraform/modules/ovh/instance-ports.git&quot;
+  ip = &quot;172.16.18.10&quot;
+  key = openstack_compute_keypair_v2.computer.name
+  name = &quot;lon-lb-rp&quot;
+  netid = module.vpc.network_id
+  sg = [
+    openstack_compute_secgroup_v2.ssh.id,
+    openstack_compute_secgroup_v2.icmp.id,
+    openstack_compute_secgroup_v2.web.id
+  ]
+  subid = module.vpc.subnet_id
+}
+</code></pre>
+<p>Let&rsquo;s break this down as I know you care:</p>
+<pre><code>module &quot;lb-rp&quot;{
+source = &quot;git::https://gitlab.breadnet.co.uk/terraform/modules/ovh/instance-ports.git&quot;
+# code goes here
+}
+</code></pre>
+<p>Defines the module
+Here we are defining the module, and where it can be found. Originally I was working with the modules in file, but towards the end I plan to use these modules often, so I moved them to git.</p>
+<pre><code>ip = &quot;172.16.18.10&quot;
+</code></pre>
+<p>This is defining the internal IP on the VPC</p>
+<pre><code> key = openstack_compute_keypair_v2.computer.name
+</code></pre>
+<p>This defines what SSH key I want to use to access the instances</p>
+<pre><code>name = &quot;lon-lb-rp&quot;
+</code></pre>
+<p>Guess what this does</p>
+<pre><code>netid = module.vpc.network_id
+</code></pre>
+<p>This one is fun, this connects the instance to the port with the correct network ID for the VPC. In order to do this, in the VPC module I had to define an output.</p>
+<pre><code>  sg = [
+    openstack_compute_secgroup_v2.ssh.id,
+    openstack_compute_secgroup_v2.icmp.id,
+    openstack_compute_secgroup_v2.web.id
+  ]
+</code></pre>
+<p>These are the firewall rules for the instance</p>
+<pre><code>subid = module.vpc.subnet_id
+</code></pre>
+<p>Much like netid, this is from the VPC module, connecting it to the VPC with the correct Subnet address.</p>
+<p>All in all, that creates an instance, attaches it to the correct VPC and subnet, gives it an IP address, gets a public IP address, allows me to ssh, ping and also inbound 80 and 443.</p>
+<p>Now this is done, we can take a look at something which is important after the recent events&hellip;
+[</p>
+<p>Millions of websites offline after fire at French cloud services firm</p>
+<p>A fire at a French cloud services firm has disrupted millions of websites, knocking out government agencies’ portals, banks, shops, news websites and taking out a chunk of the .FR web space, according to internet monitors.</p>
+<p><img src="https://www.reuters.com/article/_next/static/images/favicon-196x196-052cc719f1ac872e3544e51801338b46.png" alt="">ReutersMathieu Rosemain, Raphael Satter</p>
+<p><img src="https://static.reuters.com/resources/r/?m=02&amp;d=20210310&amp;t=2&amp;i=1554440499&amp;r=LYNXMPEH290XD&amp;w=800" alt="">
+](<a href="https://www.reuters.com/article/us-france-ovh-fire-idUSKBN2B20NU">https://www.reuters.com/article/us-france-ovh-fire-idUSKBN2B20NU</a>)
+Yeah - Big Whoops.</p>
+<h1 id="backups">backups</h1>
+<p>Now I know people see the cloud as a magical place, but bro. Really? Just because it&rsquo;s far far away from your physical control, doesn&rsquo;t mean that problems still don&rsquo;t happen.</p>
+<p>Meme time:
+<img src="__GHOST_URL__/content/images/2021/04/image.png" alt=""><img src="__GHOST_URL__/content/images/2021/04/image-1.png" alt="">
+Now we have that out of our system&hellip;</p>
+<p>Let&rsquo;s have a little think about backups.</p>
+<p>Currently I have a (lowely janky) system that works REALLY well. Let me explain:</p>
+<ul>
+<li>Backups of all servers go to backuppc (currently) running internally</li>
+<li>The server running backuppc has a cron job syncing the data to Wasabi</li>
+<li>Mail server, dbserver and reverse all backup their files to individual buckets on wasabi.</li>
+<li>VM&rsquo;s are snapshotted daily and pushed to Wasabi nightly. They are also exported to a removable harddrive for daily recovery if needed.</li>
+<li>All in all, there is about 2tb worth of data that is being shuffled around.</li>
+</ul>
+<p>Now with us moving to the cloud, we are able to use backup services built in to OVH&hellip; But after the fire, I don&rsquo;t really want to have to rely on data being stored in the same data centre to be able to spin up my resources should the place flood or some strange event happen.</p>
+<p>My plan:</p>
+<ul>
+<li>Jellyfin media is served from s3, bucket replication to RO bucket.</li>
+<li>At my current address, we have 300m down/20 up, I will purchase a raspberry Pi and run backuppc from it</li>
+<li>Backuppc on pi also has a cron job to move files to s3 bucket</li>
+<li>Servers push their files to s3</li>
+<li>Config files are all done via Ansible or Git (ci/cd)</li>
+</ul>
+<p>The whole idea around this painful process is should OVH and my house decide to show the world they vape, I have <strong>all</strong> the files on S3</p>
+<p>Should OVH and the data centre in the netherlands (where s3 is) decide they don&rsquo;t wan&rsquo;t to be a data centre and instead become a warehouse, we have the files locally.</p>
+<p>NOW - Should My house and also NL decide they <!-- raw HTML omitted --> we have the live servers, which I will snapshot and export these snapshots to my local computer. Max 30gb.</p>
+<h1 id="issues">Issues</h1>
+<p>Now the keen eyed among you who had a little scratch around Jira saw this:
+[</p>
+<p>[BCM-18] Issue log - breadNET Jira</p>
+<p><img src="https://jira.breadnet.co.uk/s/q6useh/814001/75e65367690ac553d207206292c2b417/_/jira-favicon-hires.png" alt="">JIRA</p>
+<p><img src="https://jira.breadnet.co.uk/secure/projectavatar?avatarId=10324" alt="">
+](<a href="https://jira.breadnet.co.uk/browse/BCM-18">https://jira.breadnet.co.uk/browse/BCM-18</a>)
+I kept a log of the bullshit strange issues I came across for your entertainment.</p>
+<p>let&rsquo;s get started.
+IssueDescriptionsolved?Multiple IP addressI was trying to attach internal IP address and external IP address to an instance and depeding on the order you slap them in on, one doesnt get connected.noMoving to module and IP issuesThis was sheer user error and not knowing how to then attach the Port (Which contains the IP address) to the instanceyes!Second instance failing to createThis was a stange one. I was trying to create 2 instances and use the same port as I was able to do this with the ext network. Turns out you cant actually do this so you need to create a port per instance per networkyesFirewall rules not being connectedI&rsquo;m not even sure what causes this, but just doing a terraform apply agian workseh, why not?
+Error getting openstack_networking_network_v2 16ce390d-4fa1-4767-8372-f7b243f3ac89: Get &ldquo;<a href="https://network.compute.uk1.cloud.ovh.net/v2.0/networks/16ce390d-4fa1-4767-8372-f7b243f3ac89%22">https://network.compute.uk1.cloud.ovh.net/v2.0/networks/16ce390d-4fa1-4767-8372-f7b243f3ac89&quot;</a>: OpenStack connection error, retries exhausted. Aborting. Last error was: read tcp 192.168.0.11:64516-&gt;51.75.101.108:443: read: connection reset by peer</p>
+<p>Ah this one popped up MANY times - Looks like this and it made me want to slap someone at OVH.
+<img src="__GHOST_URL__/content/images/2021/04/image-2.png" alt="">
+This is OVH being OVH. Just re-apply your terraform and you&rsquo;re good.</p>
+<p>There is one more issues I need to solve, and that is getting the instances to pick up the VPC IP address, but I think I may need to do this via Ansible or Manually.</p>
+<p>I want to avoid having to do as much as possible manually&hellip;</p>
+<p>This leads me to on to the next post where I will be discussing the Ansible behind the services I will be running, and how I plan to move all this to a CI/CD pipeline (or something like that)</p>
+<hr>
+<p>You can hire me via <a href="https://www.upwork.com/freelancers/~01c61ee9802b94133e">Upwork</a> or <a href="mailto:work@breadnet.co.uk">emailing me</a> for weekend projects!</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/moving-to-the-cloud-1/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Moving to the cloud: Intro</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>We will start this story with the facts. I am getting older, and I want to move out. As I get older, I am forced to accept more responsibilities, like paying for my own electricity.</p>
+<p>As any selfhoster will tell you, this is what bleeds their wallets dry.</p>
+<p>Moving to the cloud is not a decision I took lightly, there was alot of consideration put in to this. I was considering purchasing a newer server, probably a Dell r610 or something of that range and maxxing out the specs, but that pulls a fair bit of electricity, and where I plan to live, would also be in the same room as where I sleep. Fun</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 8 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/moving-to-ldap/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Moving to LDAP</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>I run 2 **incredibly **important pieces of software here at breadNET</p>
+<ol>
+<li>Jira (Project management tool)</li>
+<li>Bookstack (Knowledge base articles)</li>
+</ol>
+<p>The annoyance comes from having to login to them with 2 separate accounts and a lack of <a href="https://en.wikipedia.org/wiki/Multi-factor_authentication">2 factor authentication</a>.</p>
+<p>The aim of this blog post is less of a blog, and more of a How to, hence the <a href="__GHOST_URL__/tag/how-to/">How to</a> tag :)</p>
+<p>First we will look in to the platform I have decided to go with, why I chose it and what other options there are.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 5 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

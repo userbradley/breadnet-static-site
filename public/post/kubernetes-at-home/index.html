@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Kubernetes at home · breadNET</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">breadNET</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Kubernetes at home</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Kubernetes at home</h1>
+
+                
+                    <p class="post-full-custom-excerpt">Ever wondered what it&rsquo;s like running kubernetes at home? This post tries to answer that</p>
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2023-511-11">21 November 2023</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 10 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>I first started learning Kubernetes in 2021, as a Junior Systems Administrator in my bedroom in Cambridge. I&rsquo;ll be honest, I didn&rsquo;t really understand it much. What&rsquo;s a pod? Why cant I just deploy a container?</p>
+<p>Over the years, 2 of them to be exact, I have learning Kubernetes piece by peace, not really following a specific course, so if you&rsquo;re looking for course recommendations, I have none.</p>
+<p>I&rsquo;ve spent most of my Career operating and using GKE, a Kubernetes <em>flavour</em> if you will, from Google. GKE is designed to run on Google cloud, and <a href="https://issuetracker.google.com/issues/305477780">sort of</a> integrates with most of the GCP API&rsquo;s</p>
+<p>Enough about my work, you&rsquo;re here to see my Cluster at home.</p>
+<hr>
+<p>When I lived at my parents (Oh the good old days) I had a 48U rack with multiple dell servers. Due to the housing crisis affecting the UK, I cant afford to buy a house, let alone rent a place that isn&rsquo;t classified as a *<a href="https://www.redbrick.sg/blog/shoebox-apartments-is-it-worth-the-investment/#:~:text=Shoebox%20apartments%2C%20also%20known%20as%20%E2%80%98compact%20units%E2%80%99%20are%20typically%20defined%20as%20an%20apartment%20of%20500%20square%20feet%20or%20less%20and%20designed%20for%20a%20single%20occupant">shoe box</a> - *As such, some design considerations had to be made.</p>
+<h2 id="design-considerations">Design Considerations</h2>
+<ul>
+<li>Needs to not be a server chassis</li>
+<li>Needs to be <em>light</em> on power (<a href="https://www.ons.gov.uk/economy/inflationandpriceindices/articles/costoflivinginsights/energy">Energy Crisis</a>)</li>
+<li>Needs to be somewhat cheap (<a href="https://en.wikipedia.org/wiki/2021%E2%80%93present_United_Kingdom_cost-of-living_crisis">Cost of living Crisis</a>)</li>
+<li>Needs to be small (read: Shoebox apartment)</li>
+</ul>
+<p>All in all, I decided the best way to build the cluster was to use a mix of things I owned, and then buy things I did not.</p>
+<ul>
+<li>4 Dell 3040 SFF pc&rsquo;s with a minimum of 8gb ram and 128gb SSD (Purchased)</li>
+<li>Ubiquiti EdgeSwitch 8 XP (Owned already)</li>
+<li>Juniper SRX-300 (Purchased)</li>
+<li>Load of ethernet cables (Made them my self)</li>
+</ul>
+<p>I am currently learning the Juniper CLI with the end goal of replacing my ISP&rsquo;s router with the Juniper and having vlans etc.</p>
+<h2 id="kubernetes-flavor-of-choice">Kubernetes flavor of choice</h2>
+<p>There are lots of distributions of kubernetes you can run, to list a few:</p>
+<ul>
+<li>Anthos</li>
+<li>Raw Kubernetes</li>
+<li>Rancher Kubernetes Engine</li>
+<li>K3s</li>
+<li>Microk8s</li>
+</ul>
+<p>I decided that running full blown vanilla Kubernetes required too many moving parts, so I settled on K3s</p>
+<blockquote>
+<p>K3s is packaged as a single &lt;70MB binary that reduces the dependencies and steps needed to install, run and auto-update a production Kubernetes cluster</p></blockquote>
+<p>Due to it being so small, it makes installing the cluster <strong>super simple</strong> and not very network intensive</p>
+<p>I wont go in to the install process here, but below are some useful links that I suggest following</p>
+<ul>
+<li><a href="https://docs.k3s.io/quick-start">https://docs.k3s.io/quick-start</a></li>
+<li><a href="https://www.youtube.com/watch?v=UoOcLXfa8EU">https://www.youtube.com/watch?v=UoOcLXfa8EU</a></li>
+</ul>
+<p>You can get away with a single node, but if you plan to run this in <em>production</em> (ctx: production at home) then I recommend 3 nodes.</p>
+<p>This is the design for the network at a high level.
+<img src="__GHOST_URL__/content/images/2023/11/cluster.png" alt=""></p>
+<h2 id="design-specifics">Design Specifics</h2>
+<p>My cluster is made up of 3 nodes, and a <code>persistence</code> server.</p>
+<h3 id="nodes">nodes</h3>
+<p>I have one <code>Control plane</code> node, which is <code>k3s-01</code>, this runs <code>etcd</code>, <code>control-plane</code> and <code>master</code></p>
+<p>Each node runs <code>Ubuntu 22.04.3 LTS</code>, and because I am an idiot and didnt read the listing on Ebay, the nodes are a mix of i3 and i5 processors, but I honestly have not noticed a difference.</p>
+<pre><code>➜ kubectl get nodes              
+NAME     STATUS   ROLES                       AGE     VERSION
+k3s-01   Ready    control-plane,etcd,master   23d     v1.27.6+k3s1
+k3s-02   Ready    &lt;none&gt;                      23d     v1.27.6+k3s1
+k3s-03   Ready    &lt;none&gt;                      5d21h   v1.27.7+k3s2
+</code></pre>
+<h3 id="networking">Networking</h3>
+<p>I have carved out the below IP ranges for the Cluster</p>
+<p>These IP ranges are used for when the cluster exposes an IP address via either <code>type: LoadBalancer</code> or <code>type: Service</code>. Something to note is I dont use <code>type: NodePort</code> as this is just a pain.
+IP rangeUse<code>172.16.2.0/28</code>Node IP address<code>172.16.0.0/25</code>Services</p>
+<h2 id="what-im-running">What I&rsquo;m running</h2>
+<p>So with Kubernetes, there&rsquo;s a few ways to manage applications.</p>
+<p>You can use Raw manifest files, and apply them with <code>kubectl apply -f &lt;name&gt;.yaml</code> or you can use Helm charts, which are packaged <em>applications</em> and you use the helm CLI to install them.</p>
+<p>There are of course other systems, but I primerly use the above.</p>
+<p>Then there&rsquo;s one level up, which consumes the manifests (be them helm or raw) called GitOps. I&rsquo;ve installed a system called Flux which enables you to declare in a girt repo how you want things to look, then Flux will reconcile everything and deploy the changes you made in the Git repo.</p>
+<h2 id="things-installed">Things installed</h2>
+<p>In the cluster I&rsquo;ve got the below installed</p>
+<h4 id="cloudflared">Cloudflared</h4>
+<p>Cloudflared is a system from Cloudflare which allows you to use their tunnels system to send traffic back in to your network without having to port forward and open up your network.</p>
+<p>I&rsquo;ve custom built a helm chart that sets up a <code>ExternalName</code> service in the cloudflared namespace, which then points to an actual service name in the cluster.</p>
+<p>This does seem like an anti-pattern, but it allows you to simply go <code>kubectl get svc</code> in the <code>clouflared</code> namespac and see what&rsquo;s being <em>exposed</em></p>
+<p>This means the <code>values.yaml</code> file looks like the below</p>
+<pre><code>services:
+  http:
+    - domain: example.breadinfra.net
+      svc: podinfo
+      namespace: podinfo
+</code></pre>
+<p>This is then fronted by a Terraform module pre-configured to create DNS records with the tunnel ID.</p>
+<p>I&rsquo;ve put together some documentation on a stripped down version, but if you are interested in the helm chart, please get in contact and I am happy to opensource it
+[</p>
+<p>Cloudflare Tunnels on k3s - breadNET Documentation</p>
+<p>breadNET Documentation</p>
+<p><img src="https://documentation.breadnet.co.uk/favicon.ico" alt="">logo</p>
+<p><img src="https://documentation.breadnet.co.uk/assets/images/social/kubernetes/k3s/cloudflare-tunnels-on-k3s.png" alt="">
+](<a href="https://documentation.breadnet.co.uk/kubernetes/k3s/cloudflare-tunnels-on-k3s/?utm_source&amp;#x3D;breadnet&amp;amp;utm_medium&amp;#x3D;blog&amp;amp;utm_campaign&amp;#x3D;kubernetes%20at%20home">https://documentation.breadnet.co.uk/kubernetes/k3s/cloudflare-tunnels-on-k3s/?utm_source&amp;#x3D;breadnet&amp;amp;utm_medium&amp;#x3D;blog&amp;amp;utm_campaign&amp;#x3D;kubernetes%20at%20home</a>)
+This is managed via Flux</p>
+<h4 id="pihole">PiHole</h4>
+<p>Pihole is an adblocking and DNS server that lots of people in the self hosting community are using. I&rsquo;ve deployed this in to my cluster via Flux. This gets a Service address of <code>172.16.0.1</code> which is then configured via the router to be handed out to all clients to use for DNS resolution</p>
+<pre><code>➜ k get svc    
+NAME             TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+pihole-dhcp      LoadBalancer   10.43.212.91    172.16.0.1    67:32594/UDP                 9d
+pihole-dns-tcp   LoadBalancer   10.43.51.136    172.16.0.1    53:30410/TCP                 9d
+pihole-dns-udp   LoadBalancer   10.43.123.66    172.16.0.1    53:31204/UDP                 9d
+pihole-web       LoadBalancer   10.43.164.153   172.16.0.1    80:31832/TCP,443:30309/TCP   9d
+</code></pre>
+<p>This is managed by Flux, so when I get a new Block list, I update it in Git and the container rolls</p>
+<h3 id="metallb">Metallb</h3>
+<p>Metallb is a load balancer (I suppose) system that is often deployed to on-premise Kubernetes clusters that acts as a load balancer</p>
+<blockquote>
+<p>MetalLB is a load-balancer implementation for bare metal <a href="https://kubernetes.io/">Kubernetes</a> clusters, using standard routing protocols.</p></blockquote>
+<p>This is used to allow us to assign IP address to Services and service type Load balancers.</p>
+<p>Eventually I plan to configure it to use BGP to get IP address, but I dont know Junos very well or BGP</p>
+<h3 id="nginx-ingress-controller">Nginx Ingress Controller</h3>
+<p>Nginx ingress controller is a <em>flavour</em> of NGINX (the popular reverse proxy and web server) designed specifically for Kubernetes. This is used for <code>kind: Ingress</code> objects where you can configure Host paths, host names and SSL.</p>
+<p>This is managed with Flux</p>
+<h3 id="snipe-it">Snipe IT</h3>
+<p>SnipeIT is a system designed to manage IT inventory, more so tracking the physical Assets like their purchase cost, warranty, Invoices, who the device is assigned to, how much it deprecates.</p>
+<p>I&rsquo;ve written a custom helm chart for this.</p>
+<p>This is managed with flux</p>
+<h3 id="status-page">Status page</h3>
+<p>Status page is using <a href="https://gatus.io">gatus.io</a> in a self built helm chart to host an internal status page with (currently) 3 resources. Eventually I plan to make this public behind Cloudflare Tunnels, but I need to fix the helm chart.</p>
+<p>One thing is this is pulling an AWS (Hosting the status page on your infrastructure) - so for the time being this will only serve as my status page for in cluster things
+<img src="__GHOST_URL__/content/images/2023/11/image.png" alt="">
+This is managed with Flux</p>
+<h3 id="grocy">Grocy</h3>
+<p>Grocy is a PHP app designed to help you manage your kitchen inventory. I&rsquo;ve run this off and on for quite a while. The main thing that&rsquo;s stopping me from really commiting to it is the Developer&rsquo;s hate towards an external database. Meaning I have to persist the sqlite database on the cluster, and we all know that persistence is Kubernetes gets painful.</p>
+<p>This seaways very nicely on to</p>
+<h2 id="the-persistence-server">The Persistence server</h2>
+<p>This server is my hacky solution to dealing with running persistent workloads in Kubernetes.</p>
+<p>The server is an Intel i5 with 8gb ram and a 128GB ssd.</p>
+<p>I&rsquo;ve installed the below services dirctly on to the node, as opposed to being in podman</p>
+<ul>
+<li>MariaDB</li>
+<li>NFS</li>
+</ul>
+<p>The NFS export is setup that it can be used as persistent Volumes in the cluster for things like Media servers (Coming soon) and Image uploads to applications (Snipe, Grocy etc)</p>
+<p>I will need to look at installing some other things like:</p>
+<ul>
+<li>MongoDB</li>
+<li>Postgresql</li>
+</ul>
+<h3 id="where-are-the-helm-charts-stored">Where are the helm charts stored</h3>
+<p>I have a <a href="taskfile.dev/">Taskfile</a> in the monorepo that packages the helm chart as an OCI artifact and pushes it to Google Artifact Registry.</p>
+<p>In the cluster, I have then configured flux to use a custom built credential helper
+[</p>
+<p>Authenticate flux with Google Artifact Registry - breadNET Documentation</p>
+<p>breadNET Documentation</p>
+<p><img src="https://documentation.breadnet.co.uk/favicon.ico" alt="">logo</p>
+<p><img src="https://documentation.breadnet.co.uk/assets/images/social/kubernetes/flux/flux-artifact-registry-google-auth.png" alt="">
+](<a href="https://documentation.breadnet.co.uk/kubernetes/flux/flux-artifact-registry-google-auth/">https://documentation.breadnet.co.uk/kubernetes/flux/flux-artifact-registry-google-auth/</a>)</p>
+<h2 id="what-the-flux">What the flux</h2>
+<p>I&rsquo;ve mentioned that I use Flux to manage almost all the deployments, but what actually is flux.</p>
+<p>Flux is a GitOps toolkit <a href="https://pkg.go.dev/github.com/fluxcd/toolkit/cmd/gotk">(GOTK)</a>  from Weave Works, it allows you to declarativly descibe the state of the cluster and then sync that declaration to the cluster. Sure, a simple solution would be a cron job doing <code>git clone &amp;&amp; kubectl apply -f **.yaml*</code>but this allows for logging and structured config.</p>
+<p>This is a screenshot from the repo where I configure the flux system, and the deployments
+<img src="__GHOST_URL__/content/images/2023/11/image-1.png" alt="">
+<code>flux-system</code> - this contains all the Flux config. It&rsquo;s a brain bender, but flux manages it&rsquo;s self via it&rsquo;s own repo.</p>
+<p><code>HelmRelease</code> - Deploys the helm chars from the HelmRepositories I specify. Here you can also pass the values as well as what namespace and version of the chart to use</p>
+<p><code>HelmRepository</code> - This is where we tell flux where to get the helm charts we want to use later. Flux supports Cloud storage buckets, OCI (I use this one personally) and HTTPS endpoints, provided there is an <code>index.yaml</code> file</p>
+<p><code>namespaces</code> - Defines the namespaces in the cluster.</p>
+<p>To create a new resource, you just commit a file in the <code>k3s/*</code> directory and flux will build it. At work I have built a lot more complex solution for this, but at home I don&rsquo;t need something super complicated.</p>
+<h2 id="things-i-would-do-differently">Things I would do differently</h2>
+<p>So far I would stick with this design. It&rsquo;s quite clean and for me, makes sense. Everything is in Git, it hardly uses much power, and it&rsquo;s HA. What more could you want from a small cluster.</p>
+<p>If I could change something, it would be where it&rsquo;s physically positioned. On top of the water heater is not amazing</p>
+<h2 id="talk-is-cheap-show-me-the-cluster">Talk is cheap, show me the cluster</h2>
+<p>Something to note is, this is a small cluster. It runs a few services and nothing more, nothing less. I am not running HPC here.</p>
+<p>If you are worried about the heat the water heater puts off, dont be. That gap between the nodes is enough actually to keep them at a happy enough temperature</p>
+<pre><code>root@k3s-01:~# sensors
+coretemp-isa-0000
+Adapter: ISA adapter
+Package id 0:  +43.0°C  (high = +84.0°C, crit = +100.0°C)
+Core 0:        +41.0°C  (high = +84.0°C, crit = +100.0°C)
+Core 1:        +40.0°C  (high = +84.0°C, crit = +100.0°C)
+
+acpitz-acpi-0
+Adapter: ACPI interface
+temp1:        +27.8°C  (crit = +119.0°C)
+temp2:        +29.8°C  (crit = +119.0°C)
+
+pch_skylake-virtual-0
+Adapter: Virtual device
+temp1:        +53.5°C  
+
+root@k3s-01:~# 
+</code></pre>
+<p>If these look a little high to you, something to note is these are <em>consumer</em> devices, and designed that they can be given to the average joe who will put the computer down the back of their desk with -1 airflow and 200 cubic meters of dust flakes.</p>
+<p>Now I&rsquo;ve finished justifying the decision, let me show you the cluster</p>
+<h3 id="the-cluster-and-its-supporting-infra">The cluster and it&rsquo;s supporting infra</h3>
+<p><img src="__GHOST_URL__/content/images/2023/11/cluster.jpg" alt="">
+Some more justifying the terrible placement</p>
+<ul>
+<li>The router (Black box tied to the copper pipe) techniaclly is water cooled. I know this is really less than ideal, but this is the only place I could put it that I had access to, and kept it cool. You may laugh, but since putting it there, it actually reduces the temprature of the router, really letting me get all 110mbps I paid for.</li>
+</ul>
+<h3 id="cluster-from-the-top">Cluster from the top</h3>
+<p><img src="__GHOST_URL__/content/images/2023/11/cluster-top.jpg" alt=""></p>
+<h3 id="switch">Switch</h3>
+<p><img src="__GHOST_URL__/content/images/2023/11/switch.jpg" alt="">
+The Switch sees a constant load of about 2-5mbps when the cluster is just chilling
+<img src="__GHOST_URL__/content/images/2023/11/image-2.png" alt=""></p>
+<h3 id="the-new-router">The new router</h3>
+<p><img src="__GHOST_URL__/content/images/2023/11/router.jpg" alt="">
+This is the Juniper SRX-330 I have purchased, I need to learn how to use it. Currently I have PPPoE setup on <code>ge-0/0/0</code> (White ethernet) and then setting up the servers <em>lan</em> on <code>ge-0/0/1</code> (trunk port) to the switch, where the rest of my devices will connect to, and then anything else can go in to the router using an <code>irb</code></p>
+<h2>This overall leaves the network looking like the below
+<img src="__GHOST_URL__/content/images/2023/11/simple-network-2.png" alt=""></h2>
+<p>I hope you&rsquo;ve enjoyed this, if so, or if not, please feel free to get in contact.</p>
+<p>You can contract me to set up a Kubernetes cluster in your house, provided you pay my petrol (I have a Costco membership) and feed me.</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/kubernets-secrets-using-google-secret-manager/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Kubernetes secrets using Google Secret Manager</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p>How to get Google Secret manager secrets in to GKE? Look no further. We discuss options and implementing External Secrets Operator</p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="2023-1010-10">15 October 2023</time>
+                            <span class="bull">&bull;</span> 6 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/what-im-running-at-the-end-of-2023/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">What I&#39;m running at the end of 2023</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p>A quick recap on what I&rsquo;m running at the end of 2023, and a look to the future of the self hosting lab</p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="2023-212-12">27 December 2023</time>
+                            <span class="bull">&bull;</span> 5 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">breadNET</a> &copy; 2023</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    
+                    
+                    
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Your Spotify: 2022 · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Your Spotify: 2022</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Your Spotify: 2022</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>I wrote a post in June of 2020 about installing this super cool application called <code>your spotify</code></p>
+<p>If you didn&rsquo;t join us in 2020, let me give you the rundown on what <code>your_spotify</code> is</p>
+<p>It&rsquo;s an application that runs on <a href="https://www.docker.com">Docker containers</a> that poll Spotify&rsquo;s API to get information about your current listening, and then build dashboards around them. See below photos</p>
+<p><img src="https://user-images.githubusercontent.com/17204739/154752226-c2215a51-e20e-4ade-ac63-42c5abb25240.png" alt=""></p>
+<h2 id="how-to-install-and-use">How to install and use</h2>
+<p>You will need the below to be installed</p>
+<ol>
+<li><a href="https://docs.docker.com/engine/install/">Docker</a></li>
+<li><a href="https://docs.docker.com/compose/install/">docker-compose</a></li>
+<li>git</li>
+</ol>
+<p>Once these are installed, check they are working</p>
+<p>Run the below in the command line:</p>
+<pre><code>➜ docker -v
+➜ docker-compose -v 
+➜ git -v  
+</code></pre>
+<p>You should see a similar output to the below</p>
+<pre><code>➜ docker -v                                   
+Docker version 20.10.17-rd, build c2e4e01
+
+➜ docker-compose -v   
+Docker Compose version v2.11.1
+
+➜ git -v  
+git version 2.37.0 (Apple Git-136)
+</code></pre>
+<p><em>Your versions will be different, do not <a href="https://warehouse-camo.ingress.cmh1.psfhosted.org/2e5d6f776534fb7359fe412019743be199f86e6a/68747470733a2f2f692e696d6775722e636f6d2f426a4b5445386d2e6a706567">panik</a></em></p>
+<hr>
+<p>As this is an application that connects to an API, it will need to be able to Authenticate to the API.</p>
+<p><em>If you want to learn more about an API, go <a href="https://www.mulesoft.com/resources/api/what-is-an-api">here</a></em></p>
+<h2 id="spotify-part">Spotify part</h2>
+<p>Navigate to <a href="https://developer.spotify.com/dashboard/applications">https://developer.spotify.com/dashboard/applications</a></p>
+<p>You will need to login with your Spotify account
+<img src="__GHOST_URL__/content/images/2022/10/image.png" alt="">
+Once logged in, click on <code>create app</code> on the right hand side
+<img src="__GHOST_URL__/content/images/2022/10/image-1.png" alt="">
+You can name this anything you want, but it&rsquo;s reccomended you call this something like <code>Your spotify</code> or <code>your_spotify</code> so you know what it does if you ever have issues</p>
+<p>Ensure that you read the T&amp;C&rsquo;s and ensure you&rsquo;re not signing away your first born by accident
+<img src="__GHOST_URL__/content/images/2022/10/image-2.png" alt="">
+You should now be greeted by a page similar to the below
+<img src="__GHOST_URL__/content/images/2022/10/image-3.png" alt="">
+Click Edit and paste the below values in to their respective fields.
+Field NameValueRedirect URIs<code>http://localhost:3000/oauth/spotify/callback``http://localhost:8080/oauth/spotify/callback</code>
+Should look like the below
+<img src="__GHOST_URL__/content/images/2022/10/image-4.png" alt=""></p>
+<h2 id="the-docker-part">The Docker part</h2>
+<p>Now that the spotify section is done, we are able to create the actual application</p>
+<p>On your computer or server, git clone the GitHub repo.</p>
+<blockquote>
+<p>Something to note, if you are on windows, you may have to install git and the git cli. <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Please refer to the official documentation</a></p></blockquote>
+<p>Open the terminal (Or command line on windows)</p>
+<pre><code>git clone git@github.com:Yooooomi/your_spotify.git
+</code></pre>
+<p>This will download the files to a folder called <code>your_spotify</code> where ever you ran the command.</p>
+<p>Open the file called <code>docker-compose.yml</code></p>
+<p>I suggest you do this in an IDE like Intelli-j or vscode (Or vim if you&rsquo;re hardcore)</p>
+<p>Edit the lines below</p>
+<pre><code>      - SPOTIFY_PUBLIC=__your_spotify_client_id__
+      - SPOTIFY_SECRET=__your_spotify_secret__
+</code></pre>
+<p>You will need to replace these values from the ones on spotify.</p>
+<p>Navigate back to the Dev Portal, select the application we created, and on the left hand side, locate the credentials.</p>
+<p>They look like the below
+<img src="__GHOST_URL__/content/images/2022/10/image-5.png" alt="">These dont work, dont even try
+Once edited the lines should look like the below
+<img src="__GHOST_URL__/content/images/2022/10/image-6.png" alt="">
+You can now run the docker compose command</p>
+<pre><code>docker-compose up -d
+</code></pre>
+<p>the <code>-d</code> runs this in the background if you were wondering</p>
+<p>You can now navigate to <code>localhost:3000</code> and are greeted with a login page
+<img src="__GHOST_URL__/content/images/2022/10/image-7.png" alt=""><img src="__GHOST_URL__/content/images/2022/10/image-8.png" alt="">
+Once logged in, you need to authorise your account to access the app.</p>
+<p>Once that&rsquo;s done, you&rsquo;re all sorted!</p>
+<p>Listen to some spotify and boom, now the page <em>should</em> look something like the below
+<img src="__GHOST_URL__/content/images/2022/10/image-9.png" alt=""></p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/zerotrust-and-you/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">ZeroTrust and you</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><h2 id="firstly-what-is-zero-trust">Firstly what is zero trust</h2>
+<p>So from what I can tell, zero trust is a process of trusting nothing, not even the network you&rsquo;re on! It&rsquo;s designed to help with the &ldquo;Digital transition to the cloud&rdquo;, which especially with the big &lsquo;rona around, this is good!</p>
+<p>We&rsquo;re seeing more business&rsquo; adopting a zero trust model as employees are working from home, and Corporate IT teams are scrambling to enable workers to access internal servers and applications.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 4 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/years-in-review/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Years in review</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>This page captures all the &ldquo;x year in review&rdquo; pages I originally had!</p>
+<h1 id="2022--year-in-review">2022 : Year in review</h1>
+<p>2022 was the year of the cloud migration. I went through all the services I required and then migrated them.</p>
+<p>Sadly because it&rsquo;s all cloud infrastructure, I cant show you anything.</p>
+<p>I moved out in 2021, so this year was mainly spent sitting on a VPN connection trying to copy data form my parents garage (where the breadNET existed) to cambridge.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 4 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

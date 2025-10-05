@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Jellyfin with s3 backend · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Jellyfin with s3 backend</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Jellyfin with s3 backend</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 9 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>Jellyfin is a FOSS media server forked from Emby before they went sketchy.
+[</p>
+<p>jellyfin/jellyfin</p>
+<p>The Free Software Media System. Contribute to jellyfin/jellyfin development by creating an account on GitHub.</p>
+<p><img src="https://github.githubassets.com/favicons/favicon.svg" alt="">GitHubjellyfin</p>
+<p><img src="https://avatars1.githubusercontent.com/u/45698031?s=400&amp;v=4" alt="">
+](<a href="https://github.com/jellyfin/jellyfin">https://github.com/jellyfin/jellyfin</a>)</p>
+<blockquote>
+<p>So in a bid to speed up my jellyfin server, and cut costs I am now fully running my Jellyfin off of a vm on OVH with an s3 based backend, so this does work</p></blockquote>
+<p>I guess you could call this one of my shower thoughts as I wanted to be able to use jellyfin on a Digital ocean droplet or something external just so I don&rsquo;t have to mess about with using a reverse proxy from my home servers, to Digital ocean then out to the world. Whilst I know I could have just opened the ports on my home network, I have a Dynamic IP address which changes every so often.</p>
+<p>Yes, I could write a simple script to monitor the IP address and see when it changes, then update the domain, but that&rsquo;s not complex enough for me, and I&rsquo;m terrible at coding.</p>
+<p>We will first start with the droplet. I suggest going with either of the below for Digital ocean
+<img src="__GHOST_URL__/content/images/2020/06/image-8.png" alt="">
+Or if Digital ocean isn&rsquo;t your cuppa&rsquo; tea, then vultr have a reasonable product.
+<img src="__GHOST_URL__/content/images/2020/06/image-7.png" alt="">
+Or even GCP&rsquo;s N2, N2D, N1 servers seem to bee half decent for Jellyfin.</p>
+<p>There&rsquo;s nothing stopping you from deploying this at home, just realise that you will need 50mbps+ download and *ideally *25mbps+ upload to be able to support multiple users streams externaly if you&rsquo;re going though either an nginx reverse proxy like I am, or straight from you connection</p>
+<p>What you want is cores over anything, especially if you&rsquo;re going to be trans-coding.  Yes I did try and use the $5 tier from digital ocean and I wanted to <a href="https://www.urbandictionary.com/define.php?term=aliven't">commit alive&rsquo;nt</a></p>
+<hr>
+<h3 id="enough-fuzz-lets-get-to-it">Enough fuzz, lets get to it!</h3>
+<hr>
+<h4 id="prereqs">Prereqs:</h4>
+<p>I am not a security expert, I am a sysadmin. The security of your server is up to you. Do basic things like enable <a href="https://documentation.breadnet.co.uk/kb/ssh/ssh-client-setup-using-keys/">ssh keys</a> and lock down ingress ports with ufw or iptables. What ever angles your dangle.
+I am not a docker expert. I am a sysadmin which means I can use google (I think? bleh) so if you see anything whack in this, feel free to email me</p>
+<h5 id="you-will-need">You will need:</h5>
+<ol>
+<li>S3 compatible bucket - I suggest wasabi but you can also use Min.io if you&rsquo;re in to FOSS (wasabi has a 30 day free 1tb trial)</li>
+<li>Ability to read and copy and paste.</li>
+</ol>
+<h5 id="the-first-step">The first step</h5>
+<p>First we will spin up a digital ocean droplet but you can use what ever VPS provider you want.</p>
+<p>Once the VPs is up and you&rsquo;re logged in run the below to update the sources and upgrade any packages that need it. Should not take longer than 5-10 minutes at worst case scenario</p>
+<p><code>sudo apt-get update &amp;&amp; sudo apt-get upgrade</code></p>
+<p>Once that&rsquo;s done, install rclone</p>
+<p><code>sudo apt-get install rclone</code></p>
+<p>Next we need to setup the bucket and fuzz to actually have some media to present to Jellyfin once everything gets up and running.</p>
+<p>Login to wasabi console at <a href="https://console.wasabisys.com/#/login">https://console.wasabisys.com/</a></p>
+<blockquote>
+<p>A quick Gotcha here. Wasabi really pissed me off as they charge you for deleted storage for 90 days. I&rsquo;m not sure if I goofed this up somewhere but I have contacted support to find out</p></blockquote>
+<p>Once logged in, go to buckets and create bucket. Name it something like jellyfin-media and select the region that is closest to you. If you&rsquo;re in Europe, pick the Europe one. It&rsquo;s located in the Netherlands.</p>
+<p>Once the bucket is created, we need to create a policy that works with the bucket. This will be applied to a user later which grants access rights to the bucket and fun stuff.</p>
+<p>Click policies on the left hand side navbar
+<img src="__GHOST_URL__/content/images/2020/06/image-9.png" alt="">
+In here, name it something like <code>jellyfin-media-ro</code> or what ever you like. As long as you remember it for later!</p>
+<p>Once naming it, paste the below in, but change where it says <code>&lt;bucket name&gt;</code> to the name of your bucket. This will be applied to the <code>docker</code> user we will create next. It&rsquo;s only given read permissions to the media, just in case something weird happens and jellyfin (or you, no judgment) tries to nuke your files.</p>
+<pre><code>{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Principal&quot;: {
+        &quot;AWS&quot;: &quot;*&quot;
+      },
+      &quot;Action&quot;: [
+        &quot;s3:GetBucketLocation&quot;,
+        &quot;s3:ListBucket&quot;,
+        &quot;s3:ListBucketMultipartUploads&quot;
+      ],
+      &quot;Resource&quot;: &quot;arn:aws:s3:::&lt;bucket name&gt;&quot;
+    },
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Principal&quot;: {
+        &quot;AWS&quot;: &quot;*&quot;
+      },
+      &quot;Action&quot;: &quot;s3:GetObject&quot;,
+      &quot;Resource&quot;: &quot;arn:aws:s3:::&lt;bucket name&gt;/*&quot;
+    }
+  ]
+}
+</code></pre>
+<p>jellyfin-media-ro
+For a user that can upload to the bucket create a policy called <code>jellyfin-media-rw</code> where <code>rw</code> is read write.  As usual substitute the <code>&lt;your bucket&gt;</code> with the name of your actual bucket.</p>
+<pre><code>{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: &quot;s3:ListAllMyBuckets&quot;,
+      &quot;Resource&quot;: &quot;arn:aws:s3:::*&quot;
+    },
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: &quot;s3:*&quot;,
+      &quot;Resource&quot;: [
+        &quot;arn:aws:s3:::&lt;your bucket&gt;&quot;,
+        &quot;arn:aws:s3:::&lt;your bucket&gt;/*&quot;
+      ]
+    }
+  ]
+}
+</code></pre>
+<p>jellyfin-media-rw
+Now we can create a user. Click users on the left hand side nav bar.</p>
+<p>Click &lsquo;Create user&rsquo;</p>
+<p>I suggest calling it something like <code>docker</code> or <code>jellyfin</code> or <code>jeff</code> if you really like.
+<img src="__GHOST_URL__/content/images/2020/06/image-10.png" alt="">
+The important part is that you click &lsquo;Programmatic (create API key)</p>
+<p>Click next till page 3 where you will assign the policy we created. Here we need the  <code>jellyfin-media-ro</code> policy</p>
+<p>Once done, wait a few seconds and it will ask you to download the keys. Save these and name them respective of the user.</p>
+<p>You will need to do the same thing for the <code>rw</code> user, so create the user and give them the rw policy, naming them something else.</p>
+<hr>
+<h3 id="part-2-the-vps-shenanigans">Part 2: The VPS shenanigans</h3>
+<p>Depending on if you ave docker already installed, you can skip down a bit. If not please read the below:</p>
+<p>Run the below commands after each other</p>
+<p><code>curl -fsSL https://get.docker.com -o get-docker.sh</code></p>
+<p><code>sh get-docker.sh</code></p>
+<p><code>sudo apt-get install docker-compose</code></p>
+<p>if all went well, docker should be installed</p>
+<p>Now we need to get the docker image to actually use. This can be downloaded using the built in docker &lsquo;package manager&rsquo; if you will.</p>
+<p><code>docker pull jellyfin/jellyfin</code></p>
+<p>Next, we will create the folder structure.</p>
+<pre><code>mkdir docker
+mkdir docker/jellyfin
+mkdir docker/jellyfin/files
+mkdir docker/jellyfin/files/{cache,config,media}
+touch docker/jellyfin/docker-compose.yml
+</code></pre>
+<p>If you care, this is what it will look like.</p>
+<pre><code>.
+└── docker
+    └── jellyfin
+        ├── docker-compose.yml
+        └── files
+            ├── cache
+            ├── config
+            └── media
+
+6 directories, 1 file
+</code></pre>
+<p>Once that is done, move to <code>docker/jellyfin</code> and edit the <code>docker-compose.yml</code> file</p>
+<p><code>sudo nano docker-compose.yml</code></p>
+<p>In the file paste the below and change out <code>&lt;path/to/config&gt;</code> with the full path to the folders. If you&rsquo;re not sure of them, go to that directory and type <code>pwd</code></p>
+<pre><code>version: &quot;3&quot;
+services:
+ jellyfin:
+  image: jellyfin/jellyfin
+  user: 1000:1000
+  network_mode: &quot;host&quot;
+  volumes:
+    - &lt;/path/to/config&gt;:/config
+    - &lt;/path/to/cache&gt;:/cache
+    - &lt;/path/to/media&gt;:/media
+</code></pre>
+<p>docker-compose.yml
+Next we need to sort out how to present the bucket to jellyfin. This is where rclone comes in. We installed it at the start!</p>
+<p>But before we can start, we need to figure out a way to run the command, and disconnect from that session without stopping the command from running. We will use screen as I am yet to figure out how to use systemd for this</p>
+<p><code>screen</code></p>
+<p>Should show you something like this. if not, <code>sudo apt-get install screen</code>
+<img src="__GHOST_URL__/content/images/2020/06/image-11.png" alt="">
+Now that that works, we just press enter and it shows us a command line. Press <code>Ctrl + a </code>and then press <code>d</code> (it&rsquo;s a weird combo, dont ask)</p>
+<p>Now we can configure rclone.</p>
+<p>Change directory to <code>.config</code> and if there isn&rsquo;t an rclone folder there <code>mdkir rclone</code></p>
+<p><code>nano rclone.conf</code></p>
+<p>paste the below in there.  </p>
+<pre><code>[media]
+type = s3
+env_auth = 
+access_key_id = &lt;first key in .csv file from user creation&gt;
+secret_access_key = &lt;second key from user creation&gt;
+region = 
+endpoint = https://s3.eu-central-1.wasabisys.com #if using a europe bucket, else; See below for specifics
+location_constraint = 
+acl = 
+server_side_encryption = 
+storage_class = 
+
+####You dont need to copy this shit in to the file, it's in reference to line 7###
+#Wasabi US East 1 (N. Virginia): s3.wasabisys.com or s3.us-east-1.wasabisys.com
+#Wasabi US East 2 (N. Virginia): s3.us-east-2.wasabisys.com 
+#Wasabi US West 1 (Oregon): s3.us-west-1.wasabisys.com
+#Wasabi EU Central 1 (Amsterdam): s3.eu-central-1.wasabisys.com
+</code></pre>
+<p>once done, exit that bad boy. ( <code>ctrl + x``y``enter</code>)</p>
+<p>Go to the wasabi interface and click that bucket. Upload your favourite meme or something and then back in your terminal run:</p>
+<p><code>rclone ls media:&lt;bucket name&gt;</code> and you should see the file name there.</p>
+<blockquote>
+<p>If this fails, then I&rsquo;m not sure what went wrong. Email me and we can sort it out.</p></blockquote>
+<p>Next we need to map the bucket to a folder.</p>
+<p>Open screen by typing <code>screen</code></p>
+<p><code>cd docker/jellyfin/files/</code></p>
+<p><code>rclone mount media:&lt;bucket name&gt; media --allow-others --daemon</code></p>
+<p>It may throw back an error about using &ndash;allow-others, but just do what the command says and edit the file, remove the # in from of the allow_others or what&rsquo;s closest in the file.</p>
+<p>It should return nothing if it worked.</p>
+<p>Exit screen with <code>ctrl + a``d</code></p>
+<p>Change to the media folder <code>docker/jellyfin/files/media</code></p>
+<p>list the stuff in there with <code>ls</code> and it should (hopefully) return the file from earlier</p>
+<h3 id="part-3-making-progress">Part 3: Making progress</h3>
+<p>In the folder where the docker-compose.yml file exists, run:</p>
+<p><code>docker-compose up</code></p>
+<p>If all went well, you should be able to visit the IP address of the host and be greeted with the jellyfin create user account</p>
+<p><code>http://&lt;ip/hostname&gt;:8096</code></p>
+<p>I suggest you create the tv, movies, podcasts, skin flic and what ever else folders though the webUI for wasabi then upload your stuff there.</p>
+<p>Once everything is uploaded on Jellyfin, add the media as you usually would.</p>
+<p>Once done, go back to your command line and kill the docker container with <code>ctrl + c</code>
+Now type <code>docker ps -a</code> to see all containers on your host. There should be one called Jellyfin. Make a note of the first 3 characters of the weird looking string before it&rsquo;s name</p>
+<p>The hit it with a <code>docker start &lt;characters&gt;</code>  Hopefully it starts and is off to the races. Go back to the url or IP address and continue as you would.</p>
+<p>If you want to put it behind a nginx reverse proxy, stay tuned for my next post where I talk about how I have everything behind nginx because I&rsquo;m too stubborn to learn traefik :)</p>
+<blockquote>
+<p>this was previously posted <a href="https://documentation.breadnet.co.uk/kb/public-web-facing/jellyfin-using-s3-and-docker/">here</a> but I did a terrible job</p></blockquote>
+<hr>
+<p>You can hire me via <a href="https://www.upwork.com/freelancers/~01c61ee9802b94133e">Upwork</a> or <a href="mailto:work@breadnet.co.uk">emailing me</a> for weekend projects!</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/kubernetes-at-home/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Kubernetes at home</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>I first started learning Kubernetes in 2021, as a Junior Systems Administrator in my bedroom in Cambridge. I&rsquo;ll be honest, I didn&rsquo;t really understand it much. What&rsquo;s a pod? Why cant I just deploy a container?</p>
+<p>Over the years, 2 of them to be exact, I have learning Kubernetes piece by peace, not really following a specific course, so if you&rsquo;re looking for course recommendations, I have none.</p>
+<p>I&rsquo;ve spent most of my Career operating and using GKE, a Kubernetes <em>flavour</em> if you will, from Google. GKE is designed to run on Google cloud, and <a href="https://issuetracker.google.com/issues/305477780">sort of</a> integrates with most of the GCP API&rsquo;s</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 10 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/homelab/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Introduction to home-labbing</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>Hello, welcome. Settle down as we&rsquo;re about to take a dive in to the topic of Homelabs, selfhosting and how to break in to Linux administration.</p>
+<p>A little about me: I am by no means a professional writer or programmer. I do however use linux as part of my day to day job and as my daily driver.</p>
+<hr>
+<p>The objective here is to look at:</p>
+<ul>
+<li>The server</li>
+<li>Building the server</li>
+<li>Building infrastructure</li>
+<li>Building a VM</li>
+<li>Hosting something</li>
+<li>Monitoring</li>
+<li>Backups (Most important part)</li>
+</ul>
+<p>Now you know what to expect from this, let&rsquo;s start.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 7 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

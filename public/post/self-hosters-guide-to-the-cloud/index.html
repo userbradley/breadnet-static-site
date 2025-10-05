@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Self hosters guide to the cloud · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Self hosters guide to the cloud</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Self hosters guide to the cloud</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 6 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <ul>
+<li>services to offer</li>
+<li>how it&rsquo;s different</li>
+<li>ways to manage it</li>
+<li>best practices</li>
+<li>how to make the most of it</li>
+<li>companies I suggest</li>
+</ul>
+<p>I&rsquo;ll be honest with eneryone here, I never thought I would ever write something like this.</p>
+<p>The time has come, I am moving my servers to the cloud.</p>
+<p>I still am a selfhoster as I rely on my own knowledge and experience to operate all my services and ensure that they are online for the people who have come to rely on them.</p>
+<p>The reason I am moving to the cloud is since moving out of my parents, I need to decom all my on premise infrastructure as the network connection isn&rsquo;t the best and also it&rsquo;s at my parent house.</p>
+<p>Let&rsquo;s take a look in to the reasons you would want to move your lab to the cloud (If you plan on still labbing), how to set it up and then how to maintain it.</p>
+<hr>
+<p>A lot of cloud providers will have different plans and offerings. Let&rsquo;s focus real quick on the terminology they use, as some of it is literal bullshit</p>
+<p>IaaS : Infrastructure as a service:
+ This would be renting the servers, network (yeah you can do that), storage etc from the  provider</p>
+<p>PaaS : Platform as a service:
+ This is delivering a platform to the user, so the developer just runs their code on their       service and don&rsquo;t have to manage the infrastrucute. I&rsquo;m not sure what their underlying       tech is, but I&rsquo;m probably going to go with K8</p>
+<p>SaaS : Software as a service:
+ This would be using something like Google drive, SAP etc. You use the software as a       service</p>
+<p>DBaaS : Database as a service
+ If you run a lot of applications that need a database, I suggest you use your cloud providers database offering as it&rsquo;s got backups usually and runs as a cluster with HA.</p>
+<p>You will want to look at each cloud providers offerings. One thing to note is that you can actually land up causing cloud lock in.</p>
+<!-- raw HTML omitted -->
+<p>If you are developing an application, use docker! You can run docker on basically anything <a href="https://stackoverflow.com/questions/53527277/is-it-possible-to-run-containers-on-android-devices">(well, almost)</a> you then can bang it in to K8 (which every cool cloud provider will have)</p>
+<p>Finally once you&rsquo;ve picked your cloud provider you then have the whole setting &lsquo;it&rsquo; up.
+&lsquo;it&rsquo; being what ever you&rsquo;re hosting at home.</p>
+<p>The common misconception I&rsquo;ve seen with people and the cloud is that:
+<img src="__GHOST_URL__/content/images/2021/04/image-8.png" alt="">
+no. Just no. Stop. I can understand that thought process if you were new to computers, but you guys running a datacetnre in your mom&rsquo;s living room, no.</p>
+<p>Let me introduce you to a little friend called &lsquo;Firewalls&rsquo;</p>
+<p>At an absolute minimum, your cloud provider will have a form of managed firewall service where you can click and point.</p>
+<p>My favourite way of this, which GCP does quite well is:</p>
+<p>You create the firewall rules first. So we will create one allowing http/s access to our instances, and then we say we want to add it to any instance that has the tag of <code>web</code> assigned under the network section:
+<img src="__GHOST_URL__/content/images/2021/04/image-9.png" alt="">
+then under our instance we get this:
+<img src="__GHOST_URL__/content/images/2021/04/image-10.png" alt="">
+Point in case, if you are still worried about people getting to your servers, then you can make a career out of that as a cyber security expert. Start studying my friend!</p>
+<p>Now we have that out the way, we will talk about how to actually deploy.</p>
+<p>Running on the cloud has some perks. You get access to things like API&rsquo;s where you can tell the cloud:</p>
+<pre><code>Dear sir,
+
+I write to you to request one server with a gigabyte of ram, 1TB data and 2vcpu
+
+Signed,
+
+Bradley
+</code></pre>
+<p>(Side note, if you want to see how to actually do it: &ndash;&gt; <a href="https://gitlab.breadnet.co.uk/terraform/modules/ovh/instance-ports/-/blob/074ac784d6c9533a7de7c4c4de32ecaa0c6f72f7/main.tf">Here</a> &lt;– )</p>
+<p>and it will give you a server.</p>
+<p>Now you&rsquo;re probably wondering why I mention this? Why cant I just do things normally? Ah well! You can manage everything as code now. You can use something like Terraform and Codefresh with Git to manage your infrastructure.</p>
+<p>If you&rsquo;re using Terraform, I strongly suggest you learn to create modules so you can have a quick and standardised way to create instances and stuff. Feel free to checkout my modules I have created for OVH/ Openstack:
+[</p>
+<p>ovh</p>
+<p>GitLab Enterprise Edition</p>
+<p><img src="https://gitlab.breadnet.co.uk/assets/touch-icon-ipad-retina-8ebe416f5313483d9c1bc772b5bbe03ecad52a54eba443e5215a22caed2a16a2.png" alt="">GitLab</p>
+<p><img src="https://gitlab.breadnet.co.uk/assets/gitlab_logo-7ae504fe4f68fdebb3c2034e36621930cd36ea87924c11ff65dbcb8ed50dca58.png" alt="">
+](<a href="https://gitlab.breadnet.co.uk/terraform/modules/ovh">https://gitlab.breadnet.co.uk/terraform/modules/ovh</a>)
+The use case for this is repeatability and simplicity. If I want to deploy another instance to my stack, I simply create another module request in <code>main.tf</code> and then it&rsquo;s done.</p>
+<p>A nice example of this is my DNS records are all managed from Cloudflare, through terraform. Once I push to master on gitlab, Codefresh picks up the changes and deploys them.</p>
+<p>At work we are Codefresh partners, but I use them personally as they are actually really good. (Just a little disclaimer)</p>
+<p>From here, now that your infrastrucute is created, you need to provision your instances.</p>
+<p>I suggest using something like an Ansible playbook or bash scripts (if push comes to shove)</p>
+<p>If you&rsquo;re going to be working on Digital ocean, I suggest learning <a href="https://www.packer.io">Packer</a> for image creation from a playbook/ script.</p>
+<hr>
+<p>Lastly there is backups and migrations.</p>
+<p>A lot of things that people forget with running on the cloud is backups as it&rsquo;s out of their sight and mind.</p>
+<p>The recent fire that was <a href="https://www.reuters.com/article/us-france-ovh-fire-idUSKBN2B20NU">experienced by OVH speaks to this</a> - Just because it&rsquo;s in the cloud, doesn&rsquo;t mean that it&rsquo;s not still your responsibility to maintain it.</p>
+<p>For this, I recommend daily snapshots of the instance, as well as file based backups to something like S3. I personally recommend something like Wasabi storage as they are pretty cheap.</p>
+<p>Daily snapshots are managed by your cloud provider, but you can also use something like backuppc running on a pi at home with a 2tb drive (This is what I do to follow the 3-2-1 rule)</p>
+<p>For example from my mail server to Wasabi is over a 200g connection so daily file backups are easy.</p>
+<p>Oh that&rsquo;s something I forgot to mention about the cloud is the bandwidth. You will really enjoy this alot.</p>
+<h3 id="companies-i-suggest">Companies I suggest</h3>
+<p><a href="https://m.do.co/c/77be3c3aa96c">Digital ocean for hosting</a></p>
+<p>OVH for hosting</p>
+<p>Gitlab for code and Cicd</p>
+<p>Codefresh for hosted CiCd</p>
+<p>Cloudflare for DNS</p>
+<p>Ubuntu as an OS provider</p>
+<p><a href="zerotier.com">Zerotier for Mesh overlay </a></p>
+<h3 id="how-to-make-the-most-of-the-cloud">How to make the most of the cloud?</h3>
+<p>Having since moved to my own place, I don&rsquo;t have the luxury of running my own servers so I have had to throw everything on the cloud.</p>
+<p>The nice thing here is that if you need a resource for say, 30 minutes, you only pay for 30 minutes.</p>
+<p>I sometimes use a throw away instance (created and destroyed via terraform) for downloading large files quickly. I will download it to the instance, work on it there and push it back, utilising the bandwidth available.</p>
+<p>OVH and most cloud providers don&rsquo;t block ports 6881-6889 6969 so if you&rsquo;re hosting linux ISO&rsquo;s for the community to download faster, god for you! &lt;3</p>
+<p>Finally, you have the platform to help and inspire people, host a website with Ghost/ wordpress/ CMS of your choice!</p>
+<p>Safe hosting and don&rsquo;t open anything other than tcp:80/443 to the web!</p>
+<hr>
+<p>You can hire me via <a href="https://www.upwork.com/freelancers/~01c61ee9802b94133e">Upwork</a> or <a href="mailto:work@breadnet.co.uk">emailing me</a> for weekend projects!</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/showcasing-your-knowledge/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Showcasing your knowledge</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>Being in IT is&hellip; <em>fun</em></p>
+<p>As with any job, you naturally move around and, if you&rsquo;re in IT, the second you open Linkedin to recruiters, 10,000 recruiters will blow your inbox up trying to get you. And boy, do they harass you! Wow.</p>
+<p>See, I&rsquo;ve had my fare share of interviews, and I know what I want (cough slack cough jira), and don&rsquo;t want - Windows.</p>
+<p>So in order to speed up the process of recruiters talking to me, and also to have a place to showcase my work, I decided it was a cool idea to make a <code>readme.md</code> file almost, detailing what I do, past work and past projects.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 4 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/self-hosted-analytics/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Self hosted analytics</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>The worst part about self hosting stuff is not having that seamless transition between applications built by google, microsoft and others, to being able to control the data your self.</p>
+<p>My biggest annoyance was being able to see how many hits my page got, where people came to my site from, as well as what people were searching for. This allows me to know what people like (for example most people came to my site to see me use s3 with jellyfin and nginx reverse proxy) so I can write more posts for them</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 5 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Using Google Artifact Registry with k3s · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Using Google Artifact Registry with k3s</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Using Google Artifact Registry with k3s</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>It&rsquo;s been a while since we&rsquo;ve done a post about truly self hosted stuff. This is in part due to me being a DevOps engineer.</p>
+<p>That aside, today I aim to solve the problem of how to authenticate a k3s cluster to Google Artifact Registry</p>
+<h2 id="why-we-need-to-do-this">Why we need to do this</h2>
+<p>Google has a really good Container registry, called <a href="https://cloud.google.com/artifact-registry">Artifact Registry</a>. I am hosting all of my images on the container registry as it allows better IAM control, as well as being easier to authenticate to when using GKE.</p>
+<p>Why bother mentioning GKE? Well I spend about 90% of my day working on GKE, so it makes sense that I would use a Google Cloud service for this.</p>
+<h2 id="what-is-the-actual-issue">What is the actual issue</h2>
+<p>Unless your GAR (Google Artifact Registry) repo is public, then you have to authenticate to it.</p>
+<p>If we try and pull an image on our k3s cluster without authentication we get the below error</p>
+<pre><code> ErrImagePull: rpc error: code = Unknown desc = failed to pull and unpack image &quot;europe-west2-docker.pkg.dev/breadnet-container-store/redacted/documentation-dev:0.0.1&quot;: failed to resolve reference &quot;europe-west2-docker.pkg.dev/breadnet-container-store/redacted/documentation-dev:0.0.1&quot;: failed to authorize: failed to fetch anonymous token: unexpected status: 403 Forbidden
+</code></pre>
+<p>This is basically saying, you&rsquo;ve not told me who you are, I am not letting you in.</p>
+<p>In order to resolve this, we need to authenticate k3s to Google Cloud.</p>
+<h2 id="how-to-fix-this">How to fix this</h2>
+<p>I wont go in to detail on the GCP cloud side, as if you&rsquo;ve come across this I assume you know how to do the below but:</p>
+<ol>
+<li>Create a Service account</li>
+<li>Export the Service account keys to your computer as a json file (hold on to this, we need it later!)</li>
+<li>Add that service account to the Google Artifact Registry using <code>Artifact Registry Reader</code></li>
+</ol>
+<h3 id="formatting-the-service-account-file-correctly">Formatting the Service account file correctly</h3>
+<p>In order to provision the <em>custom</em> registry in k3s, we need to authenticate to it.</p>
+<p>The json file needs to be <em>stacked</em> or converted to a single line.</p>
+<p>This can be done by going to the end of each line, and deleting the new line. Example is below</p>
+<pre><code>{
+  &quot;type&quot;: &quot;service_account&quot;,
+  &quot;project_id&quot;: &quot;redacted&quot;,
+  &quot;private_key_id&quot;: &quot;redacted&quot;,
+  &quot;private_key&quot;: &quot;-----BEGIN PRIVATE KEY-----\nredacted\n-----END         PRIVATE KEY-----\n&quot;,
+  &quot;client_email&quot;: &quot;k3s-container-puller@redacted.iam.gserviceaccount.com&quot;,
+  &quot;client_id&quot;: &quot;redacted&quot;,
+  &quot;auth_uri&quot;: &quot;https://accounts.google.com/o/oauth2/auth&quot;,
+  &quot;token_uri&quot;: &quot;https://oauth2.googleapis.com/token&quot;,
+  &quot;auth_provider_x509_cert_url&quot;: &quot;https://www.googleapis.com/oauth2/v1/certs&quot;,
+  &quot;client_x509_cert_url&quot;: &quot;https://www.googleapis.com/robot/v1/metadata/x509/k3s-container-puller%40redacted.iam.gserviceaccount.com&quot;
+}
+</code></pre>
+<p>Becomes</p>
+<pre><code>{ &quot;type&quot;: &quot;service_account&quot;, &quot;project_id&quot;: &quot;redacted&quot;,  &quot;private_key_id&quot;: &quot;redacted&quot;,  &quot;private_key&quot;: &quot;-----BEGIN PRIVATE KEY-----\nredacted\n-----END PRIVATE KEY-----\n&quot;,  &quot;client_email&quot;: &quot;k3s-container-puller@redacted.iam.gserviceaccount.com&quot;,  &quot;client_id&quot;: &quot;redacted&quot;,  &quot;auth_uri&quot;: &quot;https://accounts.google.com/o/oauth2/auth&quot;,  &quot;token_uri&quot;: &quot;https://oauth2.googleapis.com/token&quot;,  &quot;auth_provider_x509_cert_url&quot;: &quot;https://www.googleapis.com/oauth2/v1/certs&quot;,  &quot;client_x509_cert_url&quot;: &quot;https://www.googleapis.com/robot/v1/metadata/x509/k3s-container-puller%40redacted.iam.gserviceaccount.com&quot;}
+</code></pre>
+<p>Ignore the formatting, if you copied and pasted this, it would be on one line
+We are then able to creat the <code>registries.yaml</code> file</p>
+<pre><code># registries.yaml 
+mirrors:
+  europe-west2-docker.pkg.dev:
+    endpoint:
+      - &quot;https://europe-west2-docker.pkg.dev&quot;
+configs:
+  europe-west2-docker.pkg.dev:
+    auth:
+      username: _json_key
+      password: '{ &quot;type&quot;: &quot;service_account&quot;, &quot;project_id&quot;: &quot;redacted&quot;,  &quot;private_key_id&quot;: &quot;redacted&quot;,  &quot;private_key&quot;: &quot;-----BEGIN PRIVATE KEY-----\nredacted\n-----END PRIVATE KEY-----\n&quot;,  &quot;client_email&quot;: &quot;k3s-container-puller@redacted.iam.gserviceaccount.com&quot;,  &quot;client_id&quot;: &quot;redacted&quot;,  &quot;auth_uri&quot;: &quot;https://accounts.google.com/o/oauth2/auth&quot;,  &quot;token_uri&quot;: &quot;https://oauth2.googleapis.com/token&quot;,  &quot;auth_provider_x509_cert_url&quot;: &quot;https://www.googleapis.com/oauth2/v1/certs&quot;,  &quot;client_x509_cert_url&quot;: &quot;https://www.googleapis.com/robot/v1/metadata/x509/k3s-container-puller%40redacted.iam.gserviceaccount.com&quot;}'
+</code></pre>
+<blockquote>
+<p>Note!
+Ensure that you surround the value for <code>password</code> with <code>'</code> or it will brea</p></blockquote>
+<p>Name this <code>registries.yaml</code></p>
+<p>Copy this file to <strong>all workers</strong> (and servers if pods can be scheduled on them)</p>
+<p>Put the file in <code>/etc/rancher/k3s</code></p>
+<p>You will then need to restart <code>k3s</code></p>
+<pre><code>systemctl restart k3s
+</code></pre>
+<h1 id="further-reading">Further reading</h1>
+<p>This blog post was made off of a documentation page I wrote
+[</p>
+<p>K3s private registry using Google Artifact Registry - breadNET Documentation</p>
+<p>breadNET Documentation</p>
+<p><img src="https://documentation.breadnet.co.uk/favicon.ico" alt="">logo</p>
+<p><img src="https://documentation.breadnet.co.uk/assets/images/social/kubernetes/k3s/k3s-private-registry-using-google-artifact-registry.png" alt="">
+](<a href="https://documentation.breadnet.co.uk/kubernetes/k3s/k3s-private-registry-using-google-artifact-registry/?mtm_campaign&amp;#x3D;breadnet&amp;amp;mtm_kwd&amp;#x3D;private-reg">https://documentation.breadnet.co.uk/kubernetes/k3s/k3s-private-registry-using-google-artifact-registry/?mtm_campaign&amp;#x3D;breadnet&amp;amp;mtm_kwd&amp;#x3D;private-reg</a>)</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/what-im-running/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">What I&#39;m running</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>All my servers are currently (and always will be)  running Linux. My choice is mainly Ubuntu LTS how ever there are 2 Debian VM&rsquo;s running.</p>
+<p>I have got my backups of VM&rsquo;s done over XOA which copies the full image of the VM to an external hard drive.</p>
+<p>For file based backups as well as database backups, I have writted my own scripts to back up servers to a Wasabi bucket. This is done for, you guessed it, Databases as well a media servers as it doest not make sense to backup 300gb vm easch week when nothing changes</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 2 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/the-story/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">The story</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><h1 id="what-is-breadnet"><strong><strong>What is breadNET?</strong></strong></h1>
+<p>BreadNET is the name I have given my home lab. The name originated form my original nickname of breadbin from primary school. From there, branched breadNET. I had originally planned to purchase the domain of bread.net but this was taken, hence breadnet.co.uk</p>
+<h1 id="what-qualifies-me-to-write-about-this-stuff"><strong><strong>What qualifies me to write about this stuff?</strong></strong></h1>
+<p>Nothing at all, I am a Cloud engineer by Trade so that contributes something?</p>
+<h1 id="how-did-i-get-in-to-computers"><strong><strong>How did I get in to computers?</strong></strong></h1>
+<p>So It really started back in 2012/13 when I had moved abroad with an old XP computer and from there it branched out. I started out wanting to work at Openrach as a technician, but decided not to. I used to work on the welpdesk for an *msp *in Potters Bar. I had moved on and accepted a job as a Junior System administrator for a cloud based company! woo</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 4 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

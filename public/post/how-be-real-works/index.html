@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>How BeReal works · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">How BeReal works</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">How BeReal works</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 6 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>And no, this not a <em>how to,</em> on how to use the app. But a deep dive on the infrastructure behind BeReal, and the engineering decisions that were taken.</p>
+<hr>
+<p>Firstly, what is BeReal?</p>
+<p>BeReal is an app designed by a French Developer called <a href="https://fr.linkedin.com/in/alexisbarreyat">Alexis Barreyat</a>, which aims to break down the highly edited social media that we have come to know and hate.</p>
+<p>You get a notification once a day, like the below, where you are urged to whip out your phone, and snap a pic.
+<img src="__GHOST_URL__/content/images/2022/08/image.png" alt="The BeReal notification: An iOS notificaiton bubble with the words &quot;Time to be real&quot; surrounded by two warning symbols. Below the  warning is the words &quot;2 min left to capture a BeReal and see what your friends are up to !&quot;">BeReal Notification
+The application makes use of both the front facing and back facing camera to give <em>real view</em> in to what you&rsquo;re up to.</p>
+<p>See the example below:
+<img src="__GHOST_URL__/content/images/2022/08/BeReal_example.png" alt="">BeReal, where I was on the roof of a building
+Enough about the app, let&rsquo;s take a look at how it works, under the hood.</p>
+<hr>
+<h2 id="the-legal-stuff">The Legal stuff</h2>
+<p>I want to make this very clear, this does not go against the terms of service, as nothing malicious was intended, I did not send requests to the application, merely peeked in to the network traffic the application was sending.</p>
+<p>Below is the part of the ToS&rsquo; that could apply to this post, how ever for legal reasons, I must specify that there was no tampering as this is network traffic one can see when running an SSL proxy on their network.</p>
+<blockquote>
+<p>Tamper or attempt to tamper with the proper working of the Application, interfere with access to the Application or circumvent any measures we may use to block or restrict access to the Services;</p></blockquote>
+<p>Everything I say below is purely speculative, I do not work for, nor ever have worked for the BeReal Company/ Corporation.</p>
+<p>For any legal issues, please contact legal@</p>
+<hr>
+<h2 id="the-cloud-provider">The cloud Provider</h2>
+<p>From what I can see, BeReal makes extensive use of the below cloud providers</p>
+<h3 id="datadog">DataDog</h3>
+<p>DataDog is being used for in-app metrics, as well as logging and something called RUM (Real user monitoring) - Which looks in to how the application is used by the user</p>
+<h3 id="onesignal">OneSignal</h3>
+<p>One<strong>S</strong>ignal is being used for the the push notifications that users all over the world receive. I&rsquo;m not sure about how Time Zones work, so don&rsquo;t ask me.</p>
+<h3 id="amplitude">Amplitude</h3>
+<p>I&rsquo;m still not 100% sure on this one, but from their <a href="https://amplitude.com">website</a> - They seem to be a user journey tracking tool, so how you signed up, and also surfacing better metrics.</p>
+<h3 id="google-cloud">Google Cloud</h3>
+<p>BeReal makes <strong>heavy</strong> use of the google cloud <strong>global architecture</strong>.
+A good example of this is they use serverless where ever possible, as well as managed services.</p>
+<hr>
+<h2 id="the-apis">The API&rsquo;s</h2>
+<p>The application is pretty bare bones, but the way it makes the API calls is&hellip; interesting.</p>
+<blockquote>
+<p>This blog post has taken over 2 months to write, and since starting they have implemented Certificate Pinning, preventing the Network wide proxy from intercepting the app traffic.</p></blockquote>
+<p>BeReal uses a GCS bucket called <code>storage.bere.al</code> running on GCS. This bucket is behind a Global Load balancer on Google cloud.</p>
+<p>We can try and run a gsutil ls gs://storage.bere.al but will get an IAM error</p>
+<pre><code>➜ gsutil ls gs://storage.bere.al/Photos/                                 
+
+AccessDeniedException: 403 &lt;&gt;k does not have storage.objects.list access to the Google Cloud Storage bucket.
+</code></pre>
+<p>So it seems the DevOps team are on top of the Bucket IAM permissions.</p>
+<p>When a user takes a photo, (this is after the notification goes off), BeReal app sends a Post to <code>/**sendCaptureInProgressPush**</code>which from what I can tell, publishes a message on Pubsub:</p>
+<pre><code>{
+    &quot;data&quot;: {
+        &quot;photoURL&quot;: &quot;Photos/&lt;me&gt;/profile/&lt;me&gt;-1655905537-profile-picture.jpg&quot;,
+        &quot;topic&quot;: &quot;&lt;me&gt;&quot;,
+        &quot;userName&quot;: &quot;&lt;me&gt;&quot;
+    }
+}
+</code></pre>
+<p>And the response being</p>
+<pre><code>{
+    &quot;result&quot;:&quot;projects/alexisbarreyatbereal/messages/7517087177659076139&quot;
+}
+</code></pre>
+<p>This let&rsquo;s BeReal know that there will be an upload for the user.</p>
+<p>When the user has finally taken the photo, it calls to <code>content/post</code> API, and sends the below:</p>
+<pre><code>{
+    &quot;backCamera&quot;: {
+        &quot;bucket&quot;: &quot;storage.bere.al&quot;,
+        &quot;height&quot;: 2000,
+        &quot;path&quot;: &quot;Photos/&lt;me&gt;/bereal/7c44d6e8-086b-4a18-b8b4d3785f58cda8-1660122851.jpg&quot;,
+        &quot;width&quot;: 1500
+    },
+    &quot;frontCamera&quot;: {
+        &quot;bucket&quot;: &quot;storage.bere.al&quot;,
+        &quot;height&quot;: 2000,
+        &quot;path&quot;: &quot;Photos/&lt;me&gt;/bereal/7c44d6e8-086b-4a18-b8b4d3785f58cda8-1660122851-secondary.jpg&quot;,
+        &quot;width&quot;: 1500
+    },
+    &quot;isLate&quot;: true,
+    &quot;isPublic&quot;: false,
+    &quot;location&quot;: {
+        &quot;latitude&quot;: &lt;&gt;&gt;,
+        &quot;longitude&quot;: &lt;&gt;&gt;
+    },
+    &quot;retakeCounter&quot;: 4,
+    &quot;takenAt&quot;: &quot;2022-08-10T09:14:11Z&quot;
+}
+</code></pre>
+<p>Something of note here, is the way that BeReal stores images in a way that I can&rsquo;t just crawl all the Images, and download them all.</p>
+<p>Something of concern here is the Precise location of a post, down to a 1M accuracy.</p>
+<pre><code>&quot;location&quot;: {
+        &quot;latitude&quot;: &lt;&gt;&gt;,
+        &quot;longitude&quot;: &lt;&gt;&gt;
+ },
+</code></pre>
+<p>You&rsquo;re wondering what we can do with this data?</p>
+<p>We can scrape it for all our friends, and plot it out in Grafana or Tableau and work out where they spend a lot of time, as well as predict places of work, partners houses etc.</p>
+<p><a href="https://shomil.me/bereal/#:~:text=Now%20one%20might,people%E2%80%99s%20homes%3F%20Workplaces%3F">Someone else who reverse engineered the app did something similar</a></p>
+<h3 id="lets-break-down-the-image-url">Let&rsquo;s break down the Image URL</h3>
+<pre><code>Photos/&lt;me&gt;/bereal/7c44d6e8-086b-4a18-b8b4-d3785f58cda8-1660122851.jpg
+</code></pre>
+<p>Image URL
+<code>Photos</code> - This is the subdirectory in the Bucket that the images are stored in (This is down to how GCS and Load balancers interact with each other)</p>
+<p><code>&lt;me&gt;</code> - This is going to be the Users Unique ID, AlphaNumeric string</p>
+<p><code>bereal</code> - Not too sure why this is in here, I assume this may have something to do with where videos are also stored?</p>
+<p><code>7c44d6e8-086b-4a18-b8b4-d3785f58cda8</code> - I&rsquo;m not too sure about this, I would *assume * that it&rsquo;s going to be a unique ID for that day and user to upload the image with</p>
+<p><code>1660122851</code> - Linux Epoch time the image was finalized
+<img src="__GHOST_URL__/content/images/2022/08/image-1.png" alt=""></p>
+<h3 id="perhaps-the-most-interesting-api">Perhaps, the most interesting API</h3>
+<p>One of the API&rsquo;s that stuck out the most was the <code>cloudfunctions</code> one</p>
+<pre><code>https://us-central1-alexisbarreyat-bereal.cloudfunctions.net
+</code></pre>
+<p>This is an application that runs on Google App Engine (GAE) which does some cool things:</p>
+<ul>
+<li>Convert Id&rsquo;s to Names</li>
+<li>Convert Phone numbers to users</li>
+<li>Publishes a message to Pub/Sub</li>
+<li>[Deprecated] Suggest friends you may know</li>
+</ul>
+<p>Now this is useful especially from a data exfiltration standpoint as you are able to convert a butt load of Phone numbers to Users, and do some Osint.</p>
+<h2 id="public-feeds">Public Feeds</h2>
+<p>The public feeds works a different way compared to your actual friends feeds.</p>
+<ol>
+<li>You navigate to the feeds page</li>
+<li>It loads the feeds page</li>
+<li>It makes subsequent calls to the <a href="https://us-central1-alexisbarreyat-bereal.cloudfunctions.net/getUserNames"><code>https://us-central1-alexisbarreyat-bereal.cloudfunctions.net/getUserNames</code></a> API to convert <code>uid</code>&rsquo;s to Usernames</li>
+<li>Loads the images from the storage bucket</li>
+</ol>
+<hr>
+<h2 id="closing-notes">Closing Notes</h2>
+<p>There are alot more API endpoints I have not found yet, as well as don&rsquo;t want to mention from fear of lawyers coming at me.</p>
+<p>But I have made a list of API endpoints, as well as responses etc available on my Github.
+[</p>
+<p>GitHub - userbradley/BeReal: How does BeReal work (Under the hood)</p>
+<p>How does BeReal work (Under the hood). Contribute to userbradley/BeReal development by creating an account on GitHub.</p>
+<p><img src="https://github.githubassets.com/favicons/favicon.svg" alt="">GitHubuserbradley</p>
+<p><img src="https://opengraph.githubassets.com/008e444a696cd7cde3b7e5b5219f89fafbcd509bee2c1277c4172ed25bc277d3/userbradley/BeReal" alt="">
+](<a href="https://github.com/userbradley/beReal">https://github.com/userbradley/beReal</a>)
+BeReal seems to be cool application, and their intentions are good, but I am somewhat suspicious of what they do with the data, as I mean, they have daily coordinates of where you are and can build patterns around it.</p>
+<hr>
+<h2 id="about-the-author">About the Author</h2>
+<p>Bradley is the DevOps engineer for the biggest Pet care company in the UK, specializing in GCP as well as finding solutions for all problems.</p>
+<p>His blog posts go from How to&rsquo;s to Infrastructure deep dives as well as reverse engineering.</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/how-i-got-to-where-i-am-now/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">How I got to where I am now</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>Getting a job in IT can be easy, but also not. In today&rsquo;s installment of blog post, we&rsquo;re going to do a deep dive in to my career, recommendations I would make to younger me and things I would avoid doing.</p>
+<p>Let&rsquo;s start</p>
+<p>This is structured as an interview with my self, but in reality it&rsquo;s me typing this at my desk on a Wednesday night. Go figure</p>
+<hr>
+<h2 id="where-i-am-now">Where I am now</h2>
+<p>So currently I am at a Pet care company, doing Devops. From what I can gather, I&rsquo;ve been brought on as someone who&rsquo;s full time job is to know the cloud, and advise on things related to the cloud.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 8 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/homelab-v2/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Homelab V2</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>It&rsquo;s like the original <a href="__GHOST_URL__/kubernetes-at-home/">Home lab</a> but this time, not quite as bad.</p>
+<p>Home labs are very personal, what works for me wont work for you. What you like, I may dislike. Homelab V2.</p>
+<p>The whole idea behind why Homelab V2 has come about, is because one of the services I host, Mealie, crashed and burnt so badly that we were having to go back to using cook books and digging through the backup JSON to find recipes.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 4 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

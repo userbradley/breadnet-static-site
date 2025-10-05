@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Markdown on Hugo Themes</title>
+    <link>http://localhost:1313/categories/markdown/</link>
+    <description>Recent content in Markdown on Hugo Themes</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>Copyright © 2008–2019, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Wed, 28 Dec 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/markdown/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Test</title>
+      <link>http://localhost:1313/post/test/</link>
+      <pubDate>Wed, 28 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/test/</guid>
+      <description>&lt;p&gt;Looking at an easier way to host static sites? Fly.io has you covered!&lt;/p&gt;&#xA;&lt;p&gt;Test test&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Fly.io is cool</title>
+      <link>http://localhost:1313/post/fly-io-is-cool/</link>
+      <pubDate>Wed, 07 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/fly-io-is-cool/</guid>
+      <description>&lt;p&gt;Looking at an easier way to host static sites? Fly.io has you covered!&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

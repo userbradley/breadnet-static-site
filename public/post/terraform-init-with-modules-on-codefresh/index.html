@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Terraform init on codefresh with private modules · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Terraform init on codefresh with private modules</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Terraform init on codefresh with private modules</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 5 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>It&rsquo;s no secret that I love codefresh. I find it incredibly simple to use, and it just makes sense.</p>
+<p>One thing that does not make sense is how to easily run <code>terraform init</code> on codefresh with <strong>private modules</strong> stored on Github (or BitBucket)</p>
+<h2 id="the-issue">The issue</h2>
+<p>So the issue we have with any module, is how we access it. If your module is public, then you can use the <a href="https://developer.hashicorp.com/terraform/language/modules/sources#github">GitHub</a> URL like the below</p>
+<pre><code>module &quot;consul&quot; {
+  source = &quot;github.com/hashicorp/example&quot;
+}
+</code></pre>
+<p>This makes the assumption that the module is public</p>
+<p>When we have private modules, like for exmaple my DNS records one:</p>
+<pre><code>module &quot;documentation&quot; {
+  source  = &quot;git::ssh://git@github.com/userbradley/terraform-modules-cloudflare-breadnet-&lt;&gt;.git&quot;
+  name    = &quot;documentation&quot;
+  proxied = &quot;true&quot;
+  value   = &quot;&lt;&gt;&quot;
+}
+</code></pre>
+<p>The <code>source</code> has changed to use ssh now. In order to run <code>terraform init</code> on this, we&rsquo;re basically doing a <code>git clone</code> (<a href="https://github.com/hashicorp/terraform/issues/21522#issuecomment-497963956">as explained here</a>) on the repo&rsquo;s url.</p>
+<hr>
+<h2 id="some-assumptions-we-are-going-to-make">Some assumptions we are going to make</h2>
+<p>Annoyingly, before we get on to the solution, we need to make the below assumptions</p>
+<ul>
+<li>
+<p>You have a dedicated Git/ Bitbucket account for your Codefresh account</p>
+</li>
+<li>
+<p>We are calling mine <code>brobot</code></p>
+</li>
+<li>
+<p>You are running on a *nix based system (I am on a mac)</p>
+</li>
+</ul>
+<h2 id="setting-up-ssh-keys">Setting up SSH keys</h2>
+<p>We need to create the keys, and add them to the relevant systems that need them!</p>
+<h3 id="creating-the-keys">Creating the keys</h3>
+<p>The first step is creating the SSH keys to use.</p>
+<ol>
+<li>Open a terminal</li>
+<li>Run <code>ssh-keygen-t ed25519</code> and give it a useful name like <code>robot</code></li>
+<li>Copy the keys to the clipboard</li>
+<li><code>cat ~/.ssh/robot.pub | pbcopy</code></li>
+<li><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Login to Github and add SSH Keys </a></li>
+</ol>
+<h3 id="create-the-secret-on-codefresh">Create the secret on codefresh</h3>
+<p>Once we&rsquo;ve got the public key uploaded to Github, we are able to add the private key to Codefresh.</p>
+<p>Depending on your security posture, you can either add these variables at a Pipeline  level, or a Project. For ease, I recommend at Project level as it means less times you need to locate the ssh keys, and also&hellip; You can delete them from your compute.</p>
+<ol>
+<li>Login to <code>g.codefresh.io</code></li>
+<li>Navigate to Projects</li>
+<li>Click on the project you want to add the keys to</li>
+<li>Click <code>Variables</code></li>
+<li>Copy the private key <code>cat ~/.robot | base64 | pbcopy</code></li>
+<li>Create a secret on codefresh called <code>ssh_key</code></li>
+<li>Paste the value in, and click encrypt</li>
+</ol>
+<blockquote>
+<p>Why are we base64 encoding it?</p></blockquote>
+<p>In order to get the file to not be formatted like garbage, we base64 the file so it keeps formatting, and means we can single line it when we put it in codefresh, as I don&rsquo;t think codefresh has a <code>--from-file=</code> option like kubernetes</p>
+<hr>
+<h2 id="creating-the-pipeline">Creating the pipeline</h2>
+<p>Now that we have the SSH keys created, and the keys uploaded to both GitHub and Codefresh, now it&rsquo;s time to actually use them.</p>
+<p>The tl;dr is:</p>
+<ul>
+<li>Create a step to echo the file, base64 decode it to the shared volume</li>
+<li><code>ssh-keyscan</code> github and add it to shared volume</li>
+<li><code>chmod</code> it</li>
+<li>mount shared volume</li>
+</ul>
+<h3 id="ssh-key-init-step">SSH Key init step</h3>
+<p>This is the most importat step, as this is where we take the secret, and inject it in to the shared volume <a href="https://codefresh.io/docs/docs/yaml-examples/examples/shared-volumes-between-builds/">(read more about that here)</a></p>
+<p>Below is some <em>okay</em> code that does the job</p>
+<pre><code>  sshSetUp:
+    image: alpine/git:2.36.3
+    title: Setting up SSH
+    stage: init
+    commands:
+      - mkdir -p /codefresh/volume/ssh
+      - echo $ssh_key | base64 -d &gt; /codefresh/volume/ssh/id_rsa
+      - ssh-keyscan github.com &gt; /codefresh/volume/ssh/known_hosts
+      - chmod 600 /codefresh/volume/ssh/id_rsa
+</code></pre>
+<p>A breif explination is below on what each line does</p>
+<ul>
+<li>
+<p>image:</p>
+</li>
+<li>
+<p>We use an alpine based image as it&rsquo;s small and use the git one as it has git built in</p>
+</li>
+<li>
+<p>title: Give it a name basically</p>
+</li>
+<li>
+<p>stage: what stage this runs in the pipeline. best to use init</p>
+</li>
+<li>
+<p>commands:</p>
+</li>
+<li>
+<p>mkdir</p>
+</li>
+<li>
+<p>Creates the <code>/codefresh/volume/ssh</code> directory if it doesnt already exist</p>
+</li>
+<li>
+<p>echo <code>$ssh_key</code></p>
+</li>
+<li>
+<p>Echos the key, base64 decodes it and then writes it to the volume</p>
+</li>
+<li>
+<p>ssh-keyscan</p>
+</li>
+<li>
+<p>scans github.com:22 for the public keys it has on record (So we dont get an error about keys not found)</p>
+</li>
+<li>
+<p>chmod</p>
+</li>
+<li>
+<p>Sets the permissions on the key file</p>
+</li>
+</ul>
+<h3 id="consuming-the-keys-in-the-init-step">Consuming the keys in the init step</h3>
+<p>Now we have the keys on the shared volume, we need to consume it in the init step.</p>
+<p>I orginally went about this by trying to copy the files from the shared volume each time, as <code>/root</code> on the steps are ephemeral</p>
+<p>I then trued to symlink the <code>/codefresh/volume/ssh/id_rsa</code> to <code>/root/.ssh</code> when I thougt &ldquo;wonder if we can mount volumes&rdquo;</p>
+<p>You can!</p>
+<pre><code>  TerraformInit:
+    image: hashicorp/terraform:light
+    title: Terraform Init
+    stage: init
+    working_directory: &quot;${{clone}}/kubernetes&quot;
+    commands:
+      - terraform init
+    volumes:
+      - ./ssh:/root/.ssh
+</code></pre>
+<p>This follows the same format, but there are 2 important details here</p>
+<ul>
+<li>
+<p>working_directory</p>
+</li>
+<li>
+<p>Sets where the container is running the task. Comparible to going <code>cd /bradley</code></p>
+</li>
+<li>
+<p>volumes</p>
+</li>
+<li>
+<p>mounting <code>/codefresh/volume/ssh</code> to <code>/root/.ssh</code> on the container</p>
+</li>
+</ul>
+<p>This then allows terraform to run the init step, puling the module from Github!</p>
+<hr>
+<h2 id="wrap-up">Wrap up</h2>
+<p>I hope this page was of some use to you.</p>
+<p>I put all the documentation I write on my new documentation site, feel free to have a look around
+[</p>
+<p>Welcome</p>
+<p>breadNET Documentation</p>
+<p><img src="https://documentation.breadnet.co.uk/favicon.ico" alt="">logo</p>
+<p><img src="https://documentation.breadnet.co.uk/assets/images/social/index.png" alt="">
+](<a href="https://documentation.breadnet.co.uk/?mtm_campaign&amp;#x3D;blogpost&amp;amp;mtm_kwd&amp;#x3D;terraform-init-codefresh">https://documentation.breadnet.co.uk/?mtm_campaign&amp;#x3D;blogpost&amp;amp;mtm_kwd&amp;#x3D;terraform-init-codefresh</a>)
+As always, if you struggle, you can reach out to me at <code>webmaster at breadnet dot co dot uk</code> and I will do my best to help you where I can!</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/terraform-init-on-github-actions-with-private-modules/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Terraform init on GitHub actions with private modules</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>Last month I wrote a blog post about how to run <code>terraform init</code> on codefresh. Sadly Codefresh are changing their pricing which makes it alot more expenive per developer. For this reason, we&rsquo;re migrating our pipelines at work to GitHub actions.
+[</p>
+<p>Pricing &amp; Plans | Codefresh</p>
+<p>Sign up for Codefresh today and get a 14-day trial of our Enterprise plan. Flexible pricing plans for every project and budget.</p>
+<p><img src="https://codefresh.io/wp-content/uploads/2022/07/cropped-favicon_codefresh_2_512x512-192x192.png" alt="">Codefresh</p>
+<p><img src="https://codefresh.io/wp-content/uploads/2023/03/Open_Graph_Homepage.jpg" alt="">
+](<a href="https://codefresh.io/pricing/">https://codefresh.io/pricing/</a>)
+tl;dr: It&rsquo;s going from $34 pcm for 10 devs on a small runner to ~$50+ per dev per month.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 4 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/stuff-i-find-cool/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Stuff I find cool</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><hr>
+<p><img src="__GHOST_URL__/content/images/2020/06/xoa.png" alt="xcp-ng logo">
+I&rsquo;m not sure if this would come under software but this is what runs my servers. XCP-NG is the hypervisor and xen orchestra is the orchestration service I use. It&rsquo;s got an API called &lsquo;xo-cli&rsquo; and is terraform (woo!) compatible. You only need one xoa server to manage a whole data centre worth of servers (physical hosts)
+<img src="__GHOST_URL__/content/images/2020/06/mino-1.jpg" alt="Minio logo">
+Minio is a self hosted s3 compatible object storage with a web interface and a client called mc which makes admin work a breeze. Some times it can be a real pain to get started with if you&rsquo;ve never used s3 storage before.
+<img src="__GHOST_URL__/content/images/2020/06/do.png" alt="Digital ocean Logo">
+Well, not really software but they are who I host all my external services with.
+<img src="__GHOST_URL__/content/images/2020/06/51KORkIMXqL.png" alt="Jellyfin">
+An Emby fork designed to be user friendly and not steal your data. Which is important to me as I don&rsquo;t like being sold as a product. It can run on docker or bare metal. I have mine somewhere in London as a docker with an s3 as a back end. (post incoming)</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 1 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

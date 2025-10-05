@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>ZeroTrust and you · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">ZeroTrust and you</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">ZeroTrust and you</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 4 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <h2 id="firstly-what-is-zero-trust">Firstly what is zero trust</h2>
+<p>So from what I can tell, zero trust is a process of trusting nothing, not even the network you&rsquo;re on! It&rsquo;s designed to help with the &ldquo;Digital transition to the cloud&rdquo;, which especially with the big &lsquo;rona around, this is good!</p>
+<p>We&rsquo;re seeing more business&rsquo; adopting a zero trust model as employees are working from home, and Corporate IT teams are scrambling to enable workers to access internal servers and applications.</p>
+<p><a href="https://www.okta.com/sites/default/files/2021-07/WPR-2021-ZeroTrust-070821.pdf">According to Okta</a>, zero trust has increased as a priority for 78% of business!  </p>
+<h3 id="the-tldr">The TLDR;</h3>
+<p>Zero trust is exposing internal services behind a login page that has secure communication to the backend, or using hardware keys on computers. Be this using SSO or federated systems like LDAP behind the proxy, we call this zero trust.</p>
+<h2 id="options-on-the-market">Options on the market</h2>
+<p>As with anything, there are several options that one can use.</p>
+<ul>
+<li>Duo Beyond</li>
+<li>Perimeter81</li>
+<li>Forcepoint Dynamic Security Solutions</li>
+<li>Prove</li>
+<li>Google BeyondCorp</li>
+<li>Microsoft 365 Azure</li>
+<li>Okta Identity Cloud</li>
+<li>Palo Alto Networks</li>
+<li>Proofpoint Meta</li>
+<li>Unisys Stealth</li>
+<li>Cloudflare Teams access</li>
+<li>Pritunl Zero</li>
+<li>Teleport</li>
+</ul>
+<p>Each one had it&rsquo;s fare share of good as well as bad things about it.</p>
+<p>I needed my solution to:</p>
+<ul>
+<li>Allow SSH Bastion</li>
+<li>Allow web connections</li>
+<li>2FA</li>
+<li>Central user management</li>
+<li>Simple to use</li>
+<li>Run on minimal hardware (s1-2 on OVH)</li>
+</ul>
+<h2 id="option-i-went-with">Option I went with</h2>
+<p>Based on my above requirements, I&rsquo;ve decided to go with <a href="https://zero.pritunl.com">Pritunl Zero</a></p>
+<p>It allows SSH, Web, 2FA on both web interfaces and the admin UI, Users are managed via the webUI, and stored in MongoDB and it&rsquo;s pretty simple to use!</p>
+<h2 id="implementation">Implementation</h2>
+<p>All my code for this can be located on the below github repo:
+[</p>
+<p>GitHub - userbradley/zerotrust-public</p>
+<p>Contribute to userbradley/zerotrust-public development by creating an account on GitHub.</p>
+<p><img src="https://github.githubassets.com/favicons/favicon.svg" alt="">GitHubuserbradley</p>
+<p><img src="https://opengraph.githubassets.com/2308e21c024e7a78416d8c208b1ab6c624b50f62905581ef7298b47a62472324/userbradley/zerotrust-public" alt="">
+](<a href="https://github.com/userbradley/zerotrust-public">https://github.com/userbradley/zerotrust-public</a>)
+For getting started on using terraform with OVH, follow <a href="__GHOST_URL__/terraform-ovh-openstack/">This guide </a></p>
+<p>Once setup with terraform, set the <code>me</code> variables in <code>terraform.tfvars</code> if on a mac, or edit the file path under <code>ssh.tf</code> to the full path of your SSH key.</p>
+<p>Once that&rsquo;s up, you need to SSH in to the server, copy the <code>install.sh</code> file and run it!</p>
+<p>Finally get the password with <code>sudo pritunl-zero default-password</code></p>
+<p>If you plan on running an SSH bastion, you need to install Docker, which can be found <a href="https://docs.docker.com/get-docker/">here</a></p>
+<p>Full setup can be found below:
+[</p>
+<p>Getting Started SSH</p>
+<p>Install and configure Pritunl Zero SSH certificates with two-factor authentication</p>
+<p><img src="https://files.readme.io/gkjYhYaZQkyKjQTOFpIn_favicon.ico" alt="">Pritunl</p>
+<p><img src="https://files.readme.io/306844c-ssh0.png" alt="">
+](<a href="https://docs.pritunl.com/docs/pritunl-zero">https://docs.pritunl.com/docs/pritunl-zero</a>)</p>
+<h2 id="issues-ive-had">Issues I&rsquo;ve had</h2>
+<p>So there have been a few teething issues I&rsquo;ve had!</p>
+<ol>
+<li>Installing the bastion service doesn&rsquo;t detail installing docker, the logs reflect this:</li>
+</ol>
+<p><img src="__GHOST_URL__/content/images/2021/12/image.png" alt="">
+As soon as Docker was installed:
+<img src="__GHOST_URL__/content/images/2021/12/image-1.png" alt="">
+2. SSH not working after certificate has expired</p>
+<p>So the specific error you&rsquo;d get here is:</p>
+<pre><code>check_host_cert: certificate signature algorithm ssh-rsa: signature algorithm not supported
+Received disconnect from &lt;ip&gt; port 9800:2: Too many authentication failures
+Disconnected from &lt;ip&gt; port 9800
+kex_exchange_identification: Connection closed by remote host
+</code></pre>
+<p>The simple way to solve this is run <code>pritunl-ssh</code> and allow the new key on the web interface
+<img src="__GHOST_URL__/content/images/2021/12/image-2.png" alt="">
+3. Config files are confusing!
+ So this was more on me than anything, and I&rsquo;m hoping that by me showing you how to write one, as well as where the username comes from etc</p>
+<p>Example config file:</p>
+<pre><code>Host 198.244.155.107
+    ProxyJump bastion@&lt;bastionaddress&gt;:9800
+
+ host reverse1-lon
+ hostname reverse1.lon.eu.breadnet.co.uk
+ user root
+ ProxyJump bastion@&lt;bastionaddress&gt;:9800
+</code></pre>
+<ul>
+<li></li>
+</ul>
+<p>Lines <code>1-2</code></p>
+<ul>
+<li>
+<p>Connects to the host 198&hellip;</p>
+</li>
+<li>
+<p>Username is your logged in user</p>
+</li>
+<li>
+<p>Uses the ssh key defined when you setup the local pritunl-ssh</p>
+</li>
+<li></li>
+</ul>
+<p>Rest of the file</p>
+<ul>
+<li>Using a simple name</li>
+<li>Logs in as root</li>
+<li>Jumps via the bastion</li>
+<li>Same SSH key as the above</li>
+</ul>
+<hr>
+<p>Closing notes:</p>
+<p>So this was a really short one, but I really wanted to share this as there&rsquo;s sub-minimal documentation around this topic and specifically around pritunl-zero.</p>
+<p>If you have any issues or confused with anything please feel free to reach out to me!</p>
+<hr>
+<p>So I&rsquo;ve added the ability to subscribe to my site&hellip; I know no one will, but I thought I would try and let yall enjoy it? It will just be a link to the latest post!</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/your-spotify-2022/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Your Spotify: 2022</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>I wrote a post in June of 2020 about installing this super cool application called <code>your spotify</code></p>
+<p>If you didn&rsquo;t join us in 2020, let me give you the rundown on what <code>your_spotify</code> is</p>
+<p>It&rsquo;s an application that runs on <a href="https://www.docker.com">Docker containers</a> that poll Spotify&rsquo;s API to get information about your current listening, and then build dashboards around them. See below photos</p>
+<p><img src="https://user-images.githubusercontent.com/17204739/154752226-c2215a51-e20e-4ade-ac63-42c5abb25240.png" alt=""></p>
+<h2 id="how-to-install-and-use">How to install and use</h2>
+<p>You will need the below to be installed</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 3 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Moving to the cloud: Intro · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Moving to the cloud: Intro</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Moving to the cloud: Intro</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 8 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>We will start this story with the facts. I am getting older, and I want to move out. As I get older, I am forced to accept more responsibilities, like paying for my own electricity.</p>
+<p>As any selfhoster will tell you, this is what bleeds their wallets dry.</p>
+<p>Moving to the cloud is not a decision I took lightly, there was alot of consideration put in to this. I was considering purchasing a newer server, probably a Dell r610 or something of that range and maxxing out the specs, but that pulls a fair bit of electricity, and where I plan to live, would also be in the same room as where I sleep. Fun</p>
+<p>What cloud provider am I going with?</p>
+<p>Well, glad you asked. I have decided to go with a french company called <a href="https://ovh.com">OVH</a> as their prices are pretty hard to beat (at-least from what I have seen)</p>
+<blockquote>
+<p>This article was written before they burnt down their Datacentre, so I am sort of re-evaluating my decisions&hellip;</p></blockquote>
+<p>One node costs £3.60 pcm (vat inc) compared to £6 from digital ocean for a similarly specced machine. Not bad eh?</p>
+<p>Let&rsquo;s do a cost break down per cloud provider, using their minimum viable product as well as correctly sizing the nodes
+<img src="__GHOST_URL__/content/images/2020/07/image-1.png" alt="Cost breakdown for Digital ocean vs OVH">
+I was also considering doing something on GCP with pre-emptible vm&rsquo;s (They get shutdown at any time, moved around, basically abused, for a fraction of the cost)</p>
+<p>Below is my ideal setup for moving my stuff off my host at home, to the cloud
+<img src="__GHOST_URL__/content/images/2020/07/Untitled-drawing.png" alt="">
+Most of the things I run are native web applications, hence why I can slap them on a really basic vm. But, applications like Zabbix and Jellyfin are full blown applications that need COMPUTE! hence why they are on a slightly more powerful host.</p>
+<p>Now, the issue I face here is that, I need to in effect, install 13 web apps. I don&rsquo;t really fancy having to do them one by one, so I plan to automate the bajeebus out of it (well, as much as possible)</p>
+<p>A nice thing about using something like Ansible is you can see <strong>exactly</strong> what was done, so if something breaks, I have a rough idea of what the hell is up.</p>
+<p>Another nice thing about ansible, is I can create a teardown playbook that dumps databases, copies config files etc to my local host, then allowing me to move cloud providers painlessly.</p>
+<p>You can see my setup below.
+It&rsquo;s most likely still work in progress, but you can copy parts if you so desire.</p>
+<p>Now I am by no means an ansible expert, or a cicd engineer or what have you, but I can google and I&rsquo;m pretty decent at it.
+[</p>
+<p>userbradley/breadnet-infra</p>
+<p>Breadnet Infra setup though ansible. Contribute to userbradley/breadnet-infra development by creating an account on GitHub.</p>
+<p><img src="https://github.githubassets.com/favicons/favicon.svg" alt="">GitHubuserbradley</p>
+<p><img src="https://avatars2.githubusercontent.com/u/41597815?s=400&amp;v=4" alt="">
+](<a href="https://github.com/userbradley/breadnet-infra">https://github.com/userbradley/breadnet-infra</a>)
+This ansible playbook works methodically. Below are the steps I am striving towards:</p>
+<ol>
+<li>Install nginx on <code>rev1</code></li>
+<li>Install Nginx and mysql on <code>app1</code> along with Analytics, Website, kanboard, status page and month server (used for reddit posts)</li>
+<li>Install Nginx and mysql on <code>app2</code> along with Bookstack, Firefly, Passbolt, Nextcloud and may need to put docker in a container, this I will need to test</li>
+<li>Install Zabbix, Jellyfin and Minecraft on <code>app3</code></li>
+</ol>
+<p>So far I have faced a few issues, mainly down to my own stupidity, and some down to a simple lack of knowledge of ansible.</p>
+<p>The first being how I was calling what to install on each server, I had some funky fike structure like you see below.</p>
+<p>The issue was you would call the file <code>setup.yml</code> which would call on the files in the folder called <code>setup</code> which would then run their respective jobs.</p>
+<pre><code>.
+├── hosts
+├── README.md
+├── setup
+│   ├── defaults
+│   │   └── main.yml
+│   ├── group_vars
+│   │   ├── all.yml
+│   │   ├── app1.yml
+│   │   └── app2.yml
+│   └── tasks
+│       ├── bookstack.yml
+│       ├── files
+│       │   ├── bookstack_env.j2
+│       │   ├── bookstack_nginx.j2
+│       │   ├── kanboard_config.j2
+│       │   ├── kan_nginx.j2
+│       │   ├── matomo_nginx.j2
+│       │   ├── status.env.j2
+│       │   ├── status.j2
+│       │   └── zabbix_apache2.j2
+│       ├── ghost.yml
+│       ├── - include: nginx.yml
+│       ├── jellyfin.yml
+│       ├── kanboard.yml
+│       ├── main.yml
+│       ├── matomo.yml
+│       ├── mysql.yml
+│       ├── nginx.yml
+│       ├── php7.2.yml
+│       ├── reboot.yml
+│       ├── scripts
+│       │   └── inscomp.sh
+│       ├── status.yml
+│       └── zabbix.yml
+├── setup.yml
+├── tasks
+│   ├── files
+│   │   ├── bookstack_env.j2
+│   │   ├── bookstack_nginx.j2
+│   │   ├── kanboard_config.j2
+│   │   ├── kan_nginx.j2
+│   │   ├── matomo_nginx.j2
+│   │   ├── status.env.j2
+│   │   ├── status.j2
+│   │   └── zabbix_apache2.j2
+│   ├── ghost.yml
+│   ├── main.yml
+│   └── scripts
+│       └── inscomp.sh
+└── test
+    ├── defaults
+    │   └── main.yml
+    ├── hosts
+    ├── roles
+    │   ├── bookstack
+    │   │   ├── defaults
+    │   │   │   └── main.yml
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── common
+    │   │   └── tasks
+    │   │       ├── mysql.yml
+    │   │       └── php7.2.yml
+    │   ├── defaults
+    │   │   └── main.yml
+    │   ├── jellyfin
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── kanboard
+    │   │   ├── defaults
+    │   │   │   └── main.yml
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── matomo
+    │   │   ├── defaults
+    │   │   │   └── main.yml
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── mysql
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── nginx
+    │   │   ├── defaults
+    │   │   │   └── main.yml
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── reboot
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── status
+    │   │   ├── defaults
+    │   │   │   └── main.yml
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   └── zabbix
+    │       └── tasks
+    │           └── main.yml
+    └── setup.yml
+</code></pre>
+<p>Now those of you who do ansible day in day our are probably wanting to swat my house, and I&rsquo;m sorry - You wont like this next part.</p>
+<p>My solution on what tasks were to be run per server was so bad, that it actually made me consider giving up.</p>
+<pre><code>---
+- include: reboot.yml
+  become: yes
+  when:
+     - reboot|bool
+       
+- include: nginx.yml
+  become: yes
+  delegate_to: app2
+  when: 
+     - inventory_hostname in groups['app1']
+     #- inventory_hostname in groups['app2']
+     - inventory_hostname == app[1]
+     - inventory_hostname in groups['app1']|default([])
+     - nginx|bool
+  tags:
+      - nginx
+</code></pre>
+<p>This was my attempt at getting it nginx to run on server <code>app1</code> - Not great.</p>
+<p>I asked the kind people of reddit and someone pointed me in the right direction, now everything actually works for a start. So if anyone finds my page from googling &lsquo;How to run different playbooks on different servers&rsquo; (not even close to what I actually needed) then check out how I have done it on github. You&rsquo;re welcome</p>
+<p>My second issue I faced was that I use Nginx as I just found it so much simpler to understand. And yes, apache2 and I had a good childhood growing up, but times change
+<img src="__GHOST_URL__/content/images/2020/07/image-2.png" alt="">A meme for all you cool kids
+And for some reason Apache2 was being installed when ever I ran the install php7.2 task.</p>
+<p>Let&rsquo;s take a look at the task for a second (in breif)</p>
+<pre><code>---
+    - name: Add PHP repository 
+      become: true
+      apt_repository:
+       repo: 'ppa:ondrej/php'
+      tags: [php1]
+
+    - name: Update repositories
+      become: true
+      apt:
+       update_cache: yes
+      tags: [php2]
+
+    - name: Install php7.2 #Move to a global install
+      become: true
+      apt: name=php7.2 update_cache=yes state=latest
+      tags: [php3]
+
+    - name: Install php7.2-cli #Move to a global install
+      become: true
+      apt: name=php7.2-cli update_cache=yes state=latest
+      tags: [php4]
+</code></pre>
+<p>Now those of you who have been dealing with linux and PHP longer than I&rsquo;ve been alive will know exactly what the hell is going on here, something I did not.</p>
+<p>So I went to the only place that keeps us Sysadmins employed, google.</p>
+<blockquote>
+<p>Does Apache2 auto install when installing PHP 7.2?</p></blockquote>
+<p>Yes - it does. See, I was installing <code>php7.2</code> which has a package dependency of&hellip; you guessed it <code>libapache2-mod-php7.2</code> which as far as I care to know, is apache2.</p>
+<p>The way I figured this out was really painful, but I ran the playbook with <code>-t php1</code> then
+<code>-t php2</code> and running <code>systemctl status apache2</code> till I saw it kick back a response.</p>
+<p>My tip for anyone else dealing with weird issues like this? Just segment everything down, read the logs, take it a step at a time. This is the nice thing with ansible is you can see exactly what it did, and there seems to be quite a nice community over at reddit. You dont want to lean on them to spoon feed you, but use them as your last resort! (eg: after page 2 of google)
+[</p>
+<p>r/ansible</p>
+<p>r/ansible: Automation for the People! A Subreddit dedicated to fostering communication in the Ansible Community, includes Ansible, AWX, Ansible …</p>
+<p><img src="https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png" alt="">reddit</p>
+<h2 id="heading"><img src="https://b.thumbs.redditmedia.com/WmbHlRNHXOci-aUzBgHmKPMHRNvI2OtKF2XguHteO5A.png" alt="">
+](<a href="https://reddit.com/r/ansible">https://reddit.com/r/ansible</a>)</h2>
+<p>Now we have the fluff of what I&rsquo;m doing out of the way, we can finally start running things!</p>
+<hr>
+<p>Stay tuned for a part 2!</p>
+<p>(Note from the Author: I will probably land up changing a lot of things)</p>
+<hr>
+<p>You can hire me via <a href="https://www.upwork.com/freelancers/~01c61ee9802b94133e">Upwork</a> or <a href="mailto:work@breadnet.co.uk">emailing me</a> for weekend projects!</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/nginx-reverse/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Nginx and Lets encrypt, a story of reverse proxying</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>This is something that took some time to get my head around, but once I managed to (somewhat) figure it out, it&rsquo;s made exposing my services to the internet a lot easier</p>
+<p>After a few years of building up the courage and knowledge to host stuff that my friends and I can use, it&rsquo;s become apparent that updating a DNS record every time your public IP at home changes, isn&rsquo;t a great way to host things. This is where Nginx reverse proxy comes in.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 8 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/moving-to-the-cloud-2/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Moving to the cloud: Infrastructure</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>Welcome back!</p>
+<p>If you&rsquo;re not seen it, I suggest you have a read of:
+[</p>
+<p>breadNET Cloud Migration</p>
+<p>How did I move all my servers to the cloud? Well - Ansible, automation and CI/CD!</p>
+<p><img src="https://breadnet.co.uk/favicon.png" alt="">breadNETBradley Stannard</p>
+<p><img src="https://images.unsplash.com/photo-1560182413-53772f3d7134?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="">
+](<strong>GHOST_URL</strong>/cloud-migration-part-1/)
+In this installment of &ldquo;Something I did at 4am that really should have been done during the day&rdquo; we will be looking at the infrastructure that will be powering my internal services.</p>
+<p>I had a lot of issues during this, but let&rsquo;s take a look at the code first.
+[</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 10 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

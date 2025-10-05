@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Cloud-init that works · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Cloud-init that works</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Cloud-init that works</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 4 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>For some reason this single task has stumped me for around 3 years till I had to basically wipe my home lab as I messed up some hard drive install procedure half juggling act.</p>
+<p>I will be writing these instructions for Xen Orchestra but almost 99% of this can be transfered to other virtualization servers.</p>
+<p>First we will need to start with creating a VM on your server.</p>
+<p>I am chosing Ubuntu 18.04 as this is the current Ubuntu image I trust. generally I will move on to the latest LTS release after it&rsquo;s been out for a year.</p>
+<p>Create the VM with 1 core, 1gb ram and 10gb drive. Give it a name.
+<img src="__GHOST_URL__/content/images/2020/08/image.png" alt="">
+Once it&rsquo;s done, run though the install procedure as you normally would till you get to the disk options. This is where it gets fun. We need to install everything on one partition to allow for disk resizing later on
+<img src="__GHOST_URL__/content/images/2020/08/image-2.png" alt="">
+Select Manual here
+<img src="__GHOST_URL__/content/images/2020/08/image-3.png" alt="">
+Select the disk then <code>Add Partition</code>
+<img src="__GHOST_URL__/content/images/2020/08/image-4.png" alt="">
+Type the avalible size (so in this case <code>9.998</code> )then create</p>
+<p>Finish the install as you usually would.
+<img src="__GHOST_URL__/content/images/2020/08/image-5.png" alt="">
+Dont worry too much about SSH keys as this all gets wiped with <code>cloud-init</code></p>
+<p>Let the install go on.</p>
+<p>Once the install is completed, reboot and remove the drive if instructed to.</p>
+<p>Login to the server though either xoa&rsquo;s web interface or via ssh. I find SSH is the best way.</p>
+<p>We need to install the xen tools before we do anything. I have a one liner I tend to run that does this
+<img src="__GHOST_URL__/content/images/2020/08/image-6.png" alt="">
+First mount the drive in xen orchestra, select <code>guest-tools.iso</code></p>
+<p>Now once we&rsquo;re logged in, the one liner</p>
+<pre><code>sudo -s
+mount /dev/cdrom /mnt &amp;&amp; bash /mnt/Linux/install.sh -n &amp;&amp; reboot now
+</code></pre>
+<p>This does 3 things.</p>
+<ol>
+<li>Mount the drive at /mnt</li>
+<li>Run the install.sh command siletly with no input from you needed</li>
+<li>reboots the machine</li>
+</ol>
+<p>Once rebooted, log back in and we can start with the actual cloud-init part</p>
+<hr>
+<pre><code> (adsbygoogle = window.adsbygoogle || []).push({});
+</code></pre>
+<p>Now we can install cloud-init and the software needed to grow the disk when we want a larger disk</p>
+<pre><code>sudo -s
+apt-get install cloud-init cloud-initramfs-growroot
+</code></pre>
+<p>Growroot package is needed to allow us to expand the disk on the template</p>
+<p>Now that is done, here comes the part I really have 0 clue about, and just crossed my fingers and hoped for the best. I suggest you do this via ssh, and full screen</p>
+<pre><code>dpkg-reconfigure cloud-init
+</code></pre>
+<p>Deselect them all, then match it to what I have below
+<img src="__GHOST_URL__/content/images/2020/08/image-7.png" alt="">ConfigDrive, OpenNebula, Azure and Openstack (I relase the photo is too small)</p>
+<blockquote>
+<p>I have had a very nice person (Who I cant name due to GDPR, love you bro) reach out to me to let me know the following, which I think is **very **importat to know</p></blockquote>
+<blockquote>
+<p>After multiple failed attempts, and some debugging I found that the latest(?) Ubuntu installer overrides the effects of the <code>dpkg-reconfigure</code> step with setting <em>datasource_list</em> to <em>[None]</em> in /etc/cloud/cloud.cfg.d/99-installer.cfg</p></blockquote>
+<blockquote>
+<p>Removing the offending line (or the whole file) fixed my problems. This info may help other people who will find your post later.</p></blockquote>
+<p>Press tab, then <code>OK</code></p>
+<p>Now we need to delete a folder that has caused me so much greif over the years</p>
+<pre><code>cd /var/lib/cloud
+rm -r instance
+</code></pre>
+<p>Run an update and upgrade for good measure and then shutdown</p>
+<pre><code>apt-get update &amp;&amp; apt-get upgrade -y &amp;&amp; sudo shutdown now
+</code></pre>
+<p>Once the VM is shut down you should see under <code>Advanced</code> that you can <code>Convert to Template</code>
+<img src="__GHOST_URL__/content/images/2020/08/image-8.png" alt="">
+Click it.</p>
+<p>Now when we go to create a new VM we type <code>Ubuntu cloud image</code> for the template name.</p>
+<p>I highly suggest you add your main computer&rsquo;s Public SSH key to XOA.</p>
+<hr>
+<p><img src="__GHOST_URL__/content/images/2020/08/image-10.png" alt="">
+Now when you create the VM, rename the name and the disk. Add your SSH key and click create.</p>
+<p>It shold take around about 30 seconds for the VM to be created and ready to use!</p>
+<p>You can ssh using the below as it has your SSH keys added</p>
+<pre><code>ssh ubuntu@IP 
+</code></pre>
+<p>if you have questions drop me an email at webmaster at breadnet dot co dot uk</p>
+<hr>
+<p>You can hire me via <a href="https://www.upwork.com/freelancers/~01c61ee9802b94133e">Upwork</a> or <a href="mailto:work@breadnet.co.uk">emailing me</a> for weekend projects!</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/cloud-init-ovh-and-terraform/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Cloud-init, OVH and terraform</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>Yup, it&rsquo;s that time of the year again when I talk about some issues I&rsquo;ve had and couldn&rsquo;t find a solution on google so I wrote about it.</p>
+<h2 id="what-is-the-problem">What is the problem?</h2>
+<p>If you&rsquo;re never used OVH and terraform, you&rsquo;ll know that standing up the instance using terraform is quite easy. But adding a second network adapter and getting that to get DHCP&hellip; No.</p>
+<p>I&rsquo;ve previously written about using cloud-init, see below, on local infrastructure.
+[</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 4 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/cloud-security/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Cloud security</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><blockquote>
+<p>This is still being written but I think it&rsquo;s important you see it</p></blockquote>
+<p>Well, It&rsquo;s official. I am now a &lsquo;Cloud engineer&rsquo; as far as my company is concerned. Woo!</p>
+<p>On the topic of cloud, I should make my first post about something that is usually overloked by companies when migrating to the cloud: <strong>Security</strong></p>
+<p>This is only a guidance and you should consult your SecOps team if you have one, or consider hiring consultants for this. You can get in contact and I can point you towards companies that are good at this.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 5 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

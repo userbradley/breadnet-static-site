@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>Migrating off of Bookstack · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">Migrating off of Bookstack</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">Migrating off of Bookstack</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 5 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>Organizing documentation is hard.</p>
+<p>I&rsquo;ll start the post off with that.</p>
+<hr>
+<p>Since I started my home lab back in 2018, I knew I needed a place to write down important information like the server name, where it&rsquo;s located and all the other stuff that goes along with that - Example below:
+<img src="__GHOST_URL__/content/images/2022/09/image.png" alt="">
+For a long time, that was bookstack. One of my favourite pieces of open source software.</p>
+<p>For those of you who aren&rsquo;t familiar with BookStack:</p>
+<ul>
+<li>Self Hosted Wiki</li>
+<li><code>wysiwyg</code> and <code>markdown</code> support</li>
+<li>Supports LDAP, AD and other integrations</li>
+<li>Built in PHP</li>
+<li>Used MariaDB as a database to store content</li>
+<li>Full API</li>
+<li><a href="https://www.bookstackapp.com/blog/10k-stars-and-a-look-back-at-first-sharing/">Recently hit 10k Stars</a></li>
+</ul>
+<p>For more information on BookStack, you can visit the site:
+[</p>
+<p>BookStack</p>
+<p>BookStack is a simple, open-source, self-hosted, easy-to-use platform for organising and storing information.</p>
+<p><img src="https://www.bookstackapp.com/images/favicon-196x196.png" alt="">BookStack</p>
+<p><img src="https://www.bookstackapp.com" alt="">
+](<a href="https://www.bookstackapp.com">https://www.bookstackapp.com</a>)
+At the time of writing, I currently have 125 pages active:</p>
+<pre><code>MariaDB [bookstack]&gt; select count(slug) as &quot;current pages&quot; from pages;
++---------------+
+| current pages |
++---------------+
+|           125 |
++---------------+
+1 row in set (0.001 sec)
+</code></pre>
+<p>I will add, that using BookStack has been amazing for my documentation writing skills. So much so, I have free-lanced simply being on calls with engineers, taking their <em>engineer</em> speak, and turning it into documents that the average Joe can understand.  </p>
+<h2 id="i-speak-so-highly-of-bookstack-why-migrate">I speak so highly of BookStack&hellip; Why migrate?</h2>
+<p>It&rsquo;s come to the point where the overhead of running BookStack is more than I need at the moment.</p>
+<p>The way I see it is I will be making more specialized sites, and lots of them, opposed to clustering them all in to one site.</p>
+<p>A good example of this would be the new site, as well a new undertaking I have started:
+[</p>
+<p>Welcome - breadNET Documentation</p>
+<p>breadNET Public Documentation</p>
+<p><img src="__GHOST_URL__/favicon.ico" alt="">logo</p>
+<p><img src="https://documentation.breadnet.co.uk/assets/pipeline.png" alt="">
+](<a href="https://documentation.breadnet.co.uk">https://documentation.breadnet.co.uk</a>)
+The top one is my new home for documentation (Which I will touch on in a bit)
+Where as the second on is a highly specialized site, that serves one purpose: To explain Kubernetes manifests.</p>
+<h2 id="the-reason-for-migrating">The reason for migrating</h2>
+<p>As I mentioned, I have started building more specialized sites, but never answered why.</p>
+<p>My job&rsquo;s have changed so much since I started. I went from Junior network engineer to sole DevOps engineer rolling out GKE to a national retailer in less time than it takes to get a <code>Veterinary Medicine BVM&amp;S</code> Degree (5 years) and naturally so has the type of stuff I am doing in my free time.</p>
+<p>I&rsquo;ve done from configuring cisco switches, to writing code to deploy a Google Kubernetes cluster with a Highly available app in 15 minutes from start to finish.</p>
+<p>Enough chit-chat:</p>
+<ol>
+<li>Documentation software does not need to be so complex</li>
+<li>Less overhead (Does not need a database)</li>
+<li>Lower barrier to entry (Just know markdown)</li>
+<li>Documentation is markdown files</li>
+<li>Source control (Easy roll-back)</li>
+<li>No security issues</li>
+</ol>
+<hr>
+<h2 id="platform-of-choice">Platform of choice</h2>
+<p>I don&rsquo;t know if I would call it a <em>platform</em> necisarrly, but I chose to go with; mkdocs, with Material Theme.
+[</p>
+<p>MkDocs</p>
+<p>Project documentation with Markdown.</p>
+<p><img src="https://www.mkdocs.org/img/favicon.ico" alt="">MkDocsMkDocs Team</p>
+<p>](<a href="https://www.mkdocs.org">https://www.mkdocs.org</a>)[</p>
+<p>Material for MkDocs</p>
+<p>Write your documentation in Markdown and create a professional static site in minutes – searchable, customizable, for all devices</p>
+<p><img src="https://squidfunk.github.io/mkdocs-material/assets/favicon.png" alt="">Martin Donath</p>
+<p><img src="https://squidfunk.github.io/mkdocs-material/assets/images/social/index.png" alt="">
+](<a href="https://squidfunk.github.io/mkdocs-material/">https://squidfunk.github.io/mkdocs-material/</a>)
+The way mkocs works, is:</p>
+<ol>
+<li>You write your site in markdown documents</li>
+</ol>
+<p><img src="__GHOST_URL__/content/images/2022/09/image-1.png" alt="">
+2. You tell mkdocs how the site navigation should look like</p>
+<pre><code>nav:
+  - Home: index.md
+  - KB Articles:
+      - Disk management:
+        - Expanding a file system: kb/disk-management/expanding-a-filesystem.md
+        - Formatting drive and Auto mount: kb/disk-management/formatting-drive-automount.md
+        - Mount a new drive: kb/disk-management/mount-a-new-drive.md
+        - &quot;GPT PMBR Size Mismatch will be corrected by w(rite)&quot; : kb/disk-management/gpt-pmbr-size-mismatch-will-be-corrected-by-write.md
+      - Minio:
+          - OLD : kb/minio/old.md
+          - Connecting to minio over s3fs: kb/minio/minio-over-s3fs.md
+          - creating users and assigning policies: kb/minio/s3-policies.md
+      - PHP:
+          - Install PHP: kb/php/install-php.md
+          - Wordpress permissions: kb/php/wordpress-permissions.md
+      - Docker:
+          - Installing Docker: kb/docker/installing-docker.md
+          - Basics of docker: kb/docker/basics-of-docker.md
+          - Installing jellyfin: kb/docker/installing-jellyfin.md
+          - &quot;Docker: Intro and notes&quot;: kb/docker/docker-intro-and-notes.md
+          - Exporting and importing: kb/docker/exporting-and-importing.md
+          - Docker Architecture: kb/docker/docker-architecture.md
+          - Bulk retag: kb/docker/bulk-retag.md
+</code></pre>
+<ol start="3">
+<li>
+<p>You tell mkdocs what theme to use (This is comparable to a theme in wordpress, or ghost)</p>
+<p>theme:
+name: material</p>
+</li>
+<li>
+<p>You build and then host it on an nginx server, or Apache.</p>
+</li>
+</ol>
+<p>The nice part about mkdocs is it&rsquo;s simple, if you can write markdown, you can build a good documentation site.</p>
+<hr>
+<h1 id="pipelines">Pipelines</h1>
+<p>Seeing as the site is just being built on demand, we can make a code pipeline to deploy on certain actions.</p>
+<p>I have mine deploy on a push to <code>dev</code> branch which goes to a development site (dev-documentation.breadnet.co.uk) and then once you open a PR and merge to master, it deploys the site to production.</p>
+<p>As you can see, there is a stark difference between Dev:
+<img src="__GHOST_URL__/content/images/2022/09/image-2.png" alt="">Dev (dev-documentation.breadnet.co.uk)
+And Production
+<img src="__GHOST_URL__/content/images/2022/09/image-3.png" alt="">Production (documentation.breadnet.co.uk)
+This is achieved in mkdocs&rsquo; flexible nature to use Environment variables on build</p>
+<pre><code>site_name: !ENV [env,&quot;breadNET Documentation&quot;]
+</code></pre>
+<p>The above sets the site name, so what you see at the top left.</p>
+<p>What happens here is on build, mkdocs checks what the value for <code>env</code> is, and if it&rsquo;s <code>null</code> (so not set), it will default to <code>breadNET Documentation</code></p>
+<p>It&rsquo;s the same for the color and anything else I want to set.</p>
+<hr>
+<h1 id="the-code-pipeline">The Code pipeline</h1>
+<p>At the time of writing, this is how the pipeline looks
+<img src="__GHOST_URL__/content/images/2022/09/image-4.png" alt=""></p>
+<ol>
+<li>git clone</li>
+<li>If on dev, set vars</li>
+<li>If on dev, set Robots.txt</li>
+<li>Build site</li>
+<li>If on dev, copy to dev server</li>
+<li>If on master, copy to prod server.</li>
+</ol>
+<h2>The nice thing is the site is built on each commit, so you can see what will be going in to production.
+<img src="__GHOST_URL__/content/images/2022/09/image-5.png" alt=""></h2>
+<h2 id="closing-notes">Closing notes</h2>
+<p>I will miss BookStack. It&rsquo;s been one of the best pieces of software that I have used. It&rsquo;s opened my eyes to what open source has to offer, as well as teaching me ansible!</p>
+<p>I don&rsquo;t know if I will run BookStack again -  However it&rsquo;s my go-to application for testing things. So at some point I will release a helm chart for BookStack as I learn helm more.</p>
+<p>As always, a link to all the <em>&ldquo;micro sites&rdquo;</em> I run
+[</p>
+<p>About me - Portfolio</p>
+<p><img src="__GHOST_URL__/favicon.ico" alt="">logo</p>
+<p><img src="https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&amp;logo=google-cloud&amp;logoColor=white" alt="">
+](<a href="https://bradley.breadnet.co.uk">https://bradley.breadnet.co.uk</a>)[</p>
+<p>Welcome - breadNET Documentation</p>
+<p>breadNET Public Documentation</p>
+<p><img src="__GHOST_URL__/favicon.ico" alt="">logo</p>
+<p><img src="https://documentation.breadnet.co.uk/assets/pipeline.png" alt="">
+](<a href="https://documentation.breadnet.co.uk">https://documentation.breadnet.co.uk</a>)</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/moving-to-the-cloud-3/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Migrating to the cloud: The end</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>This is the final post in my *Migrating to the cloud *trio. Just like Orange is the new black, it can only get worse after the 3rd installment.
+[</p>
+<p>breadNET Cloud Migration</p>
+<p>How did I move all my servers to the cloud? Well - Ansible, automation and CI/CD!</p>
+<p><img src="https://breadnet.co.uk/favicon.png" alt="">breadNETBradley Stannard</p>
+<p><img src="https://images.unsplash.com/photo-1560182413-53772f3d7134?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=2000&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" alt="">
+](<a href="https://breadnet.co.uk/moving-to-the-cloud-1/)%5B">https://breadnet.co.uk/moving-to-the-cloud-1/)[</a></p>
+<p>Moving to the cloud: Infrastructure</p>
+<p>Part 2 of moving to the cloud - Let’s talk about IaC</p>
+<p><img src="https://breadnet.co.uk/favicon.png" alt="">breadNETBradley Stannard</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 5 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/kubernets-secrets-using-google-secret-manager/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Kubernetes secrets using Google Secret Manager</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>Since my career at the current company cool enough to employ me, I&rsquo;ve been almost exclusively working on GKE (Google&rsquo;s Kubernetes offering)</p>
+<p>One (of the many) issues I&rsquo;ve been trying to solve in GKE is how to use Google Secrets (<a href="https://cloud.google.com/secret-manager">Their secret manager</a>) **inside **GKE in a simple mean that doest require crazy add ons, and complexity.</p>
+<p>I&rsquo;ve opened a Feature Request, but until then this blog post will explain what options you have, and what I did, and then a walkthrough of how to set up what I&rsquo;ve done</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 6 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

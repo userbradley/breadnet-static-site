@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on breadNET</title>
+    <link>http://localhost:1313/post/</link>
+    <description>Recent content in Posts on breadNET</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 18 Sep 2025 00:41:33 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Homelab V2</title>
+      <link>http://localhost:1313/post/homelab-v2/</link>
+      <pubDate>Thu, 18 Sep 2025 00:41:33 +0000</pubDate>
+      <guid>http://localhost:1313/post/homelab-v2/</guid>
+      <description>breadNET Lab is getting built back better than ever, based on Talos. Some new apps are lined up to get deployed!</description>
+    </item>
+    <item>
+      <title>2024 Year in review</title>
+      <link>http://localhost:1313/post/2024-year-in-review/</link>
+      <pubDate>Tue, 31 Dec 2024 20:35:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/2024-year-in-review/</guid>
+      <description>2024, great fun. Broke kubernetes many times, changed careers and big plans for 2025</description>
+    </item>
+    <item>
+      <title>What I&#39;m running at the end of 2023</title>
+      <link>http://localhost:1313/post/what-im-running-at-the-end-of-2023/</link>
+      <pubDate>Wed, 27 Dec 2023 02:10:59 +0000</pubDate>
+      <guid>http://localhost:1313/post/what-im-running-at-the-end-of-2023/</guid>
+      <description>A quick recap on what I&amp;rsquo;m running at the end of 2023, and a look to the future of the self hosting lab</description>
+    </item>
+    <item>
+      <title>Kubernetes at home</title>
+      <link>http://localhost:1313/post/kubernetes-at-home/</link>
+      <pubDate>Tue, 21 Nov 2023 17:42:44 +0000</pubDate>
+      <guid>http://localhost:1313/post/kubernetes-at-home/</guid>
+      <description>Ever wondered what it&amp;rsquo;s like running kubernetes at home? This post tries to answer that</description>
+    </item>
+    <item>
+      <title>Kubernetes secrets using Google Secret Manager</title>
+      <link>http://localhost:1313/post/kubernets-secrets-using-google-secret-manager/</link>
+      <pubDate>Sun, 15 Oct 2023 22:08:26 +0000</pubDate>
+      <guid>http://localhost:1313/post/kubernets-secrets-using-google-secret-manager/</guid>
+      <description>How to get Google Secret manager secrets in to GKE? Look no further. We discuss options and implementing External Secrets Operator</description>
+    </item>
+    <item>
+      <title>Terraform state chicken and egg problem</title>
+      <link>http://localhost:1313/post/terraform-state-chicken-and-egg-problem/</link>
+      <pubDate>Wed, 04 Oct 2023 15:40:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/terraform-state-chicken-and-egg-problem/</guid>
+      <description>Terraform is full of chicken and egg problems, let&amp;rsquo;s solve the state one</description>
+    </item>
+    <item>
+      <title>Dependabot for terraform and terraform modules</title>
+      <link>http://localhost:1313/post/dependabot-for-terraform-and-terraform-modules/</link>
+      <pubDate>Sun, 16 Jul 2023 01:00:31 +0000</pubDate>
+      <guid>http://localhost:1313/post/dependabot-for-terraform-and-terraform-modules/</guid>
+      <description>Looking at using Dependabot to manage your terraform modules and providers? I&amp;rsquo;ve got you covered</description>
+    </item>
+    <item>
+      <title>Google Artifact Registry Remote Repositories</title>
+      <link>http://localhost:1313/post/google-artifact-registry-virtual/</link>
+      <pubDate>Sun, 16 Jul 2023 00:28:53 +0000</pubDate>
+      <guid>http://localhost:1313/post/google-artifact-registry-virtual/</guid>
+      <description>What is the Google Artifact Registry remote repo and how do I use it?</description>
+    </item>
+    <item>
+      <title>Docker it&#39;s over, moving to podman</title>
+      <link>http://localhost:1313/post/docker-its-over-moving-to-podman/</link>
+      <pubDate>Wed, 19 Apr 2023 23:58:13 +0000</pubDate>
+      <guid>http://localhost:1313/post/docker-its-over-moving-to-podman/</guid>
+      <description>Docker, we&amp;rsquo;re breaking up! Tips on moving to podman</description>
+    </item>
+  </channel>
+</rss>

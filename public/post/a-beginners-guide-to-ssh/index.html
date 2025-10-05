@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>A beginners guide to SSH · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">A beginners guide to SSH</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">A beginners guide to SSH</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 8 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>Sweet, you just got a linux server running on &lt;<em>insert cloud provider</em> &gt; but now you need to actually do something on it.</p>
+<p>You tried to use the web console but now you need to paste something in&hellip; It doesn&rsquo;t work? Shit. Luckilly SSH was designed to allow for Secure SHell access to a server. (Hence SSH)</p>
+<p>We will look in to the basics of how to connect, using keys, config files and going passwordless!  </p>
+<p>Basically stops you doing what the goons in the photo are doing, sitting next to the servers to manage them</p>
+<hr>
+<h2 id="phase-1-the-connection">Phase 1: The connection</h2>
+<p>Now that your fresh server is waiting for you to come in and unleash 12 levels of hell on it, we need to connect.</p>
+<p>Depending on what Operating system you are using, your milage may vary.</p>
+<p>If you are on <a href="https://lolnein.com/2018/06/14/windowsupdate/">windows</a> you can download a tool called Putty from <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">here</a> (their <a href="https://www.putty.org">website</a> if you don&rsquo;t trust my links)
+But if memory servers correctly, windows 10 has SSH baked in to the <code>cmd</code> app.</p>
+<p>Where as if you are on Linux, SSH is built in!</p>
+<p>Start by opening your terminal program. On ubuntu and ubuntu based OS&rsquo; press <code>ctrl + alt + t</code> or on windows <code>win + r</code> then type <code>cmd</code></p>
+<p>Next we will have to tell the computer what to do, what user we want to connect as and where the server is located.</p>
+<p>In your terminal window type the below. If it does not make sense how I have presented it,  have included a picture:</p>
+<pre><code>ssh &lt;username&gt;@&lt;host/ip&gt;
+</code></pre>
+<p><img src="__GHOST_URL__/content/images/2020/06/image-16.png" alt="">
+Depending on your config, you may either get presented with 1 of many results.
+Below are common ones I see day to day and you may encounter the first time you SSH:</p>
+<p>Password prompt: Do I really need to tell you?
+<code>Could not resolve hostname</code>: You may have typed it wrong</p>
+<pre><code>The authenticity of host 'bread-exit-node-1.breadnet.co.uk (203.192.192.24)' can't be established.
+ECDSA key fingerprint is fd:fd:d4:f9:77:fe:73:84:e1:55:00:ad:d6:6d:22:fe.
+Are you sure you want to continue connecting (yes/no)?
+</code></pre>
+<p>Type <code>yes</code></p>
+<p>Once it&rsquo;s gone though you will be presented with a linux shell. Go wild!</p>
+<p>To get back to your local machine, type <code>exit</code></p>
+<hr>
+<h2 id="phase-2-keys">Phase 2: Keys!</h2>
+<p>Whilst SSH is secure if done correctly, you really want to avoid using a password to login as if someone gets your password they have the ability to login from anywhere regardless of what machine they are on. To combat this, we use SSH keys.</p>
+<p>Sadly I only know Linux for this bit, but luckily the good folks at Ubuntu pulled though and saved me!</p>
+<p>(guess that&rsquo;s another reason to move to linux)
+[</p>
+<p>Generate SSH Keys on Windows 10 | Ubuntu</p>
+<p>Ubuntu is an open source software operating system that runs from the desktop, to the cloud, to all your internet connected things.</p>
+<p><img src="https://assets.ubuntu.com/v1/17b68252-apple-touch-icon-180x180-precomposed-ubuntu.png" alt="">Ubuntu</p>
+<p><img src="https://assets.ubuntu.com/v1/ebdfffbf-Aubergine_suru_background.png" alt="">
+](<a href="https://ubuntu.com/tutorials/tutorial-ssh-keygen-on-windows#4-key-generation-with-openssh)Using">https://ubuntu.com/tutorials/tutorial-ssh-keygen-on-windows#4-key-generation-with-openssh)Using</a> OpenSSH[</p>
+<p>Generate SSH Keys on Windows 10 | Ubuntu</p>
+<p>Ubuntu is an open source software operating system that runs from the desktop, to the cloud, to all your internet connected things.</p>
+<p><img src="https://assets.ubuntu.com/v1/17b68252-apple-touch-icon-180x180-precomposed-ubuntu.png" alt="">Ubuntu</p>
+<p><img src="https://assets.ubuntu.com/v1/ebdfffbf-Aubergine_suru_background.png" alt="">
+](<a href="https://ubuntu.com/tutorials/tutorial-ssh-keygen-on-windows#5-key-generation-with-putty)Putty">https://ubuntu.com/tutorials/tutorial-ssh-keygen-on-windows#5-key-generation-with-putty)Putty</a>
+On linux, type</p>
+<pre><code>ssh-keygen
+</code></pre>
+<p>this will return something similar to</p>
+<pre><code>stannardb@bread-d1:~$ ssh-keygen 
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/&lt;username&gt;/.ssh/id_rsa): 
+</code></pre>
+<p>Just press enter</p>
+<blockquote>
+<p>Important to read the next step</p></blockquote>
+<p>If you are presented with the below. Press <code>n</code></p>
+<pre><code>/home/&lt;username&gt;/.ssh/id_rsa already exists.
+Overwrite (y/n)?
+</code></pre>
+<p>If not, then it will continue to asking you for a password. I suggest pick a strong one, it will encrypt the private keyflie on the disk.</p>
+<p>Now you have your keys, lets take a second to explain them.
+cd to the .ssh folder and list the contense</p>
+<pre><code>cd .ssh
+ls
+</code></pre>
+<p>You will see 2 files at mimimum, one called <code>id_rsa</code> and <code>id_rsa.pub</code></p>
+<blockquote>
+<p>DO NOT EVER GIVE ANYONE <code>ID_RSA</code></p></blockquote>
+<p>The file named <code>id_rsa</code> is your private key and <code>id_rsa.pub</code> is your public key. Weird huh. Let me explain it quickly.</p>
+<p>Imagine you have a post box at the front of your house, it has 2 doors. One on the top where people can put post, and one on the front for retrieving post. This postbox has 2 locks. One on the top flap and one on the big door to get post.</p>
+<p>The public key can be compared to giving all your friends and the Postal workers a key each, to access the top flap so they can put post in to your postbox. You want as many people to have this so it makes recieving post simple.</p>
+<p>Where as the private key is the key that opens the main flap to get out the post. You <strong>really</strong> don&rsquo;t want anyone to get this key as they will have full roam to your mailbox.</p>
+<p>You would give your public key to your friends who have servers so you can login, and they do the same.</p>
+<p>To drive the point home, imagine the private key is your underwear that your mom purchased, it has minnie the mouse on it. I don&rsquo;t know about you, but I don&rsquo;t want anyone to see them.</p>
+<p>Now we have that out the way, we can talk about how it makes our lives easier.</p>
+<p>We need to copy our keys to the remote server that we plan to login to. Luckilly (as usual) linux has a built in tool for this. For some reason, they named it <code>ssh-copy-id</code> , odd.</p>
+<p>The syntax for this is:</p>
+<pre><code>ssh-copy-id &lt;username&gt;@&lt;remote_server&gt;
+</code></pre>
+<p>So if I wanted to copy my desktops keys to my exit node:</p>
+<pre><code>ssh-copy-id jeff@bread-exit-node-1.breadnet.co.uk
+</code></pre>
+<p>It will ask for a password, then once that&rsquo;s in you&rsquo;re good to go.</p>
+<p>Try SSH to the host again, and you <em>hopefully</em> wont be asked for a password.</p>
+<hr>
+<h2 id="phase-3-config-file">Phase 3: Config file</h2>
+<p>So now that we have been using SSH for a while, it gets annoying having to type out the username, server name and sometimes port mapping (appending <code>-p &lt;port</code> if you wanted to know)</p>
+<p>SSH can make use of a config file with a specific syntax to speed up connecting to a server. It allows something like the below where we can give our servers human names if you&rsquo;re in to that</p>
+<pre><code>ssh jeffserver
+</code></pre>
+<p>To achive this level of godly-ness we need to create the config file.</p>
+<p>Run the below to create the file, or edit it if you already have one.</p>
+<pre><code>nano ~/.ssh/config
+</code></pre>
+<p>This will either open up a file with  a config or a blank file.</p>
+<p>In the file we need to specify at minimum 3 things. What we will call it, the address and what user</p>
+<pre><code>### domain name example
+Host india-exit
+  HostName bread-exit-node-1.breadnet.co.uk
+  User root
+  
+  ###IP address example
+  Host india-exit-ip
+  	Hostname 203.192.192.24
+  	User root
+</code></pre>
+<p>Feel free to copy the above for formatting.</p>
+<blockquote>
+<p>Just know you cant use spaces for names</p></blockquote>
+<p>Now save the file with <code>ctrl + x``y``enter</code></p>
+<p>Try ssh to the name you gave it. (This is the word that follows after <code>Host</code>)</p>
+<p>It <em>should</em> work if all went well.</p>
+<p>Now I know my windows friends are complaining &lsquo;but what about us&rsquo; - Don&rsquo;t worry fam.
+[</p>
+<p>Copy SSH Public Key from Windows to Ubuntu</p>
+<p>I am trying to get my ssh public key from my windows client to ubuntu host, but I have no idea how to. I tried to find the authorized_keys file, but had zero success. ssh-copy-id command did not work</p>
+<p><img src="https://cdn.sstatic.net/Sites/security/Img/apple-touch-icon.png?v=14deb51d6304" alt="">Information Security Stack Exchangeuser15791</p>
+<p><img src="https://cdn.sstatic.net/Sites/security/Img/apple-touch-icon@2.png?v=497726d850f9" alt="">
+](<a href="https://security.stackexchange.com/questions/167952/copy-ssh-public-key-from-windows-to-ubuntu">https://security.stackexchange.com/questions/167952/copy-ssh-public-key-from-windows-to-ubuntu</a>)
+Move your public key (id_rsa.pub) and your private key (id_rsa) to <code>C:\Users\yourUserName\.ssh\</code> create the .ssh folder if needed.</p>
+<p><strong><strong>2.</strong></strong> On your windows host via cmder:</p>
+<p><code>cp C:\Users\yourUserName\.ssh\id_rsa.pub C:\Users\yourUserName\authorized_keys</code></p>
+<p><strong><strong>3.</strong></strong> On your ubuntu host:</p>
+<p><code>service ssh status</code> Start sshd if necessary</p>
+<p><code>mkdir ~/.ssh/</code> (if it doesn&rsquo;t already exist)</p>
+<p><strong><strong>4.</strong></strong> On your Windows host via cmder:</p>
+<p><code>cd C:\Users\yourUserName\</code></p>
+<p><code>scp authorized_keys login-id@ubuntu-Host-Ip:~/.ssh</code></p>
+<p><strong><strong>5.</strong></strong> On your Ubuntu host:</p>
+<p><code>chmod 700 ~/.ssh</code></p>
+<p><code>chmod 600 ~/.ssh/authorized_keys</code></p>
+<p><strong><strong>6.</strong></strong> On your Windows host via cmder:</p>
+<p>Test if you can ssh into your ubuntu host without login/pw auth. If yes:</p>
+<p><code>rm C:\Users\yourUserName\authorized_keys</code></p>
+<hr>
+<h2 id="phase-4-look-mom-no-password">Phase 4: Look mom, no password!</h2>
+<p>Now this has the potential to really ruin your day if it goes wrong, so I suggest open 2 ssh sessions to the server. One you will leave in the background logged in and at a sudo terminal ( <code>sudo -s</code>) and one where you will do the work in. This is just in case something goes wrong!</p>
+<blockquote>
+<p>Before completing the below steps, ensure you can ssh to the server using keys only.</p></blockquote>
+<p>We will start by disabling Password based authentication</p>
+<p>On one of the sessions, type</p>
+<pre><code>sudo nano /etc/ssh/sshd_config
+</code></pre>
+<p>Int he file, locate the line <code>PasswordAuthentication</code></p>
+<p>Set it to <code>no</code> so it looks like the below</p>
+<pre><code>PasswordAuthentication no
+</code></pre>
+<p>Here comes the part that will ruin your day if goofed up. Just putting this out there but I accept to responsibility if you goof up.</p>
+<pre><code>sudo service ssh restart
+</code></pre>
+<p>Now logout (<code>exit</code>) and ssh to the server. If all is good, you should have no problem logging in.</p>
+<p>**However, **should you not be able to, just open the other window we had and revert the changes, restart the service and work out the problems you may have had!</p>
+<p>To wrap it up:</p>
+<p>You should now have SSH knowledge and a place to start in the world of managing linux based server&rsquo;s over SSH, how to setup and use keys and how to stop using passwords.</p>
+<p>If you&rsquo;re ready to move on to something a little more complex, check out the below!
+[</p>
+<p>SSH Client setup using keys</p>
+<p>The following steps will setup your ssh keypairs on your local machine, copy thepublic key to your server, and configure your ssh client to use a specificprivate key with a server alias. &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash; First, generate your keypair…</p>
+<p><img src="https://breadnet.co.uk/favicon.png" alt="">breadNETthatonesysadmin</p>
+<h2 id="ghost_ssh-client-setup-using-keys"><img src="https://breadnet.co.uk/content/images/2020/08/matrix-2883623_1920.jpg" alt="">
+](<strong>GHOST_URL</strong>/ssh-client-setup-using-keys/)</h2>
+<p>You can hire me via <a href="https://www.upwork.com/freelancers/~01c61ee9802b94133e">Upwork</a> or <a href="mailto:work@breadnet.co.uk">emailing me</a> for weekend projects!</p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/cloud-security/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Cloud security</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><blockquote>
+<p>This is still being written but I think it&rsquo;s important you see it</p></blockquote>
+<p>Well, It&rsquo;s official. I am now a &lsquo;Cloud engineer&rsquo; as far as my company is concerned. Woo!</p>
+<p>On the topic of cloud, I should make my first post about something that is usually overloked by companies when migrating to the cloud: <strong>Security</strong></p>
+<p>This is only a guidance and you should consult your SecOps team if you have one, or consider hiring consultants for this. You can get in contact and I can point you towards companies that are good at this.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 5 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/2024-year-in-review/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">2024 Year in review</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>As 2024 has already come to an end, I thought I should probably write a post as I&rsquo;ve not made one in over a year&hellip; I thought no better way to round it out with what I&rsquo;ve been up to</p>
+<h2 id="lets-start-with-my-personal-life">Let&rsquo;s start with my personal life.</h2>
+<p>I&rsquo;ve moved house to a nice apartment along the river Kennet, with amazing views of the Town. It&rsquo;s a recently built 2 bed apartment so I now have an office, opposed to my desk being <em>literally</em> in the middle of the Dining Room/Kitchen/Living room/ Hallway&hellip; Fun of a one bed apartment.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 4 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>

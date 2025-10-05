@@ -1,4 +1,59 @@
-baseURL: https://example.org/
-languageCode: en-us
-title: My New Hugo Site
-theme: casper
+baseURL: https://breadnet.co.uk
+title: breadNET
+author: Bradley Stannard
+pagination:
+  disableAliases: false
+  pagerSize: 10
+  path: page
+languageCode: en
+DefaultContentLanguage: en
+enableInlineShortcodes: true
+footnoteReturnLinkContents: ^
+ignoreErrors:
+  - error-remote-getjson
+theme: hugo-casper3
+params:
+  description: DevOps Engineer, tinkerer and home labber
+  mainSections:
+    - post
+menu:
+  main:
+    - identifier: home
+      name: HOME
+      url: /
+      weight: 10
+    - identifier: my-setup
+      name: MY SETUP
+      url: /my-setup
+      weight: 30
+    - identifier: the-story
+      name: THE STORY
+      url: /story
+      weight: 40
+  secondary:
+    - identifier: linkedin
+      name: Linkedin
+      url: https://www.linkedin.com/in/bradley-stannard/
+      weight: 10
+    - identifier: documentation
+      name: Documentation
+      url: https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&mtm_kwd=navbar
+      weight: 20
+    - identifier: contact
+      name: Contact
+      url: mailto:webmaster@breadnet.co.uk
+      weight: 30
+    - identifier: github
+      name: GitHub
+      url: https://github.com/userbradley
+      weight: 40
+taxonomies:
+  category: categories
+  tag: tags
+  series: series
+  author: authors
+services:
+  instagram:
+    disableInlineCSS: true
+  twitter:
+    disableInlineCSS: true

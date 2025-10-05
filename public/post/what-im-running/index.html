@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+    <title>What I&#39;m running · Hugo Themes</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    
+    <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+
+</head>
+<body class=" post-template ">
+
+    <div class="site-wrapper">
+
+<header class="site-header"><div class="outer site-nav-main">
+    <div class="inner"><nav class="site-nav">
+    <div class="site-nav-left">
+        
+        <a class="site-nav-logo" href="http://localhost:1313/">Hugo Themes</a>
+        
+
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/">HOME</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/my-setup">MY SETUP</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="/story">THE STORY</a>
+                </li>
+                
+            </ul>
+
+            
+            <span class="nav-post-title dash">What I&#39;m running</span>
+            
+        </div>
+    </div>
+
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://www.linkedin.com/in/bradley-stannard/">Linkedin</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://documentation.breadnet.co.uk/?mtm_campaign=breadnet&amp;mtm_kwd=navbar">Documentation</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="mailto:webmaster@breadnet.co.uk">Contact</a>
+                </li>
+                
+                <li class="nav-home" role="menuitem">
+                    <a href="https://github.com/userbradley">GitHub</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</div><script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.Casper && window.Casper.stickyNavTitle) {
+                window.Casper.stickyNavTitle({
+                    navSelector: '.site-nav-main',
+                    titleSelector: '.post-full-title',
+                    activeClass: 'nav-post-title-active'
+                });
+            }
+        });
+    </script>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post  no-image ">
+
+            <header class="post-full-header">
+
+                
+
+                <h1 class="post-full-title">What I&#39;m running</h1>
+
+                
+
+                <div class="post-full-byline">
+                    <section class="post-full-byline-content">
+
+                        
+
+                        <section class="post-full-byline-meta">
+                            
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="0001-121-01">1 January 0001</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 2 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>All my servers are currently (and always will be)  running Linux. My choice is mainly Ubuntu LTS how ever there are 2 Debian VM&rsquo;s running.</p>
+<p>I have got my backups of VM&rsquo;s done over XOA which copies the full image of the VM to an external hard drive.</p>
+<p>For file based backups as well as database backups, I have writted my own scripts to back up servers to a Wasabi bucket. This is done for, you guessed it, Databases as well a media servers as it doest not make sense to backup 300gb vm easch week when nothing changes</p>
+<p>Server: Dell R710</p>
+<p>Use: Hypervisor</p>
+<p>OS: <a href="https://www.google.com/url?q=https%3A%2F%2Fxcp-ng.org&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNHpemVlzMiyZtgC6GhF_G6v1rq7rQ">XCP-NG</a> (centos basically)</p>
+<p>VM&rsquo;s:</p>
+<p>1: Firefly-iii
+2: Grafana
+3: phpipam
+4: invoiceninja
+5: JellyFin
+6: Librenms
+7: Nextcloud
+8: Database server
+9: Unifi
+10: Xen Orchestra
+11: Zabbix
+12: Bookstack
+13: postfix and dovecot with dkim
+14: Leantime Project managment
+15: Status page
+16: Bind dns
+17: Nginx Reverse proxy
+18: Kanboard</p>
+<p>I have a few sites that are publicly accessible:</p>
+<ul>
+<li><a href="https://status.breadnet.co.uk/?pk_campaign=BreadnetMain&amp;pk_kwd=https%3A%2F%2Fbreadnet.co.uk%2Fwhat-im-running%2F">Status page</a></li>
+<li><a href="https://documentation.breadnet.co.uk/?pk_campaign=BreadnetMain&amp;pk_kwd=https%3A%2F%2Fbreadnet.co.uk%2Fwhat-im-running%2F">Bookstack</a> (update 2023: Migrated to mkdocs)</li>
+<li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&amp;pk_campaign=BreadnetMain&amp;pk_kwd=mailServer">email server</a></li>
+</ul>
+<p>All the names link to their respective project. They are all FOSS and run on linux</p>
+<p>Second server (Bottom one)</p>
+<p>Server: R710</p>
+<p>OS: <a href="http://www.google.com/url?q=http%3A%2F%2Freleases.ubuntu.com%2F18.04%2F&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNH3s1iSgARCKCp3uTjMvN2c83Vb2w">Ubuntu 18.04 LTS</a></p>
+<p>Use: In house Min.io server</p>
+<p>Screenshot of XOA</p>
+<blockquote>
+<p>I just want to add that I know the photos are broken - it&rsquo;s in my to do list</p></blockquote>
+<p><img src="https://lh5.googleusercontent.com/XAPS6nULuTmhGaHC7RuES25PCLfOIBRjd_7HtRANUJrkLR9LL6Xce8dJNxqVw1mNCsvzENRDl5tAUUxpTfCqZcAjlp1pNBJlZQsHr0_bkbEN0W4LjI0=w1280" alt=""><img src="https://lh3.googleusercontent.com/Il4pC2DJSA9x560nvPcXFdmzXnkcjR4lnlY6i4BQqxZwjoI_8L4OBh3EkWXvvbozRaaMi3ec6FEBmb_7CWT0346fqzpAZnfkIVqJCVd_QkwchOBqSg=w1280" alt="">
+Xcp-ng host
+<img src="https://lh4.googleusercontent.com/YnxjBvCN5qrTW4zEESgGvZPeknWCqR8BPj0vfSqVOrbI24z_gDqM6FSR2qazD1I3M7_JfZnV6SU48GS0JAwetY_yYA72znBqQK8gzJKsm5znOknbzQ=w1280" alt="">
+Firefly login screen
+<img src="https://lh6.googleusercontent.com/ABp5kC-WPMbIEHlOTpKoZDm-rggMis3UsRxsWoF-xxSQYEIl7EFIcxSAjl2voS0KBHYiaPeP1MDo_yss5Ow0A4XLp0Q3kVXeIMzo2mcqOIWuVjWCoxw=w1280" alt="">
+Jellyfin Home screen
+<img src="https://lh4.googleusercontent.com/ZnJS5SPIUaDYldCQ46tLZfgFCtNQKdTsI_0UABLKQupUYKFF7eipix4MK10vUYuCcRSmmBMGQ1p7ImIuzS8hriG3lWq_1Dhr5y2-5mTUH7sL4CsUgg=w1280" alt="">
+Unifi dashboard
+<img src="https://lh5.googleusercontent.com/u3ViM-3nkpKF0aLW6S-NgvMs3UoByTS88I8AYlb_MCRi0dxLYvX8oybZLYg2mL-osOdHsOx6EMJ7UipqSP8YaE4x2cYQDJjdCyBpJ-bfHuGWjj8qMg=w1280" alt="">
+Nextcloud - Login page
+<img src="https://lh6.googleusercontent.com/ghCKGzhrPTG_CmB9GrudtEaGVgmEYTOiMXJaQdu2DIZVnqFQMe90aRJqXgNoLaT12esEgVJLuqhX01IM4WnLThTneiGxvHBgPbAFCHSQrH8ccXPIWGA=w1280" alt="">
+Database server - Phpmyadmin
+<img src="https://lh5.googleusercontent.com/zD9KmDxsB4yxD7tSAvWfGgXnYyQrYL65r1Ip3xEUvun0Gpyh6A0x31bD4ymqvgW-YJLi6yQ44qxbMV38qNX11_03KpmSFhLmjVXC6I324hiradkaunc=w1280" alt=""><img src="https://lh3.googleusercontent.com/V9imIVZxj2wcSTac6d2nrDxEkUP6bNE4JH0OJllYCE1rRrHZRGe_SNZvQEKJE1G3nLg9fSykSi_CcOJECRmP3kTz0unUqysZsm-G7DNgM-P53yDWyQg=w1280" alt="">
+Leantime
+This is the server I use to manage my projects and a built in kanboard.
+<img src="https://lh4.googleusercontent.com/2pGT3PFBVXCzogsS68HJgHQo4DbFLgBVN36mISdDJ1JC6BzrkxrRZA8Z6COz_0M-_WkvH5TZhMDLMJSVAhXpycJNwo5670Hlo9WeFG7UGErnkVOx3w=w1280" alt="">
+Digital ocean, this is where I have my public facing servers
+<img src="https://lh5.googleusercontent.com/bEHuIzfp3uNsUmwMJPYrIqEW1wWUmldZcyOu0DriywL07-L3Vahif7QJARQIgyarFzhTxYw_wpEdtgYTpCq2yb2rsB-ZJvs7BaiCl9d0dmIpukCZwCYV=w1280" alt=""></p>
+
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed"><article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/what-im-running-at-the-end-of-2023/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">What I&#39;m running at the end of 2023</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>I&rsquo;m going to try and do a yearly blog post detailing what I&rsquo;m running at the end of each year.</p>
+<p>This year had some pretty interesting additions to the breadNET stack as well as some changes</p>
+<ul>
+<li>Kubernetes</li>
+<li>Bringing Matomo back home</li>
+<li>More Zero Trust</li>
+<li>DNS fully migrated to cloudflare</li>
+<li>Shutdown a web server</li>
+<li>Using Azure AD for authentication</li>
+<li>Using GCP for cloud offerings</li>
+</ul>
+<hr>
+<p>I am going to start this post off by managing your expectations, below is what we will cover</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 5 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+
+            <article class="post-card post
+ no-image
+ ">
+
+        
+    
+        <div class="post-card-content">
+    
+            <a class="post-card-content-link" href="http://localhost:1313/post/using-google-artifact-registry-with-k3s/">
+    
+                <header class="post-card-header">
+                    
+
+                    <h2 class="post-card-title">Using Google Artifact Registry with k3s</h2>
+                </header>
+    
+                <section class="post-card-excerpt">
+                    <p><p>It&rsquo;s been a while since we&rsquo;ve done a post about truly self hosted stuff. This is in part due to me being a DevOps engineer.</p>
+<p>That aside, today I aim to solve the problem of how to authenticate a k3s cluster to Google Artifact Registry</p>
+<h2 id="why-we-need-to-do-this">Why we need to do this</h2>
+<p>Google has a really good Container registry, called <a href="https://cloud.google.com/artifact-registry">Artifact Registry</a>. I am hosting all of my images on the container registry as it allows better IAM control, as well as being easier to authenticate to when using GKE.</p></p>
+                </section>
+    
+            </a>
+
+            <footer class="post-card-meta">
+                    <ul class="author-list">
+                        <li class="author-list-item">
+                            <div class="author-name-tooltip"></div>
+                            <a href="#" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg></a>
+                        </li>
+                    </ul>
+                    <div class="post-card-byline-content">
+                        <span></span>
+                        <span class="post-card-byline-date"><time datetime="0001-121-01">1 January 0001</time>
+                            <span class="bull">&bull;</span> 3 min read</span>
+                    </div>
+                </footer>
+    
+        </div>
+
+</article>
+    
+        </div>
+    </div>
+</aside>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://localhost:1313/">Hugo Themes</a> &copy; 0001</section>
+                <nav class="site-footer-nav">
+                    <a href="http://localhost:1313/">Latest Posts</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://github.com/jonathanjanssens" target="_blank" rel="noopener">Github</a>
+                    <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Hugo Casper3 by Jonathan Janssens</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+<script>
+
+    
+    
+    
+    
+    $(document).ready(function () {
+
+        var nav = document.querySelector('.site-nav-main .site-nav');
+        var feed = document.querySelector('.post-feed');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize, false);
+
+        update();
+
+    });
+</script>
+</body>
+</html>
