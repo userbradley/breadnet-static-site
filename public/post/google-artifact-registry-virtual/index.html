@@ -13,6 +13,12 @@
 
     
     <link rel="stylesheet" href="http://localhost:1313/style.main.min.b98e12e6b4acb157747422458845caf0880e6eda788e2e2ee3ecc617a0e9bfc3.css" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    
+    <script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
+
 
 </head>
 <body class=" post-template ">
@@ -317,47 +323,19 @@ ENTRYPOINT [&quot;kubectl&quot;]
 
     </div>
 
-<script src="http://localhost:1313/js/sticky-nav-title.min.7c74baa114d72c67b1f5c85f55da35fa76c686efef35103f409f57f6bf3f9057.js" integrity="sha256-fHS6oRTXLGex9chfVdo1&#43;nbGhu/vNRA/QJ9X9r8/kFc="></script>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const nav = document.querySelector('.site-home-header .site-nav');
+        const feed = document.querySelector('.post-feed');
+        const header = document.querySelector('.site-home-header');
 
-    
-    
-    
-    
-    $(document).ready(function () {
-
-        var nav = document.querySelector('.site-nav-main .site-nav');
-        var feed = document.querySelector('.post-feed');
-
-        var lastScrollY = window.scrollY;
-        var lastWindowHeight = window.innerHeight;
-        var lastDocumentHeight = $(document).height();
-        var ticking = false;
-
-        function onScroll() {
-            lastScrollY = window.scrollY;
-            requestTick();
-        }
-
-        function onResize() {
-            lastWindowHeight = window.innerHeight;
-            lastDocumentHeight = $(document).height();
-            requestTick();
-        }
-
-        function requestTick() {
-            if (!ticking) {
-                requestAnimationFrame(update);
-            }
-            ticking = true;
-        }
+        let lastScrollY = window.scrollY;
+        let ticking = false;
 
         function update() {
-            var trigger = feed.getBoundingClientRect().top + window.scrollY;
-            var progressMax = lastDocumentHeight - lastWindowHeight;
+            const trigger = feed.getBoundingClientRect().top + window.scrollY - header.offsetHeight;
 
-            
-            if (lastScrollY >= trigger - 20) {
+            if (window.scrollY >= trigger) {
                 nav.classList.add('fixed-nav-active');
             } else {
                 nav.classList.remove('fixed-nav-active');
@@ -366,12 +344,28 @@ ENTRYPOINT [&quot;kubectl&quot;]
             ticking = false;
         }
 
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            if (!ticking) {
+                window.requestAnimationFrame(update);
+                ticking = true;
+            }
+        }
+
+        function onResize() {
+            if (!ticking) {
+                window.requestAnimationFrame(update);
+                ticking = true;
+            }
+        }
+
         window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onResize, false);
+        window.addEventListener('resize', onResize);
 
-        update();
-
+        update(); 
     });
+
 </script>
+
 </body>
 </html>

@@ -78,5 +78,12 @@
       <guid>http://localhost:1313/bradley-stannard/</guid>
       <description>&lt;p&gt;Nice to see you&amp;rsquo;re curious about who I am! That&amp;rsquo;s pretty cool!&lt;/p&gt;&#xA;&lt;p&gt;Above, yeah, that&amp;rsquo;s me!&lt;/p&gt;&#xA;&lt;p&gt;Behind the dashing good looks and fat rimmed glasses is a die hard linux nerd and weekend project worrier.&lt;/p&gt;&#xA;&lt;p&gt;I got in to IT when I was studying at the American School of Bombay and was inspired by my Tech teacher Mr. Laub who taught me the basics of how the network at school worked, as well as Savio from the tech desk who patiently explained every answer to my questions. If it wasn&amp;rsquo;t for moving to India and these people, I don&amp;rsquo;t know where I would be now.&lt;/p&gt;</description>
     </item>
+    <item>
+      <title>Whoops! Page not found</title>
+      <link>http://localhost:1313/404/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/404/</guid>
+      <description>&lt;p&gt;That page can&amp;rsquo;t be found.&lt;/p&gt;&#xA;&lt;p&gt;Our latest content is &lt;a href=&#34;http://localhost:1313/&#34;&gt;on the homepage&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>

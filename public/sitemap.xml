@@ -44,5 +44,7 @@
     <loc>http://localhost:1313/series/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
+  </url><url>
+    <loc>http://localhost:1313/404/</loc>
   </url>
 </urlset>
