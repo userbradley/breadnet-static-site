@@ -4,6 +4,7 @@ slug: dependabot-for-terraform-and-terraform-modules
 date: 2023-07-16T01:00:31.000Z
 date_updated: 2023-07-16T01:00:31.000Z
 summary: Looking at using Dependabot to manage your terraform modules and providers? I've got you covered
+feature_image: https://images.unsplash.com/photo-1637002722490-5f8ceed9774c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDM1fHxyb2JvdHxlbnwwfHx8fDE2ODk0Njc1MTh8MA&ixlib=rb-4.0.3&q=80&w=1000
 ---
 
 I recently stumbled across [Dependabot](https://github.blog/2020-06-01-keep-all-your-packages-up-to-date-with-dependabot/) and was curious if it can be used to keep Terraform up to date. Turns out you can, but there are some small catches that you should be aware of.

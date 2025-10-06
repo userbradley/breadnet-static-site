@@ -10,8 +10,6 @@ hugo server -DF --noHTTPCache  --disableFastRender --logLevel debug
 https://github.com/hswolff/ghost-to-md
 
 ```shell
-#!/bin/bash
-
 for file in *.md; do
     awk '
     BEGIN { in_front_matter=0 }

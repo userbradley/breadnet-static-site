@@ -4,6 +4,7 @@ slug: terraform-state-chicken-and-egg-problem
 date: 2023-10-04T15:40:00.000Z
 date_updated: 2023-10-04T15:49:50.000Z
 summary: Terraform is full of chicken and egg problems, let's solve the state one
+feature_image: https://images.unsplash.com/photo-1547809890-1bef935add63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDI3fHxlZ2d8ZW58MHx8fHwxNjk2NDA5ODg4fDA&ixlib=rb-4.0.3&q=80&w=1000
 ---
 
 Since the dawn of time people have been dealing with Chicken and egg problems in terraform.

@@ -4,6 +4,7 @@ slug: what-im-running-at-the-end-of-2023
 date: 2023-12-27T02:10:59.000Z
 date_updated: 2023-12-27T02:10:59.000Z
 summary: A quick recap on what I'm running at the end of 2023, and a look to the future of the self hosting lab
+feature_image: https://images.unsplash.com/photo-1669659873672-a5f70782726b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDd8fDIwMjN8ZW58MHx8fHwxNzAzNjQyMjE4fDA&ixlib=rb-4.0.3&q=80&w=1000
 ---
 
 I'm going to try and do a yearly blog post detailing what I'm running at the end of each year. 

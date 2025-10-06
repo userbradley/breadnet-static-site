@@ -4,6 +4,7 @@ slug: google-artifact-registry-virtual
 date: 2023-07-16T00:28:53.000Z
 date_updated: 2023-07-16T00:28:53.000Z
 summary: What is the Google Artifact Registry remote repo and how do I use it?
+feature_image: https://images.unsplash.com/photo-1605745341075-1b7460b99df8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDF8fGRvY2tlcnxlbnwwfHx8fDE2ODk0NjcyNTR8MA&ixlib=rb-4.0.3&q=80&w=1000
 ---
 
 Google Cloud in April [created a blog post](https://cloud.google.com/blog/products/identity-security/take-control-your-supply-chain-artifact-registry) about a new part of the Artifact regsitry called `Remote Repositories`

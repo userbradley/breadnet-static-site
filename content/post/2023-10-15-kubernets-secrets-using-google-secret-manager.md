@@ -3,7 +3,8 @@ title: Kubernetes secrets using Google Secret Manager
 slug: kubernets-secrets-using-google-secret-manager
 date: 2023-10-15T22:08:26.000Z
 date_updated: 2024-03-14T15:27:21.000Z
-summary: How to get Google Secret manager secrets in to GKE? Look no further. We discuss options and implementing External Secrets Operator 
+summary: How to get Google Secret manager secrets in to GKE? Look no further. We discuss options and implementing External Secrets Operator
+feature_image: https://images.unsplash.com/photo-1567908643259-752122573d14?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDR8fHdva2luZ2hhbXxlbnwwfHx8fDE2OTc0MDc1Nzd8MA&ixlib=rb-4.0.3&q=80&w=1000
 ---
 
 Since my career at the current company cool enough to employ me, I've been almost exclusively working on GKE (Google's Kubernetes offering) 
