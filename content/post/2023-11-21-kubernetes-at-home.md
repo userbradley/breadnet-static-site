@@ -5,6 +5,7 @@ date: 2023-11-21T17:42:44.000Z
 date_updated: 2023-11-21T17:49:37.000Z
 summary: Ever wondered what it's like running kubernetes at home? This post tries to answer that
 feature_image: https://breadnet.co.uk/content/images/size/w1000/2023/11/cluster-top-1.jpg
+tags: ["Kubernetes"]
 ---
 
 I first started learning Kubernetes in 2021, as a Junior Systems Administrator in my bedroom in Cambridge. I'll be honest, I didn't really understand it much. What's a pod? Why cant I just deploy a container? 

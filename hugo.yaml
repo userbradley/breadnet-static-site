@@ -1,10 +1,6 @@
 baseURL: https://breadnet.co.uk
 title: breadNET
 author: Bradley Stannard
-pagination:
-  disableAliases: false
-  pagerSize: 10
-  path: page
 languageCode: en
 DefaultContentLanguage: en
 enableInlineShortcodes: true
@@ -13,7 +9,7 @@ ignoreErrors:
   - error-remote-getjson
 theme: hugo-casper3
 params:
-  description: DevOps Engineer, tinkerer and home labber
+  description: Security Engineer, tinkerer and home labber
   mainSections:
     - post
 menu:
@@ -48,12 +44,4 @@ menu:
       url: https://github.com/userbradley
       weight: 40
 taxonomies:
-  category: categories
   tag: tags
-  series: series
-  author: authors
-services:
-  instagram:
-    disableInlineCSS: true
-  twitter:
-    disableInlineCSS: true

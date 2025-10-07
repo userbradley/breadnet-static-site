@@ -4,6 +4,7 @@ slug: using-google-artifact-registry-with-k3s
 date: 2023-03-15T00:01:12.000Z
 date_updated: 2023-03-30T22:01:44.000Z
 summary: Authenticate K3S to Google Artifact Registry
+tags: ["Kubernetes"]
 ---
 
 It's been a while since we've done a post about truly self hosted stuff. This is in part due to me being a DevOps engineer. 

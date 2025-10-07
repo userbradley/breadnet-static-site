@@ -4,7 +4,7 @@ slug: gcs-web-server-using-gcsfuse
 date: 2023-03-05T22:32:00.000Z
 date_updated: 2023-07-01T17:14:43.000Z
 summary: Mount a GCS Bucket to a pod in kubernetes
-
+tags: ["Kubernetes"]
 ---
 
 Recently I had to solve a problem where we needed to serve a web page from GCS.
