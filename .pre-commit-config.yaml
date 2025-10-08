@@ -1,0 +1,38 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      #      - id: no-commit-to-branch
+      #        name: Ensure commits are only made to feature branches
+      #        args: ['-b', 'main']
+      - id: end-of-file-fixer
+        name: Ensure files have end of file
+      - id: trailing-whitespace
+        name: Trims extra whitespaces
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.17.2
+    hooks:
+      - id: yamlfmt
+        name: Yaml Formatting
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.34.0
+    hooks:
+      - id: check-github-actions
+        name: GitHub actions check
+      - id: check-dependabot
+        name: Dependabot
+      - id: check-jsonschema
+        name: Validate markdown lint file
+        files: .github/config/.markdownlint.yaml
+        args: ["--schemafile", "https://raw.githubusercontent.com/DavidAnson/markdownlint/refs/heads/main/schema/markdownlint-config-schema.json"]
+      - id: check-jsonschema
+        name: Validate Hugo config
+        files: hugo.yaml
+        args:
+          - "--schemafile"
+          - "https://www.schemastore.org/hugo.json"
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.18.1
+    hooks:
+      - id: markdownlint-cli2
+        args: ["--config", "./.github/config/.markdownlint.yaml", "--fix"]

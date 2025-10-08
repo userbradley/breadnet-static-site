@@ -10,6 +10,7 @@ ignoreErrors:
 theme: hugo-casper3
 params:
   description: Security Engineer, tinkerer and home labber
+  siteDescription: Homelab, Linux and cloud. Find something interesting
   mainSections:
     - post
 menu:
@@ -45,3 +46,21 @@ menu:
       weight: 40
 taxonomies:
   tag: tags
+markup:
+  goldmark:
+    renderHooks:
+      image:
+        useEmbedded: always
+outputs:
+  home:
+    - html
+    - rss
+  section:
+    - html
+    - rss
+#  taxonomy:
+#    - html
+#  term:
+#    - html
+permalinks:
+  post: '/:contentbasename'

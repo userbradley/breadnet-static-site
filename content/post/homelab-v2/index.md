@@ -4,15 +4,14 @@ slug: homelab-v2
 date: 2025-09-18T00:41:33.000Z
 date_updated: 2025-09-18T00:41:33.000Z
 summary: breadNET Lab is getting built back better than ever, based on Talos. Some new apps are lined up to get deployed!
-feature_image: https://breadnet.co.uk/content/images/size/w1000/2025/09/IMG_2012.JPG
+feature_image: IMG_2012.JPG
 author: Bradley Stannard
-tags: ["Kubernetes"]
+tags: ["homelab-v2"]
+aliases:
+  - /old-url
+  - /really-old-url
 ---
 
-> This is a quote
-
-
-![](../../static/images/hugo.png)
 
 It's like the original [Home lab](__GHOST_URL__/kubernetes-at-home/) but this time, not quite as bad.
 
@@ -22,12 +21,16 @@ The whole idea behind why Homelab V2 has come about, is because one of the servi
 
 The new lab is designed to score high on the SOAP scale (significant other acceptance parameters) - that is to say, my partner finds it simple to consume services and treats it like it's a Saas product.
 
-It's designed to be immutable, git native and cheap as possible to run, with as little maintenance required. 
+It's designed to be immutable, git native and cheap as possible to run, with as little maintenance required.
 
 ## Brief overview of the homelab's I've had
 
+<br>
+
 It started in my parents house where I used to have a 48U rack
-![](__GHOST_URL__/content/images/2020/06/EmbeddedImage--7-.jpg)The old server rack
+
+![](EmbeddedImage--7-.jpg)The old server rack
+
 I then migrated most of my things to SaaS offerings because I had to sell the servers, which was a sad day. Luckily they were able to go to an old frine of mine from School who would put them to good use
 ![](__GHOST_URL__/content/images/2025/09/IMG_3620-1.jpeg)All my servers, switches and routers in the back of my old car on their way to Jack
 I moved around a lot between moving out of my parents house and then when I got my own apartment, which meant I couldn't have anything permanent setup.
@@ -49,15 +52,15 @@ However, there were massive reliability issues when I moved to my new address. N
 
 # Homelab v2
 
-Homelab V2 is, for all intensive purposes, RAID but with computers. 
+Homelab V2 is, for all intents and purposes, RAID but with computers.
 
-The lab is built off of a stack of Dell 3040 SFF PC's with 8gb ram each, and 128GB SSD's. 
+The lab is built off of a stack of Dell 3040 SFF PC's with 8gb ram each, and 128GB SSD's.
 
 Currently there are 6 of these, with 5 running, and one as a spare.
 UseCountKubernetes4Database1
 As you can deduct from the table above, I am still running Kubernetes. But this is where it changes. I am now running Talos, a full OS rendition of Kubernetes designed to be lightweight and it's all configured from a file. You can get cool tools like `talhelper` that help you template out config and generate node config off a single central file.
 ![](__GHOST_URL__/content/images/2025/09/image-1.png)
-Unlike K3s which is installed on Ubuntu as a binary, Talos is the operating system and also the Kubernetes. 
+Unlike K3s which is installed on Ubuntu as a binary, Talos is the operating system and also the Kubernetes.
 
 I wont go too much in to the Kubernetes setup details here, as I plan to write another blog post about this where I touch one some more interesting details
 
@@ -106,7 +109,7 @@ Currently I am running
 
 ## Where are you storing everything
 
-I was able to pick up a Synology nas on Ebay for around £800 (Yes, that went down **very** well with the Partner) and serving iSCSI LUN's over to the Talos nodes
+I was able to pick up a Synology nas on Ebay for around £800 (Yes, that went down __very__ well with the Partner) and serving iSCSI LUN's over to the Talos nodes
 
 ## Closing notes
 

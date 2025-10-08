@@ -1,0 +1,58 @@
+"$schema": https://raw.githubusercontent.com/DavidAnson/markdownlint/refs/heads/main/schema/markdownlint-config-schema.json
+# https://github.com/DavidAnson/markdownlint/tree/main/doc
+no-inline-html:
+  allowed_elements:
+    - br
+#    - img
+#    - svg
+#    - ul
+#    - li
+#    - text
+#    - path
+#    - g
+#    - country
+#    - area
+#    - dcnumber
+#    - u
+#    - user
+#    - password
+#    - url
+#    - email
+#    - nickname
+#    - description
+#    - role
+#    - field
+#    - value
+#    #- yyyy-mm-dd-hh-ii-ss
+#    - brand
+#    - sup
+#    - atx
+#    - name
+#    - zone
+#    - destination
+#    - project-name
+#    - container
+#    - tag
+#    - KEY
+#    - br
+#    - tenant
+#    - style
+#    - body
+#    - input
+#    - label
+#    - script
+#    - textarea
+#code-block-style: false
+#fenced-code-language: false
+no-alt-text: false
+#list-indent: false
+#heading-increment: false
+#no-duplicate-heading: false
+#first-line-heading: false
+#heading-style:
+#  style: atx
+#descriptive-link-text: false #todo: Fix this at some point
+#ul-indent: false
+line-length: false
+single-h1: false
+## no-emphasis-as-heading: false
