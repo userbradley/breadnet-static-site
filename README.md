@@ -1,13 +1,12 @@
 # breadNET but now it's static
 
 ```shell
-hugo server -DF --noHTTPCache  --disableFastRender --logLevel debug
+hugo server -DF --noHTTPCache  --disableFastRender --logLevel debug --renderToMemory
 ```
-
 
 ## Migrate from Ghost blogs
 
-https://github.com/hswolff/ghost-to-md
+<https://github.com/hswolff/ghost-to-md>
 
 ```shell
 for file in *.md; do

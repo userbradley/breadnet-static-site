@@ -51,16 +51,13 @@ markup:
     renderHooks:
       image:
         useEmbedded: always
-outputs:
-  home:
-    - html
-    - rss
-  section:
-    - html
-    - rss
+services:
+  rss:
+    limit: -1
 #  taxonomy:
 #    - html
 #  term:
 #    - html
 permalinks:
   post: '/:contentbasename'
+enableGitInfo: true
