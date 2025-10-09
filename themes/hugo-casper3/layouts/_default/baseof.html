@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    {{ $title := print .Title " · " .Site.Title }}
+    {{ if .IsHome }}{{ $title = .Site.Title }}{{ end }}
+    <title>{{ $title }}</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <meta property="og:site_name" content="breadNET" />
+    <!--    START POST-->
+    {{- if eq .Section "post" -}}
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ .Title }}" />
+    <meta property="og:description" content="{{ .Params.summary }}" />
+    <meta property="og:url" content="{{ .Permalink }}" />
+        {{- $feature := .Params.feature_image -}}
+        {{- if $feature -}}
+            {{- with .Resources.GetMatch $feature -}}
+                <!-- Case 1: Image found as a page bundle resource -->
+    <meta property="og:image" content="{{ .Permalink }}" />
+            {{- else -}}
+                <!-- Case 2: Use the feature_image value directly (likely a /static/ URL) -->
+    <meta property="og:image" content="{{ $feature }}" />
+            {{- end -}}
+        {{- else -}}
+            <!-- Case 3: No feature image set, skip og:image -->
+        {{- end }}
+    <meta property="article:published_time" content="{{ .PublishDate.Format "2006-01-02T15:04:05.000Z" }}" />
+    <meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05.000Z" }}" />
+    <meta property="article:tag" content="FIRST TAG" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ .Title }}" />
+    <meta name="twitter:description" content="{{ .Summary }}" />
+    <meta name="twitter:url" content="{{ .Permalink }}" />
+        {{- if $feature -}}
+            {{- with .Resources.GetMatch $feature -}}
+                <!-- Case 1: Image found as a page bundle resource -->
+    <meta name="twitter:image" content="{{ $feature }}" />
+            {{- else -}}
+                <!-- Case 2: Use the feature_image value directly (likely a /static/ URL) -->
+    <meta name="twitter:image" content="{{ $feature }}" />
+            {{- end -}}
+        {{- else -}}
+            <!-- Case 3: No feature image set, skip og:image -->
+        {{- end }}
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Bradley Stannard" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="FIRST TAG" />
+        <!--WORK THIS OUT ANOTHER TIME    <meta property="og:image:width" content="2000" />-->
+        <!--WORK THIS OUT ANOTHER TIME    <meta property="og:image:height" content="1500" />-->
+        <!--    END POST-->
+    {{- end -}}
+
+    {{- if .IsHome -}}
+        <!--    START HOMEPAGE-->
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="{{.Site.Params.siteDescription}}" />
+    <meta property="og:url" content="{{ .Site.BaseURL }}" />
+    <meta property="og:image" content="HEADER IMAGE" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{.Site.Title}}" />
+    <meta name="twitter:description" content="{{.Site.Params.Description}}" />
+    <meta name="twitter:url" content="{{ .Site.BaseURL }}" />
+    <meta name="twitter:image" content="HEADER IMAGE" />
+        <!--WORK THIS OUT ANOTHER TIME <meta property="og:image:width" content="1680" />-->
+        <!--WORK THIS OUT ANOTHER TIME <meta property="og:image:height" content="494" />-->
+        <!--    END HOMEPAGE-->
+    {{- end -}}
+
+
+    {{- if .IsHome -}}
+        {{- $json := resources.Get "json/website.json" | resources.ExecuteAsTemplate "website.json" . -}}
+<script type="application/ld+json">
+      {{ $json.Content | safeJS }}
+    </script>
+
+    {{- end -}}
+
+    {{- if .IsPage -}}
+        {{- $name := "post" -}}
+        {{- with .File -}}
+            {{- $name = printf "article-%s.json" .BaseFileName -}}
+        {{- end -}}
+        {{- $json := resources.Get "json/article.json" | resources.ExecuteAsTemplate $name . -}}
+    <script type="application/ld+json">
+        {{ $json.Content | safeJS }}
+</script>
+
+    {{- end -}}
+
+    {{- with .OutputFormats.Get "rss" -}}
+        {{ printf `
+		<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
+    {{- end -}}
+
+    {{- $styles := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "style.main.scss" . | toCSS | minify | fingerprint -}}
+
+    <link rel="stylesheet" href="{{ $styles.Permalink }}" />
+    {{- $sticky := resources.Get "js/sticky-nav-title.js" | minify | fingerprint -}}
+
+    <script src="{{ $sticky.Permalink }}" integrity="{{ $sticky.Data.Integrity }}"></script>
+</head>
+<body class="{{ block `body_class` . }}{{ end }}">
+<div class="site-wrapper">
+    {{- block "main" . }}{{- end }}
+    <footer class="site-footer outer">
+        <div class="site-footer-content inner">
+            <section class="copyright">
+                <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a> &copy; {{ time.Now.Year }}
+            </section>
+            <nav class="site-footer-nav">
+                <a href="{{ .Site.BaseURL }}">Latest Posts</a>
+                <a href="https://jonathanjanssens.com" target="_blank" rel="noopener" style="opacity: 0.5;">Modified version of Hugo Casper3 by Jonathan Janssens</a>
+            </nav>
+        </div>
+    </footer>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var nav = document.querySelector('.site-home-header .site-nav');
+        var feed = document.querySelector('.post-feed');
+        if (!nav || !feed) return;
+        var lastScrollY = window.scrollY;
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) requestAnimationFrame(update);
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = feed.getBoundingClientRect().top + window.scrollY;
+            if (lastScrollY >= trigger - 20) {
+                nav.classList.add('fixed-nav-active');
+            } else {
+                nav.classList.remove('fixed-nav-active');
+            }
+            ticking = false;
+        }
+        window.addEventListener('scroll', onScroll, {
+            passive: true
+        });
+        window.addEventListener('resize', onResize);
+        update();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+// I think some of the CSS in here is Duplicated with that in `main.scss`
+.post-content > div {
+
+    width: 100%;
+}
+
+.site-nav-right {
+    flex: 0 1 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 0;
+    height: 64px;
+}
+
+.site-nav-right .nav {
+    position: relative;
+    margin: 0;
+}
+
+.site-nav-right .nav a {
+    white-space: nowrap;
+}
+
+.site-nav-right .nav a:before {
+    display: none;
+}
+
+.site-nav-right .nav li:last-of-type a {
+    margin-right: -12px;
+}
+
+
+.nav-home-title-active .nav {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-175%);
+}
+
+.nav-home-title-active .nav-home-title {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}

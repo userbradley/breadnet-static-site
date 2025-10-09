@@ -1,0 +1,30 @@
+<nav class="site-nav">
+    <div class="site-nav-left">
+        {{ if .IsPage }}
+        <a class="site-nav-logo" href="{{ $.Site.BaseURL }}">{{ $.Site.Title }}</a>
+        {{ end }}
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                {{ range $.Site.Menus.main }}
+                <li class="nav-home" role="menuitem">
+                    <a href="{{ .URL }}">{{- .Name -}}</a>
+                </li>
+                {{ end }}
+            </ul>
+            {{ if not $.IsHome }}
+            <span class="nav-post-title dash">{{ .Title }}</span>
+            {{ end }}
+        </div>
+    </div>
+    <div class="site-nav-right">
+        <div class="site-nav-content">
+            <ul class="nav" role="menu">
+                {{ range $.Site.Menus.secondary }}
+                <li class="nav-home" role="menuitem">
+                    <a href="{{ .URL }}">{{- .Name -}}</a>
+                </li>
+                {{ end }}
+            </ul>
+        </div>
+    </div>
+</nav>

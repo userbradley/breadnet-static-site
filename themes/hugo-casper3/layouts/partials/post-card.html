@@ -1,0 +1,53 @@
+<article class="post-card post
+{{ if not (.context.Param "feature_image") }} no-image
+{{ else }}
+{{ if (eq (mod .index 6) 0) }} post-card-large {{ end }}
+{{ end }} ">
+<!--        {{ if .context.Param "feature_image" }}-->
+<!--            <a class="post-card-image-link" href="{{ .context.Permalink }}">-->
+<!--                <img class="post-card-image"src="{{ .context.Param "feature_image" }}" alt="{{ .context.Title }}"/>-->
+<!--            </a>-->
+<!--        {{ end }}-->
+{{ $feature := .context.Param "feature_image" }}
+{{ if $feature }}
+{{ with .context.Resources.GetMatch $feature }}
+<!-- Case 1: Image found as a page bundle resource -->
+<a class="post-card-image-link" href="{{ $.context.Permalink }}">
+    <img class="post-card-image" src="{{ .RelPermalink }}" alt="{{ $.context.Title }}">
+</a>
+{{ else }}
+<!-- Case 2: Use the feature_image value directly (likely a /static/ URL) -->
+<a class="post-card-image-link" href="{{ $.context.Permalink }}">
+    <img class="post-card-image" src="{{ $feature }}" alt="{{ $.context.Title }}">
+</a>
+{{ end }}
+{{ end }}
+<div class="post-card-content">
+    <a class="post-card-content-link" href="{{ .context.Permalink }}">
+        <header class="post-card-header">
+            {{ with .context.Params.tags }}
+            {{ $primaryTag := (index . 0) }}
+            <div class="post-card-primary-tag">{{ $primaryTag }}</div>
+            {{ end }}
+            <h2 class="post-card-title">{{ .context.Title }}</h2>
+        </header>
+        <section class="post-card-excerpt">
+            <p>{{ .context.Summary }}</p>
+        </section>
+    </a>
+    <footer class="post-card-meta">
+        <ul class="author-list">
+            <li class="author-list-item">
+                <div class="author-name-tooltip">{{ .context.Param "author" }}</div>
+                <a href="#" class="static-avatar author-profile-image">{{- partial "icons/avatar.html" -}}</a>
+            </li>
+        </ul>
+        <div class="post-card-byline-content">
+            <span>{{ .context.Param "author" }}</span>
+            <span class="post-card-byline-date">
+          <time datetime="{{ .context.Date.Format "2006-31-01" }}">{{ .context.Date.Format "2 January 2006" }}</time>
+                <span class="bull">&bull;</span> {{ .context.ReadingTime }} min read </span>
+        </div>
+    </footer>
+</div>
+</article>

@@ -1,0 +1,24 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "publisher": {
+    "@type": "Organization",
+    "name": {{.Site.Title | jsonify}},
+    "url": {{ absURL "" | jsonify }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ absURL "favicon.png" | jsonify }},
+      "width": 60,
+      "height": 60
+    }
+  },
+  "url": {{ absURL "" | jsonify }},
+  "image": {
+    "@type": "ImageObject",
+    "url": {{ absURL "cover.jpg" | jsonify }},
+    "width": 1680,
+    "height": 494
+  },
+  "mainEntityOfPage": {{ absURL "" | jsonify }},
+  "description": {{ .Site.Params.siteDescription | jsonify }}
+}

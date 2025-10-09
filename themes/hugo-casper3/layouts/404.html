@@ -1,0 +1,33 @@
+{{ define "body_class" }} home-template {{ end }}
+
+{{ define "main" }}
+
+<header class="site-home-header">
+    {{ .Scratch.Set "background" "/images/404-header.jpg" }}
+    {{- partial "header-background.html" . -}}
+    <div class="inner">
+        {{- partial "site-nav.html" . -}}
+        <div class="site-header-content">
+            <h1 class="site-title">
+                {{ if $.Site.Params.logo }}
+                <img class="site-logo" src="{{ $.Site.Params.logo }}" alt="{{ .Site.Title }}" />
+                {{ else }}
+                {{ $.Site.Title }}
+                {{ end }}
+            </h1>
+            <h2 class="site-description">{{ $.Site.Params.description }}</h2>
+        </div>
+    </div>
+</header>
+
+<main id="site-main" class="site-main outer error-content">
+    <div class="inner">
+        <section class="error-message">
+            <h1 class="error-code">404</h1>
+            <p class="error-description">Page not found!</p>
+            <a class="error-link" href="http://localhost">Go to the front page →</a>
+        </section>
+    </div>
+</main>
+
+{{ end }}

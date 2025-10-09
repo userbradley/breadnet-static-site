@@ -1,0 +1,74 @@
+{{ if .IsHome }}
+<script type="application/ld+json">
+    {{- $json := dict
+        "@context" "https://schema.org"
+        "@type" "WebSite"
+        "publisher" (dict
+        "@type" "Organization"
+        "name" "breadNET"
+        "url" "https://breadnet.co.uk/"
+        "logo" (dict
+        "@type" "ImageObject"
+        "url" "https://breadnet.co.uk/content/images/size/w256h256/2020/06/favicon.png"
+        "width" 60
+        "height" 60
+        )
+        )
+        "url" "https://breadnet.co.uk/"
+        "image" (dict
+        "@type" "ImageObject"
+        "url" "https://breadnet.co.uk/content/images/2020/07/IMG_8577.JPG"
+        "width" 1680
+        "height" 494
+        )
+        "mainEntityOfPage" "https://breadnet.co.uk/"
+        "description" "Homelab, Linux and cloud. Find something interesting"
+    }}
+    {{ $json | jsonify (dict "indent" "  ") | safeHTML }}
+</script>
+
+{{ else if .IsPage }}
+<script type="application/ld+json">
+    {{- $image := .Params.featuredImage | default "https://breadnet.co.uk/content/images/size/w256h256/2020/06/favicon.png" -}}
+    {{- $json := dict
+    "@context" "https://schema.org"
+    "@type" "Article"
+    "publisher" (dict
+    "@type" "Organization"
+    "name" "breadNET"
+    "url" "https://breadnet.co.uk/"
+    "logo" (dict
+    "@type" "ImageObject"
+    "url" "https://breadnet.co.uk/content/images/size/w256h256/2020/06/favicon.png"
+    "width" 60
+    "height" 60
+    )
+    )
+    "author" (dict
+    "@type" "Person"
+    "name" "Bradley Stannard"
+    "image" (dict
+    "@type" "ImageObject"
+    "url" "https://breadnet.co.uk/content/images/2023/03/bradley.jpg"
+    "width" 2000
+    "height" 2667
+    )
+    "url" "https://breadnet.co.uk/author/bradley/"
+    "sameAs" (slice)
+    )
+    "headline" .Title
+    "url" .Permalink
+    "datePublished" .PublishDate
+    "dateModified" .Lastmod
+    "image" (dict
+    "@type" "ImageObject"
+    "url" $image
+    "width" 2000
+    "height" 1500
+    )
+    "description" .Description
+    "mainEntityOfPage" .Permalink
+    }}
+    {{ $json | jsonify (dict "indent" "  ") | safeHTML }}
+</script>
+{{ end }}
