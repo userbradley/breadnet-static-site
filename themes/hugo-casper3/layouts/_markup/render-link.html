@@ -1,0 +1,14 @@
+{{- $url := .Destination -}}
+
+{{/* Only modify external links */}}
+{{- if strings.HasPrefix $url "http" -}}
+{{- $parsed := urls.Parse $url -}}
+{{- $separator := "?" -}}
+{{- if $parsed.RawQuery -}}
+{{- $separator = "&" -}}
+{{- end -}}
+{{- $newURL := printf "%s%sref=breadnet.co.uk" $url $separator -}}
+<a href="{{ $newURL | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- else -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- end -}}

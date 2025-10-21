@@ -18,12 +18,12 @@ Enough about my work, you're here to see my Cluster at home.
 
 ---
 
-When I lived at my parents (Oh the good old days) I had a 48U rack with multiple dell servers. Due to the housing crisis affecting the UK, I cant afford to buy a house, let alone rent a place that isn't classified as a *[shoe box](https://www.redbrick.sg/blog/shoebox-apartments-is-it-worth-the-investment/#:~:text=Shoebox%20apartments%2C%20also%20known%20as%20%E2%80%98compact%20units%E2%80%99%20are%20typically%20defined%20as%20an%20apartment%20of%20500%20square%20feet%20or%20less%20and%20designed%20for%20a%20single%20occupant) -*As such, some design considerations had to be made.
+When I lived at my parents (Oh the good old days) I had a 48U rack with multiple dell servers. Due to the housing crisis affecting the UK, I cant afford to buy a house, let alone rent a place that isn't classified as a [shoebox](https://www.redbrick.sg/blog/shoebox-apartments-is-it-worth-the-investment/#:~:text=Shoebox%20apartments%2C%20also%20known%20as%20%E2%80%98compact%20units%E2%80%99%20are%20typically%20defined%20as%20an%20apartment%20of%20500%20square%20feet%20or%20less%20and%20designed%20for%20a%20single%20occupant). As such, some design considerations had to be made.
 
 ## Design Considerations
 
 - Needs to not be a server chassis
-- Needs to be *light* on power ([Energy Crisis](https://www.ons.gov.uk/economy/inflationandpriceindices/articles/costoflivinginsights/energy))
+- Needs to be _light_ on power ([Energy Crisis](https://www.ons.gov.uk/economy/inflationandpriceindices/articles/costoflivinginsights/energy))
 - Needs to be somewhat cheap ([Cost of living Crisis](https://en.wikipedia.org/wiki/2021%E2%80%93present_United_Kingdom_cost-of-living_crisis))
 - Needs to be small (read: Shoebox apartment)
 
@@ -46,13 +46,13 @@ There are lots of distributions of kubernetes you can run, to list a few:
 - K3s
 - Microk8s
 
-I decided that running full blown vanilla Kubernetes required too many moving parts, so I settled on K3s
+I decided that running full-blown vanilla Kubernetes required too many moving parts, so I settled on K3s
 
 > K3s is packaged as a single <70MB binary that reduces the dependencies and steps needed to install, run and auto-update a production Kubernetes cluster
 
 Due to it being so small, it makes installing the cluster **super simple** and not very network intensive
 
-I wont go in to the install process here, but below are some useful links that I suggest following
+I won't go in to the installation process here, but below are some useful links that I suggest following
 
 - [https://docs.k3s.io/quick-start](https://docs.k3s.io/quick-start)
 - [https://www.youtube.com/watch?v=UoOcLXfa8EU](https://www.youtube.com/watch?v=UoOcLXfa8EU)
@@ -61,7 +61,7 @@ You can get away with a single node, but if you plan to run this in *production*
 
 This is the design for the network at a high level.
 
-[//]: # (![]&#40;/content/images/2023/11/cluster.png&#41;)
+![](/content/images/2023/11/cluster.png)
 
 ## Design Specifics
 
@@ -118,19 +118,11 @@ This means the `values.yaml` file looks like the below
 
 This is then fronted by a Terraform module pre-configured to create DNS records with the tunnel ID.
 
-I've put together some documentation on a stripped down version, but if you are interested in the helm chart, please get in contact and I am happy to opensource it
-[
+I've put together some documentation on a stripped down version, but if you are interested in the helm chart, please get in contact, and I am happy to opensource it
 
-Cloudflare Tunnels on k3s - breadNET Documentation
 
-breadNET Documentation
+[Cloudflare Tunnels on k3s - breadNET Documentation](https://documentation.breadnet.co.uk/kubernetes/k3s/cloudflare-tunnels-on-k3s/?utm_source=breadnet&utm_medium=blog&utm_campaign=kubernetes%20at%20home)
 
-[//]: # (![]&#40;https://documentation.breadnet.co.uk/favicon.ico&#41;logo)
-
-[//]: # (![]&#40;https://documentation.breadnet.co.uk/assets/images/social/kubernetes/k3s/cloudflare-tunnels-on-k3s.png&#41;)
-]
-
-(<https://documentation.breadnet.co.uk/kubernetes/k3s/cloudflare-tunnels-on-k3s/?utm_source&#x3D;breadnet&amp;utm_medium&#x3D;blog&amp;utm_campaign&#x3D;kubernetes%20at%20home>)
 This is managed via Flux
 
 #### PiHole
@@ -176,14 +168,15 @@ Status page is using [gatus.io](https://gatus.io) in a self built helm chart to 
 
 One thing is this is pulling an AWS (Hosting the status page on your infrastructure) - so for the time being this will only serve as my status page for in cluster things
 
-[//]: # (![]&#40;/content/images/2023/11/image.png&#41;)
+![](/content/images/2023/11/image.png)
+
 This is managed with Flux
 
 ### Grocy
 
 Grocy is a PHP app designed to help you manage your kitchen inventory. I've run this off and on for quite a while. The main thing that's stopping me from really commiting to it is the Developer's hate towards an external database. Meaning I have to persist the sqlite database on the cluster, and we all know that persistence is Kubernetes gets painful.
 
-This seaways very nicely on to
+This seaways very nicely on to;
 
 ## The Persistence server
 
@@ -205,19 +198,12 @@ I will need to look at installing some other things like:
 
 ### Where are the helm charts stored
 
-I have a [Taskfile](taskfile.dev/) in the monorepo that packages the helm chart as an OCI artifact and pushes it to Google Artifact Registry.
+I have a [Taskfile](https://taskfile.dev/) in the monorepo that packages the helm chart as an OCI artifact and pushes it to Google Artifact Registry.
 
 In the cluster, I have then configured flux to use a custom built credential helper
-[
 
-Authenticate flux with Google Artifact Registry - breadNET Documentation
 
-breadNET Documentation
-
-[//]: # (![]&#40;https://documentation.breadnet.co.uk/favicon.ico&#41;logo)
-
-[//]: # (![]&#40;https://documentation.breadnet.co.uk/assets/images/social/kubernetes/flux/flux-artifact-registry-google-auth.png&#41;)
-](<https://documentation.breadnet.co.uk/kubernetes/flux/flux-artifact-registry-google-auth/>)
+[Authenticate flux with Google Artifact Registry - breadNET Documentation](https://documentation.breadnet.co.uk/kubernetes/flux/flux-artifact-registry-google-auth)
 
 ## What the flux
 
@@ -227,7 +213,9 @@ Flux is a GitOps toolkit [(GOTK)](https://pkg.go.dev/github.com/fluxcd/toolkit/c
 
 This is a screenshot from the repo where I configure the flux system, and the deployments
 
-[//]: # (![]&#40;/content/images/2023/11/image-1.png&#41;)
+![](/content/images/2023/11/image-1.png)
+
+
 `flux-system` - this contains all the Flux config. It's a brain bender, but flux manages it's self via it's own repo.
 
 `HelmRelease` - Deploys the helm chars from the HelmRepositories I specify. Here you can also pass the values as well as what namespace and version of the chart to use
@@ -274,30 +262,33 @@ Now I've finished justifying the decision, let me show you the cluster
 
 ### The cluster and it's supporting infra
 
-[//]: # (![]&#40;/content/images/2023/11/cluster.jpg&#41;)
+![](/content/images/2023/11/cluster.jpg)
+
 Some more justifying the terrible placement
 
-- The router (Black box tied to the copper pipe) techniaclly is water cooled. I know this is really less than ideal, but this is the only place I could put it that I had access to, and kept it cool. You may laugh, but since putting it there, it actually reduces the temprature of the router, really letting me get all 110mbps I paid for.
+- The router (Black box tied to the copper pipe) technically is water cooled. I know this is really less than ideal, but this is the only place I could put it that I had access to, and kept it cool. You may laugh, but since putting it there, it actually reduces the temprature of the router, really letting me get all 110mbps I paid for.
 
 ### Cluster from the top
 
-[//]: # (![]&#40;/content/images/2023/11/cluster-top.jpg&#41;)
+![]/content/images/2023/11/cluster-top.jpg)
 
 ### Switch
 
-[//]: # (![]&#40;/content/images/2023/11/switch.jpg&#41;)
+![](/content/images/2023/11/switch.jpg)
 The Switch sees a constant load of about 2-5mbps when the cluster is just chilling
 
-[//]: # (![]&#40;/content/images/2023/11/image-2.png&#41;)
+![](/content/images/2023/11/image-2.png)
 
 ### The new router
 
-[//]: # (![]&#40;/content/images/2023/11/router.jpg&#41;)
-This is the Juniper SRX-330 I have purchased, I need to learn how to use it. Currently I have PPPoE setup on `ge-0/0/0` (White ethernet) and then setting up the servers *lan* on `ge-0/0/1` (trunk port) to the switch, where the rest of my devices will connect to, and then anything else can go in to the router using an `irb`
+![](/content/images/2023/11/router.jpg)
+
+This is the Juniper SRX-330 I have purchased, I need to learn how to use it. Currently, I have PPPoE setup on `ge-0/0/0` (White ethernet) and then setting up the servers *lan* on `ge-0/0/1` (trunk port) to the switch, where the rest of my devices will connect to, and then anything else can go in to the router using an `irb`
 
 This overall leaves the network looking like the below
 
-[//]: # (![]&#40;/content/images/2023/11/simple-network-2.png&#41;)
+![](/content/images/2023/11/simple-network-2.png)
+
 ---
 
 I hope you've enjoyed this, if so, or if not, please feel free to get in contact.

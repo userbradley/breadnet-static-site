@@ -1,0 +1,153 @@
+{{- /*
+Shortcode: bookmark
+Usage:
+{{< bookmark "https://example.com/post" >}}
+Optional named params:
+title="Override title"
+desc="Override description"
+img="https://example.com/image.jpg"
+site="example.com"
+publisher="Name"
+*/ -}}
+
+{{- $url := .Get 0 -}}
+{{- if not $url -}}
+{{- errorf "bookmark shortcode requires a URL as first parameter" -}}
+{{- end -}}
+
+{{- $res := resources.GetRemote $url | default nil -}}
+{{- if not $res -}}
+{{- errorf "bookmark: failed to GET %s" $url -}}
+{{- end -}}
+
+{{- $body := $res.Content | safeHTML -}}
+
+{{- /* --- Title --- */ -}}
+{{- $metaTitle := .Get "title" -}}
+{{- if not $metaTitle -}}
+{{- $matches := findRE `<meta\s+(?:property|name)=["']og:title["']\s+content=["']([^"']+)["']` $body -}}
+{{- if gt (len $matches) 0 -}}
+{{- $metaTitle = index (index $matches 0) 1 | htmlUnescape -}}
+{{- else -}}
+{{- $matches = findRE `<title[^>]*>\s*([^<]+?)\s*<\/title>` $body -}}
+{{- if gt (len $matches) 0 -}}
+{{- $metaTitle = index (index $matches 0) 1 | htmlUnescape -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- /* --- Description --- */ -}}
+{{- $metaDesc := .Get "desc" -}}
+{{- if not $metaDesc -}}
+{{- $matches := findRE `<meta\s+(?:property|name)=["']og:description["']\s+content=["']([^"']+)["']` $body -}}
+{{- if gt (len $matches) 0 -}}
+{{- $metaDesc = index (index $matches 0) 1 | htmlUnescape -}}
+{{- else -}}
+{{- $matches = findRE `<meta\s+name=["']description["']\s+content=["']([^"']+)["']` $body -}}
+{{- if gt (len $matches) 0 -}}
+{{- $metaDesc = index (index $matches 0) 1 | htmlUnescape -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- /* --- Image --- */ -}}
+{{- $metaImage := .Get "img" -}}
+{{- if not $metaImage -}}
+{{- $matches := findRE `<meta\s+(?:property|name)=["']og:image["']\s+content=["']([^"']+)["']` $body -}}
+{{- if gt (len $matches) 0 -}}
+{{- $metaImage = index (index $matches 0) 1 | htmlUnescape -}}
+{{- end -}}
+{{- end -}}
+
+{{- /* --- Site / Author --- */ -}}
+{{- $metaSite := .Get "site" -}}
+{{- if not $metaSite -}}
+{{- $matches := findRE `<meta\s+property=["']og:site_name["']\s+content=["']([^"']+)["']` $body -}}
+{{- if gt (len $matches) 0 -}}
+{{- $metaSite = index (index $matches 0) 1 | htmlUnescape -}}
+{{- else -}}
+{{- $u := urls.Parse $url -}}
+{{- if $u -}}
+{{- $metaSite = $u.Host -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- $metaPublisher := .Get "publisher" -}}
+{{- if not $metaPublisher -}}
+{{- $matches := findRE `<meta\s+name=["']author["']\s+content=["']([^"']+)["']` $body -}}
+{{- if gt (len $matches) 0 -}}
+{{- $metaPublisher = index (index $matches 0) 1 | htmlUnescape -}}
+{{- end -}}
+{{- end -}}
+
+{{- /* --- Favicon --- */ -}}
+{{- $icon := "" -}}
+{{- $matches := findRE `<link\s+rel=["'](?:shortcut icon|icon|apple-touch-icon)["'].*?href=["']([^"']+)["']` $body -}}
+{{- if gt (len $matches) 0 -}}
+{{- $icon = index (index $matches 0) 1 | htmlUnescape -}}
+{{- else -}}
+{{- $u := urls.Parse $url -}}
+{{- if $u -}}
+{{- $icon = printf "%s://%s/favicon.ico" $u.Scheme $u.Host -}}
+{{- end -}}
+{{- end -}}
+
+{{- /* --- Resolve relative URLs for image & icon --- */ -}}
+{{- $u := urls.Parse $url -}}
+{{- if $u -}}
+{{- if and (ne $metaImage "") (not (hasPrefix $metaImage "http")) -}}
+{{- if hasPrefix $metaImage "/" -}}
+{{- $metaImage = printf "%s://%s%s" $u.Scheme $u.Host $metaImage -}}
+{{- else -}}
+{{- $basePath := replaceRE `[^/]+$` "" $u.Path -}}
+{{- $metaImage = printf "%s://%s%s%s" $u.Scheme $u.Host $basePath $metaImage -}}
+{{- end -}}
+{{- end -}}
+{{- if and (ne $icon "") (not (hasPrefix $icon "http")) -}}
+{{- if hasPrefix $icon "/" -}}
+{{- $icon = printf "%s://%s%s" $u.Scheme $u.Host $icon -}}
+{{- else -}}
+{{- $basePath := replaceRE `[^/]+$` "" $u.Path -}}
+{{- $icon = printf "%s://%s%s%s" $u.Scheme $u.Host $basePath $icon -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- /* --- Safe outputs --- */ -}}
+{{- $safeTitle := cond (ne $metaTitle "") ($metaTitle | safeHTMLAttr) "" -}}
+{{- $safeDesc := cond (ne $metaDesc "") ($metaDesc | safeHTML) "" -}}
+{{- $safeSite := cond (ne $metaSite "") ($metaSite | safeHTMLAttr) "" -}}
+{{- $safePublisher := cond (ne $metaPublisher "") ($metaPublisher | safeHTMLAttr) "" -}}
+{{- $safeIcon := cond (ne $icon "") ($icon | safeURL) "" -}}
+{{- $safeImage := cond (ne $metaImage "") ($metaImage | safeURL) "" -}}
+
+<figure class="kg-card kg-bookmark-card">
+    <a class="kg-bookmark-container" href="{{ $url | safeURL }}">
+        <div class="kg-bookmark-content">
+            {{- if ne $safeTitle "" -}}
+            <div class="kg-bookmark-title">{{ $safeTitle }}</div>
+            {{- end -}}
+            {{- if ne $safeDesc "" -}}
+            <div class="kg-bookmark-description">{{ $safeDesc }}</div>
+            {{- end -}}
+            <div class="kg-bookmark-metadata">
+                {{- if ne $safeIcon "" -}}
+                <img class="kg-bookmark-icon" src="{{ $safeIcon }}" alt="{{ $safeSite }}">
+                {{- end -}}
+                {{- if ne $safeSite "" -}}
+                <span class="kg-bookmark-author">{{ $safeSite }}</span>
+                {{- end -}}
+                {{- if ne $safePublisher "" -}}
+                <span class="kg-bookmark-publisher">{{ $safePublisher }}</span>
+                {{- end -}}
+            </div>
+        </div>
+
+        {{- if ne $safeImage "" -}}
+        <div class="kg-bookmark-thumbnail">
+            <img src="{{ $safeImage }}" alt="{{ $safeTitle }}">
+        </div>
+        {{- end -}}
+    </a>
+</figure>

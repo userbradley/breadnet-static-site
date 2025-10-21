@@ -1,0 +1,115 @@
+---
+title: "Your Spotify: 2022"
+slug: your-spotify-2022
+date: 2022-10-23T16:17:48.000Z
+date_updated: 2022-10-23T16:17:48.000Z
+summary: Installing your_spotify in 2022 has never been easier.
+---
+
+I wrote a post in June of 2020 about installing this super cool application called `your spotify`
+
+If you didn't join us in 2020, let me give you the rundown on what `your_spotify` is
+
+It's an application that runs on [Docker containers](https://www.docker.com) that poll Spotify's API to get information about your current listening, and then build dashboards around them. See below photos
+
+![](https://user-images.githubusercontent.com/17204739/154752226-c2215a51-e20e-4ade-ac63-42c5abb25240.png)
+
+## How to install and use
+
+You will need the below to be installed
+
+1. [Docker](https://docs.docker.com/engine/install/)
+2. [docker-compose](https://docs.docker.com/compose/install/)
+3. git
+
+Once these are installed, check they are working
+
+Run the below in the command line:
+
+    ➜ docker -v
+    ➜ docker-compose -v
+    ➜ git -v
+
+You should see a similar output to the below
+
+    ➜ docker -v
+    Docker version 20.10.17-rd, build c2e4e01
+
+    ➜ docker-compose -v
+    Docker Compose version v2.11.1
+
+    ➜ git -v
+    git version 2.37.0 (Apple Git-136)
+
+*Your versions will be different, do not [panik](https://warehouse-camo.ingress.cmh1.psfhosted.org/2e5d6f776534fb7359fe412019743be199f86e6a/68747470733a2f2f692e696d6775722e636f6d2f426a4b5445386d2e6a706567)*
+
+---
+
+As this is an application that connects to an API, it will need to be able to Authenticate to the API.
+
+*If you want to learn more about an API, go [here](https://www.mulesoft.com/resources/api/what-is-an-api)*
+
+## Spotify part
+
+Navigate to [https://developer.spotify.com/dashboard/applications](https://developer.spotify.com/dashboard/applications)
+
+You will need to login with your Spotify account
+![](/content/images/2022/10/image.png)
+Once logged in, click on `create app` on the right hand side
+![](/content/images/2022/10/image-1.png)
+You can name this anything you want, but it's reccomended you call this something like `Your spotify` or `your_spotify` so you know what it does if you ever have issues
+
+Ensure that you read the T&C's and ensure you're not signing away your first born by accident
+![](/content/images/2022/10/image-2.png)
+You should now be greeted by a page similar to the below
+![](/content/images/2022/10/image-3.png)
+Click Edit and paste the below values in to their respective fields.
+Field NameValueRedirect URIs`http://localhost:3000/oauth/spotify/callback``http://localhost:8080/oauth/spotify/callback`
+Should look like the below
+![](/content/images/2022/10/image-4.png)
+
+## The Docker part
+
+Now that the spotify section is done, we are able to create the actual application
+
+On your computer or server, git clone the GitHub repo.
+
+> Something to note, if you are on windows, you may have to install git and the git cli. [Please refer to the official documentation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
+Open the terminal (Or command line on windows)
+
+    git clone git@github.com:Yooooomi/your_spotify.git
+
+This will download the files to a folder called `your_spotify` where ever you ran the command.
+
+Open the file called `docker-compose.yml`
+
+I suggest you do this in an IDE like Intelli-j or vscode (Or vim if you're hardcore)
+
+Edit the lines below
+
+          - SPOTIFY_PUBLIC=__your_spotify_client_id__
+          - SPOTIFY_SECRET=__your_spotify_secret__
+
+You will need to replace these values from the ones on spotify.
+
+Navigate back to the Dev Portal, select the application we created, and on the left hand side, locate the credentials.
+
+They look like the below
+![](/content/images/2022/10/image-5.png)These dont work, dont even try
+Once edited the lines should look like the below
+![](/content/images/2022/10/image-6.png)
+You can now run the docker compose command
+
+    docker-compose up -d
+
+the `-d` runs this in the background if you were wondering
+
+You can now navigate to `localhost:3000` and are greeted with a login page
+![](/content/images/2022/10/image-7.png)![](/content/images/2022/10/image-8.png)
+Once logged in, you need to authorise your account to access the app.
+
+Once that's done, you're all sorted!
+
+Listen to some spotify and boom, now the page *should* look something like the below
+![](/content/images/2022/10/image-9.png)
