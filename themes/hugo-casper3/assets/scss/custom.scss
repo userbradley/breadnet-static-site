@@ -42,3 +42,22 @@
     opacity: 1;
     transform: translateY(0);
 }
+
+
+.post-content img,
+.post-content figure {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5rem auto;
+}
+
+.post-content figure {
+    text-align: center;
+}
+
+//.post-content figcaption {
+//    font-size: 0.9rem;
+//    color: var(--midgrey);
+//    margin-top: 0.5rem;
+//}

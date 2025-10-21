@@ -80,17 +80,27 @@
 
     {{- end -}}
 
-    {{- if .IsPage -}}
-        {{- $name := "post" -}}
-        {{- with .File -}}
-            {{- $name = printf "article-%s.json" .BaseFileName -}}
-        {{- end -}}
-        {{- $json := resources.Get "json/article.json" | resources.ExecuteAsTemplate $name . -}}
-    <script type="application/ld+json">
-        {{ $json.Content | safeJS }}
-</script>
+{{/*    {{- if .IsPage -}}*/}}
+{{/*        {{- $name := "post" -}}*/}}
+{{/*        {{- with .File -}}*/}}
+{{/*            {{- $name = printf "article-%s.json" .BaseFileName -}}*/}}
+{{/*        {{- end -}}*/}}
+{{/*        {{- $json := resources.Get "json/article.json" | resources.ExecuteAsTemplate $name . -}}*/}}
+{{/*    <script type="application/ld+json">*/}}
+{{/*        {{ $json.Content | safeJS }}*/}}
+{{/*</script>*/}}
+{{/*    {{- end -}}*/}}
 
-    {{- end -}}
+        {{- if .IsPage -}}
+        {{- $name := printf "article-%s.json" (sha1 .Permalink) -}}
+        {{- $tmpl := resources.Get "json/article.json" -}}
+        {{- $json := $tmpl | resources.ExecuteAsTemplate $name . -}}
+        <script type="application/ld+json">
+    {{ $json.Content | safeJS }}
+  </script>
+        {{- end -}}
+
+
 
     {{- with .OutputFormats.Get "rss" -}}
         {{ printf `

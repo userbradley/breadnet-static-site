@@ -11,6 +11,7 @@ theme: hugo-casper3
 params:
   description: Security Engineer, tinkerer and home labber
   siteDescription: Homelab, Linux and cloud. Find something interesting
+  issn: 2755-8029
   mainSections:
     - post
 menu:
@@ -50,7 +51,7 @@ markup:
   goldmark:
     renderHooks:
       image:
-        useEmbedded: always
+        useEmbedded: auto
 services:
   rss:
     limit: -1
@@ -59,5 +60,5 @@ services:
 #  term:
 #    - html
 permalinks:
-  post: '/:contentbasename'
+  post: "/:contentbasename"
 enableGitInfo: true

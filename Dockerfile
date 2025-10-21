@@ -1,4 +1,5 @@
-FROM klakegg/hugo:ext-alpine as BUILDER
+#FROM klakegg/hugo:ext-alpine as BUILDER
+FROM hugo:latest as BUILDER
 
 COPY . /src/
 
