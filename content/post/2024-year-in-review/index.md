@@ -38,6 +38,8 @@ I've moved them to my home cluster, which I have since moved from K3S to Talos, 
 
 ![Something](/content/images/2025/01/F9F8C433-641C-41B7-A04B-DB5A9CBBAD8A_1_102.jpeg "Something")
 
+![](https://breadnet.co.uk/content/images/size/w1000/2025/01/F9F8C433-641C-41B7-A04B-DB5A9CBBAD8A_1_102.jpeg)
+
 The above is my 3 node k3s cluster running on ubuntu, plus an additional node running mariadb and NFS exports for Persistent volumes.
 
 Plan is to add 3 more nodes to my *lab* and run a specific OS for Storage, as well as a node with an SSD for Databases. You would be surprised to know, it's more Dell 3040 SFF's

@@ -1,9 +1,13 @@
 #FROM klakegg/hugo:ext-alpine as BUILDER
-FROM hugo:latest as BUILDER
+FROM ghcr.io/gohugoio/hugo:v0.151.2 as BUILDER
 
+USER root:root
+
+WORKDIR /src/
 COPY . /src/
+COPY .git /src/.git/
 
-RUN hugo --baseURL http://localhost:8081
+RUN hugo build --baseURL http://localhost:8081 --noBuildLock
 
 FROM nginx:stable-alpine
 
