@@ -89,7 +89,7 @@ You get given a Fly domain to use, but you can just as easily point your existin
 
 Basically; I have migrated my mkdocs site from running on my Ubuntu server in London ([actually in Slough I just found out](https://www.equinix.co.uk/data-centers/europe-colocation/united-kingdom-colocation/london-data-centers/ld5)) to being in the UK as well as Texas!
 
-I am able to get latency in the USA down from around 2 __seconds__ for the page to paint, to around **400ms!**(This is also using Cloudflare's caching, but still)
+I am able to get latency in the USA down from around 2 __seconds__ for the page to paint, to around __400ms!__(This is also using Cloudflare's caching, but still)
 
 The deployment process is a lot easier too, as we are building the site as a docker image, uploading it to their Private registry and then turning it in to a Micro VM!
 
