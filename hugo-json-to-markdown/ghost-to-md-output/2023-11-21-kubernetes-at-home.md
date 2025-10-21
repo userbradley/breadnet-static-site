@@ -4,8 +4,6 @@ slug: kubernetes-at-home
 date: 2023-11-21T17:42:44.000Z
 date_updated: 2023-11-21T17:49:37.000Z
 summary: Ever wondered what it's like running kubernetes at home? This post tries to answer that
-feature_image: https://breadnet.co.uk/content/images/size/w1000/2023/11/cluster-top-1.jpg
-tags: ["Kubernetes"]
 ---
 
 I first started learning Kubernetes in 2021, as a Junior Systems Administrator in my bedroom in Cambridge. I'll be honest, I didn't really understand it much. What's a pod? Why cant I just deploy a container?
@@ -60,8 +58,7 @@ I wont go in to the install process here, but below are some useful links that I
 You can get away with a single node, but if you plan to run this in *production* (ctx: production at home) then I recommend 3 nodes.
 
 This is the design for the network at a high level.
-
-[//]: # (![]&#40;/content/images/2023/11/cluster.png&#41;)
+![](__GHOST_URL__/content/images/2023/11/cluster.png)
 
 ## Design Specifics
 
@@ -125,12 +122,10 @@ Cloudflare Tunnels on k3s - breadNET Documentation
 
 breadNET Documentation
 
-[//]: # (![]&#40;https://documentation.breadnet.co.uk/favicon.ico&#41;logo)
+![](https://documentation.breadnet.co.uk/favicon.ico)logo
 
-[//]: # (![]&#40;https://documentation.breadnet.co.uk/assets/images/social/kubernetes/k3s/cloudflare-tunnels-on-k3s.png&#41;)
-]
-
-(<https://documentation.breadnet.co.uk/kubernetes/k3s/cloudflare-tunnels-on-k3s/?utm_source&#x3D;breadnet&amp;utm_medium&#x3D;blog&amp;utm_campaign&#x3D;kubernetes%20at%20home>)
+![](https://documentation.breadnet.co.uk/assets/images/social/kubernetes/k3s/cloudflare-tunnels-on-k3s.png)
+](<https://documentation.breadnet.co.uk/kubernetes/k3s/cloudflare-tunnels-on-k3s/?utm_source&#x3D;breadnet&amp;utm_medium&#x3D;blog&amp;utm_campaign&#x3D;kubernetes%20at%20home>)
 This is managed via Flux
 
 #### PiHole
@@ -175,8 +170,7 @@ This is managed with flux
 Status page is using [gatus.io](https://gatus.io) in a self built helm chart to host an internal status page with (currently) 3 resources. Eventually I plan to make this public behind Cloudflare Tunnels, but I need to fix the helm chart.
 
 One thing is this is pulling an AWS (Hosting the status page on your infrastructure) - so for the time being this will only serve as my status page for in cluster things
-
-[//]: # (![]&#40;/content/images/2023/11/image.png&#41;)
+![](__GHOST_URL__/content/images/2023/11/image.png)
 This is managed with Flux
 
 ### Grocy
@@ -214,9 +208,9 @@ Authenticate flux with Google Artifact Registry - breadNET Documentation
 
 breadNET Documentation
 
-[//]: # (![]&#40;https://documentation.breadnet.co.uk/favicon.ico&#41;logo)
+![](https://documentation.breadnet.co.uk/favicon.ico)logo
 
-[//]: # (![]&#40;https://documentation.breadnet.co.uk/assets/images/social/kubernetes/flux/flux-artifact-registry-google-auth.png&#41;)
+![](https://documentation.breadnet.co.uk/assets/images/social/kubernetes/flux/flux-artifact-registry-google-auth.png)
 ](<https://documentation.breadnet.co.uk/kubernetes/flux/flux-artifact-registry-google-auth/>)
 
 ## What the flux
@@ -226,8 +220,7 @@ I've mentioned that I use Flux to manage almost all the deployments, but what ac
 Flux is a GitOps toolkit [(GOTK)](https://pkg.go.dev/github.com/fluxcd/toolkit/cmd/gotk)  from Weave Works, it allows you to declarativly descibe the state of the cluster and then sync that declaration to the cluster. Sure, a simple solution would be a cron job doing `git clone && kubectl apply -f **.yaml*`but this allows for logging and structured config.
 
 This is a screenshot from the repo where I configure the flux system, and the deployments
-
-[//]: # (![]&#40;/content/images/2023/11/image-1.png&#41;)
+![](__GHOST_URL__/content/images/2023/11/image-1.png)
 `flux-system` - this contains all the Flux config. It's a brain bender, but flux manages it's self via it's own repo.
 
 `HelmRelease` - Deploys the helm chars from the HelmRepositories I specify. Here you can also pass the values as well as what namespace and version of the chart to use
@@ -274,30 +267,28 @@ Now I've finished justifying the decision, let me show you the cluster
 
 ### The cluster and it's supporting infra
 
-[//]: # (![]&#40;/content/images/2023/11/cluster.jpg&#41;)
+![](__GHOST_URL__/content/images/2023/11/cluster.jpg)
 Some more justifying the terrible placement
 
 - The router (Black box tied to the copper pipe) techniaclly is water cooled. I know this is really less than ideal, but this is the only place I could put it that I had access to, and kept it cool. You may laugh, but since putting it there, it actually reduces the temprature of the router, really letting me get all 110mbps I paid for.
 
 ### Cluster from the top
 
-[//]: # (![]&#40;/content/images/2023/11/cluster-top.jpg&#41;)
+![](__GHOST_URL__/content/images/2023/11/cluster-top.jpg)
 
 ### Switch
 
-[//]: # (![]&#40;/content/images/2023/11/switch.jpg&#41;)
+![](__GHOST_URL__/content/images/2023/11/switch.jpg)
 The Switch sees a constant load of about 2-5mbps when the cluster is just chilling
-
-[//]: # (![]&#40;/content/images/2023/11/image-2.png&#41;)
+![](__GHOST_URL__/content/images/2023/11/image-2.png)
 
 ### The new router
 
-[//]: # (![]&#40;/content/images/2023/11/router.jpg&#41;)
+![](__GHOST_URL__/content/images/2023/11/router.jpg)
 This is the Juniper SRX-330 I have purchased, I need to learn how to use it. Currently I have PPPoE setup on `ge-0/0/0` (White ethernet) and then setting up the servers *lan* on `ge-0/0/1` (trunk port) to the switch, where the rest of my devices will connect to, and then anything else can go in to the router using an `irb`
 
 This overall leaves the network looking like the below
-
-[//]: # (![]&#40;/content/images/2023/11/simple-network-2.png&#41;)
+![](__GHOST_URL__/content/images/2023/11/simple-network-2.png)
 ---
 
 I hope you've enjoyed this, if so, or if not, please feel free to get in contact.

@@ -1,0 +1,105 @@
+---
+title: Homelab V2
+slug: homelab-v2
+date: 2025-09-18T00:41:33.000Z
+date_updated: 2025-10-15T09:15:34.000Z
+summary: breadNET Lab is getting built back better than ever, based on Talos. Some new apps are lined up to get deployed!
+---
+
+It's like the original [Home lab](__GHOST_URL__/kubernetes-at-home/) but this time, not quite as bad.
+
+Home labs are very personal, what works for me wont work for you. What you like, I may dislike. Homelab V2.
+
+The whole idea behind why Homelab V2 has come about, is because one of the services I host, Mealie, crashed and burnt so badly that we were having to go back to using cook books and digging through the backup JSON to find recipes.
+
+The new lab is designed to score high on the SOAP scale (significant other acceptance parameters) - that is to say, my partner finds it simple to consume services and treats it like it's a Saas product.
+
+It's designed to be immutable, git native and cheap as possible to run, with as little maintenance required.
+
+## Brief overview of the homelab's I've had
+
+It started in my parents house where I used to have a 48U rack
+![](__GHOST_URL__/content/images/2020/06/EmbeddedImage--7-.jpg)The old server rack
+I then migrated most of my things to SaaS offerings because I had to sell the servers, which was a sad day. Luckily they were able to go to an old friend of mine from School who would put them to good use
+![](__GHOST_URL__/content/images/2025/09/IMG_3620-1.jpeg)All my servers, switches and routers in the back of my old car on their way to Jack
+I moved around a lot between moving out of my parents house and then when I got my own apartment, which meant I couldn't have anything permanent setup.
+
+Finally when I landed in Berkshire, I had means to actually setup something *somewhat* reliable. I present, k3s at home
+![](__GHOST_URL__/content/images/size/w2000/2023/11/cluster-top-1.jpg)Old K3s cluster in Wokingham
+This cluster was great, it only really [had one outage](https://documentation.breadnet.co.uk/outage/2023-11-26-04/), and for the most part was pretty decent.
+[
+
+Kubernetes at home
+
+Ever wondered what it’s like running kubernetes at home? This post tries to answer that
+
+![](__GHOST_URL__/content/images/size/w256h256/2020/06/favicon.png)breadNETBradley Stannard
+
+![](__GHOST_URL__/content/images/2023/11/cluster-top-1.jpg)
+](__GHOST_URL__/kubernetes-at-home/)
+However, there were massive reliability issues when I moved to my new address. Namely, the IP address all changed for some reason, and the certificates also expired. I decided it was time to do something about it
+
+# Homelab v2
+
+Homelab V2 is, for all intensive purposes, RAID but with computers.
+
+The lab is built off of a stack of Dell 3040 SFF PC's with 8gb ram each, and 128GB SSD's.
+
+Currently there are 6 of these, with 5 running, and one as a spare.
+UseCountKubernetes4Database1
+As you can deduct from the table above, I am still running Kubernetes. But this is where it changes. I am now running Talos, a full OS rendition of Kubernetes designed to be lightweight and it's all configured from a file. You can get cool tools like `talhelper` that help you template out config and generate node config off a single central file.
+![](__GHOST_URL__/content/images/2025/09/image-1.png)
+Unlike K3s which is installed on Ubuntu as a binary, Talos is the operating system and also the Kubernetes.
+
+I wont go too much in to the Kubernetes setup details here, as I plan to write another blog post about this where I touch one some more interesting details
+
+> Todo: Write blog post on Talos cluster!
+
+![](__GHOST_URL__/content/images/2025/09/image-2.png)
+I've got 3 nodes in this cluster. You're probably thinking "hang on, there's 4 nodes in the table above, but only 3 here?" and you're right.
+
+The 4th node is a single node cluster called `utils` that runs some *utility* apps. (I touch on these apps later)
+
+The last node is just an Ubuntu host running `mariadb` as of current, however some apps require Postgres so I need to get that installed.
+
+## What apps are you running
+
+Currently I am running
+
+- Mealie
+- Gatus
+- Matrix server (blog post soon...)
+- Pocket-id (does all my OIDC auth)
+- Hound ([Git repo search](https://github.com/hound-search/hound))
+- Atlantis (Terraform PR automation)
+- Postfix Mail forwarder (Allows me to setup internal apps to send mail without having to deal with per application authentication. It's authenticated in one place)
+
+## What apps are planned
+
+- Jellyfin
+- *Linux ISO* Downloading software
+- Pinchflat
+- ErsatxTV
+- Airtrail
+- Kanboard.org OR [Vikunja](https://vikunja.io)
+- Karakeep ([Previously Hoarder](https://docs.karakeep.app))
+- Paperless-ngx
+- [IT Tools](https://github.com/CorentinTh/it-tools)
+- changedetection.io
+- Snipe-IT (Used to host this, just need to revive it from the dead)
+- [Wallos](https://wallosapp.com)
+- Wazuh
+- Umami
+- Matomo (Need to revive from the dead...)
+- Terraform registry Cace (Using NGINX) to speed up local Atlantis
+- Lube Logger ([It's for cars...](https://lubelogger.com))
+- [Donetick](https://donetick.com)
+- [FreshRSS](https://freshrss.org/index.html)
+
+## Where are you storing everything
+
+I was able to pick up a Synology nas on Ebay for around £800 (Yes, that went down __very__ well with the Partner) and serving iSCSI LUN's over to the Talos nodes
+
+## Closing notes
+
+This is a real great starting point for the lab. Everything is fresh and new, and I am doing it right the first time. Keep an eye out on the site for new posts
