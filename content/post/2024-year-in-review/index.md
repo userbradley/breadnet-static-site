@@ -36,27 +36,25 @@ I used to run the below applications on a few [Digital Ocean Droplets](https://m
 
 I've moved them to my home cluster, which I have since moved from K3S to Talos, which I will be writing a blog post about later
 
-![Something](/content/images/2025/01/F9F8C433-641C-41B7-A04B-DB5A9CBBAD8A_1_102.jpeg "Something")
-
-![](https://breadnet.co.uk/content/images/size/w1000/2025/01/F9F8C433-641C-41B7-A04B-DB5A9CBBAD8A_1_102.jpeg)
+![](/content/images/2025/01/F9F8C433-641C-41B7-A04B-DB5A9CBBAD8A_1_102.jpeg)
 
 The above is my 3 node k3s cluster running on ubuntu, plus an additional node running mariadb and NFS exports for Persistent volumes.
 
 Plan is to add 3 more nodes to my *lab* and run a specific OS for Storage, as well as a node with an SSD for Databases. You would be surprised to know, it's more Dell 3040 SFF's
-![](__GHOST_URL__/content/images/2025/01/03951064-8924-438D-8268-ED1BD99ED590_1_201_a.jpeg)
+![](/content/images/2025/01/03951064-8924-438D-8268-ED1BD99ED590_1_201_a.jpeg)
 The reason I went for the Dell 3040's is, they're cheap, decent CPU's, can take around 16gb of max ram, and the largest SSD you can possibly find. This means you can really get some chooch out of them.
 
 The cluster should eventually be 3 nodes, and one control plane node with scheduling disabled. This means the control plane node can just crack on with working out what's going on in the cluster, and not wasting CPU and Ram on random apps I'm running.
 
 Back in my old apartment, I was running the ISP's default router, which provided great reads like ["Update DNS on EE Router"](https://documentation.breadnet.co.uk/kb/networking/ee-update-dns/) and ["Show Broadband password on EE router"](https://documentation.breadnet.co.uk/kb/networking/show-broadband-password-ee/). For my birthday I decided to *splash the cash,*all £400ish and got a Unifi router, POE Switch, Unifi Access point and a Switch Lite
-![](__GHOST_URL__/content/images/2025/01/image.png)
+![](/content/images/2025/01/image.png)
 I am so thankful to be off EE internet, and on to *literally* anything else, in this case, Hyperoptic. I'm on, I think, a 150/150 (symmetrical) package which is quite decent as most ISP's in the UK offer pretty decent download speed, then abysmal upload speed. Take EE, offering 150/30. If someone can explain to me, how this is fair then I am all ears
-![](__GHOST_URL__/content/images/2025/01/image-1.png)
+![](/content/images/2025/01/image-1.png)
 Now I am on a decent internet package, I am able to host a lot more public services on my connection, as well as actually backup things like photos, documents and files to S3 and it wont take all night.
 
 ### Plan to move more on-prem
 
-Currently there are a few services I still have on [Digital ocean](https://m.do.co/c/77be3c3aa96c) that I plan to migrate
+Currently, there are a few services I still have on [Digital ocean](https://m.do.co/c/77be3c3aa96c) that I plan to migrate
 ServicePlanAuth ServicesCloudflare ZeroGhost BlogKubernetes Ghost blog or Static sitePassboltOn prem passbolt
 Something I have on fly.io is my [Documentation Site](https://documentation.breadnet.co.uk), which with my plan for my new cluster is to move my Documentation site to my cluster. The idea is that I will run a OCI registry, as well as GitHub actions runner on the cluster to run all my internal CI jobs
 
