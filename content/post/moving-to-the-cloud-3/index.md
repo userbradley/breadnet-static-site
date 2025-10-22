@@ -4,28 +4,15 @@ slug: moving-to-the-cloud-3
 date: 2023-03-31T17:25:35.000Z
 date_updated: 2023-03-31T18:22:31.000Z
 summary: Final blog post about moving breadNET to the cloud
+feature_image: "https://images.unsplash.com/photo-1610692507254-3bc16d2527ea"
+tags: ["cloud"]
 ---
 
-This is the final post in my *Migrating to the cloud*trio. Just like Orange is the new black, it can only get worse after the 3rd installment.
-[
+This is the final post in my _Migrating to the cloud_ trio. Just like Orange is the new black, it can only get worse after the 3rd installment.
 
-breadNET Cloud Migration
+* [breadNET Cloud Migration](/moving-to-the-cloud-1)
+* [Moving to the cloud: Infrastructure](moving-to-the-cloud-2/)
 
-How did I move all my servers to the cloud? Well - Ansible, automation and CI/CD!
-
-![](https://breadnet.co.uk/favicon.png)breadNETBradley Stannard
-
-![](https://images.unsplash.com/photo-1560182413-53772f3d7134?ixlib&#x3D;rb-1.2.1&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;2000&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ)
-](<<https://breadnet.co.uk/moving-to-the-cloud-1/>)
-
-Moving to the cloud: Infrastructure
-
-Part 2 of moving to the cloud - Let’s talk about IaC
-
-![](https://breadnet.co.uk/favicon.png)breadNETBradley Stannard
-
-![](https://images.unsplash.com/photo-1555066931-4365d14bab8c?crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;fit&#x3D;max&amp;fm&#x3D;jpg&amp;ixid&#x3D;MnwxMTc3M3wwfDF8c2VhcmNofDEzfHxjb2RlfGVufDB8fHx8MTYxNzUwMzcyMA&amp;ixlib&#x3D;rb-1.2.1&amp;q&#x3D;80&amp;w&#x3D;2000)
-](<https://breadnet.co.uk/moving-to-the-cloud-2/>)
 In the previous years, I wrote about migrating from servers in my parents garage to being on the cloud.
 
 Since then, breadNET has changed a lot!
@@ -42,19 +29,15 @@ Previously I migrated all my services to OVH, which was great for getting things
 
 I migrated as many applications as I could to Software as a service - with the most noticeable ones being:
 
-- Jira
-- Git
+* Jira
+* Git
 
 It was not economical for us to run a Jira instance (Requires around 4GB ram and 2 cores - Which costs more on the cloud)
 
 I wanted everything as code, so terraform again. We previously used OVH, which under the hood is [Open Stack](https://www.openstack.org?ref=breadnet.co.uk). We can use the [Digital ocean](https://m.do.co/c/77be3c3aa96c) terraform provider to control our account
-[
 
-Terraform Registry
+{{< bookmark "registry_terraform_io_providers_digitalocean_digitalocean_latest_docs" >}}
 
-![](https://registry.terraform.io/images/favicons/apple-touch-icon.png)
-
-](<https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs>)
 Since moving to [Digital Ocean](https://m.do.co/c/77be3c3aa96c), I've found my site is a lot more reliable and latency is a lot lower. Only issue I've had is it's a little more pricy.
 
 ## GitOps
@@ -113,16 +96,8 @@ breadNET Documentation
 By migrating [Bookstack to Mkdocs](https://breadnet.co.uk/migrating-off-bookstack/) I have been able to save $6 a month, by hosting the site on fly.io.
 
 Not to keep going on, but a great example of why this is great is, it costs me absolutly nothing a month. The Git is free, the CICD is free as it's a public repo
-[
 
-GitHub - userbradley/documentation.breadnet.co.uk: breadNET Documentation maintained by @userbradley
-
-breadNET Documentation maintained by @userbradley. Contribute to userbradley/documentation.breadnet.co.uk development by creating an account on GitHub.
-
-![](https://github.com/fluidicon.png)GitHubuserbradley
-
-![](https://opengraph.githubassets.com/7bf95a4efb4f28145e423104c6a29be7324eaad2d2239a569a88da139b1cc82f/userbradley/documentation.breadnet.co.uk)
-](<https://github.com/userbradley/documentation.breadnet.co.uk>)
+{{<bookmark "documentation_breadnet_co_uk">}}
 
 # Firewalls
 
