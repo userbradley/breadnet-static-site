@@ -7,7 +7,7 @@ WORKDIR /src/
 COPY . /src/
 COPY .git /src/.git/
 
-RUN hugo build --baseURL http://localhost:8081 --noBuildLock
+RUN hugo build --baseURL http://localhost:8081
 
 FROM nginx:stable-alpine
 

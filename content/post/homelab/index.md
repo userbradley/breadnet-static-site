@@ -111,7 +111,7 @@ Amazon Affiliate Store ➡️ <https://www.amazon.com/shop/lawrencesystemspcpick
 ![](https://www.youtube.com/yts/img/favicon_144-vfliLAfaB.png)YouTube
 
 ![](https://i.ytimg.com/vi/bG5enpij0e8/maxresdefault.jpg)
-](<https://www.youtube.com/watch?v&#x3D;bG5enpij0e8)[>
+](<<https://www.youtube.com/watch?v&#x3D;bG5enpij0e8>)
 
 Virtualize Everything! - Proxmox Install Tutorial
 
@@ -120,7 +120,7 @@ Want to know how to setup Proxmox so you can start virtualizing servers? This tu
 ![](https://www.youtube.com/yts/img/favicon_144-vfliLAfaB.png)YouTube
 
 ![](https://i.ytimg.com/vi/azORbxrItOo/maxresdefault.jpg)
-](<https://www.youtube.com/watch?v&#x3D;azORbxrItOo)[>
+](<<https://www.youtube.com/watch?v&#x3D;azORbxrItOo>)
 
 Windows Server 2016 - Install Hyper-V Server, Virtual Switch, VMs (How to Step by Step Tutorial)
 

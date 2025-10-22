@@ -1,0 +1,9 @@
+{
+  "url": "https://skaffold.dev/",
+  "title": "Skaffold",
+  "description": "Easy and Repeatable Container & Kubernetes Development",
+  "image": "https://skaffold.dev/featured-background.jpeg",
+  "site": "Skaffold",
+  "publisher": "",
+  "favicon": "https://skaffold.dev/./favicons/favicon.ico"
+}

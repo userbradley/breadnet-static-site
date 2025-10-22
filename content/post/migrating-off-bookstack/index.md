@@ -99,7 +99,7 @@ Project documentation with Markdown.
 
 ![](https://www.mkdocs.org/img/favicon.ico)MkDocsMkDocs Team
 
-](<https://www.mkdocs.org)[>
+](<<https://www.mkdocs.org>)
 
 Material for MkDocs
 
@@ -203,7 +203,7 @@ About me - Portfolio
 ![](/favicon.ico)logo
 
 ![](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style&#x3D;for-the-badge&amp;logo&#x3D;google-cloud&amp;logoColor&#x3D;white)
-](<https://bradley.breadnet.co.uk)[>
+](<<https://bradley.breadnet.co.uk>)
 
 Welcome - breadNET Documentation
 

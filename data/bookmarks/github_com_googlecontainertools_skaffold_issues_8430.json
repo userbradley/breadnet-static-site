@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/GoogleContainerTools/skaffold/issues/8430",
+  "title": "Feature Request - Support for podman builder · Issue #8430 · GoogleContainerTools/skaffold",
+  "description": "It would be great to have podman in the builders list. I have also tried using podman-docker to fake docker commands to use podman in vain (as expected). ❯ skaffold build Generating tags... - azure...",
+  "image": "https://opengraph.githubassets.com/2835e71438b90d80f791d949971734fb22b30c6830363b3c68879e6f17c429ae/GoogleContainerTools/skaffold/issues/8430",
+  "site": "GitHub",
+  "publisher": "vikas027",
+  "favicon": "https://github.com/fluidicon.png"
+}

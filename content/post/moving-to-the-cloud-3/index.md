@@ -16,7 +16,7 @@ How did I move all my servers to the cloud? Well - Ansible, automation and CI/CD
 ![](https://breadnet.co.uk/favicon.png)breadNETBradley Stannard
 
 ![](https://images.unsplash.com/photo-1560182413-53772f3d7134?ixlib&#x3D;rb-1.2.1&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;2000&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ)
-](<https://breadnet.co.uk/moving-to-the-cloud-1/)[>
+](<<https://breadnet.co.uk/moving-to-the-cloud-1/>)
 
 Moving to the cloud: Infrastructure
 

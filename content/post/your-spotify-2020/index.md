@@ -29,7 +29,7 @@ Self hosted Spotify tracking dashboard. Contribute to Yooooomi/your_spotify deve
 ![](https://github.githubassets.com/favicons/favicon.svg)GitHubYooooomi
 
 ![](https://avatars1.githubusercontent.com/u/17204739?s&#x3D;400&amp;v&#x3D;4)
-](<https://github.com/Yooooomi/your_spotify)[>
+](<<https://github.com/Yooooomi/your_spotify>)
 
 r/selfhosted - YourSpotify
 

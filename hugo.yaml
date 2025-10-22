@@ -7,6 +7,7 @@ enableInlineShortcodes: true
 footnoteReturnLinkContents: ^
 ignoreErrors:
   - error-remote-getjson
+  - warning-goldmark-raw-html
 theme: hugo-casper3
 params:
   description: Security Engineer, tinkerer and home labber

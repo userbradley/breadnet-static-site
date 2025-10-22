@@ -22,13 +22,9 @@ So why the breakup letter? What pushed you over the edge
 
 Sure, most of these above points are about money, but the docker desktop and docker hub ones annoyed me the most
 
-
-
 {{< callout color="blue" emoji="💡" >}}
 I will get on to installing Podman and how to use it later on in this blog. We just need to talk a bit about Docker and Podman.
 {{< /callout >}}
-
-
 
 Specifically, on mac [(which has 32% market share on devs)](https://survey.stackoverflow.co/2022/#section-most-popular-technologies-operating-system) you can only install docker using the desktop CLI. If you then use it for work, you need to pay.
 
@@ -46,12 +42,9 @@ One of his suggestions was podman, so I turned away from the spike I was working
 
 # The installation process
 
-
 {{< callout color="yellow" emoji="📬" >}}
 I am going to assume that you don't need me to explain what podman is and what docker is, if you are reading this post
 {{< /callout >}}
-
-
 
 For context, I am using an M1 mac - Which requires some additional configuration.
 
@@ -142,20 +135,18 @@ This is self explanatory. It's actually the same on docker, if you have a look o
 
 Skaffold is this super slick tool that allows you to automate so much
 
-
-
 [Skaffold](https://skaffold.dev)
-
 
 The issue I have is that it does not work for building docker images, as it requires either the docker daemon or the docker cli
 
 There is an open issue about this, but I think it works, providing you follow the most recent comment from my self
 [Feature Request - Support for podman builder · Issue #8430 · GoogleContainerTools/skaffold](https://github.com/GoogleContainerTools/skaffold/issues/8430)
 
+{{< bookmark "github_com_googlecontainertools_skaffold_issues_8430" >}}
+
 It would be great to have podman in the builders list. I have also tried using podman-docker to fake docker commands to use podman in vain (as expected). ❯ skaffold build Generating tags... - azure…
 
-
-{{< bookmark "https://skaffold.dev/" >}}
+{{< bookmark "skaffold_dev" >}}
 
 # Wrapping up
 
